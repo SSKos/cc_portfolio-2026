@@ -53,8 +53,8 @@ function isToken(obj: unknown): obj is Token {
 /** Normalise both Tokens Studio and DTCG token shapes to a single Token. */
 function normalise(obj: Record<string, unknown>): Token {
   return {
-    value:       (obj['$value'] ?? obj['value']) as TokenValue,
-    type:        (obj['$type']  ?? obj['type'])  as string | undefined,
+    value: (obj['$value'] ?? obj['value']) as TokenValue,
+    type: (obj['$type'] ?? obj['type']) as string | undefined,
     description: (obj['$description'] ?? obj['description']) as string | undefined,
   };
 }
@@ -115,12 +115,12 @@ function resolveAlias(value: string, allTokens: Map<string, Token>, seen = new S
 // ─── Shadow object → CSS ─────────────────────────────────────────────────────
 
 function shadowObjectToCSS(s: Record<string, unknown>): string {
-  const x      = s.x      ?? 0;
-  const y      = s.y      ?? 0;
-  const blur   = s.blur   ?? 0;
+  const x = s.x ?? 0;
+  const y = s.y ?? 0;
+  const blur = s.blur ?? 0;
   const spread = s.spread ?? 0;
-  const color  = s.color  ?? 'rgba(0,0,0,0.25)';
-  const inset  = s.type === 'innerShadow' ? 'inset ' : '';
+  const color = s.color ?? 'rgba(0,0,0,0.25)';
+  const inset = s.type === 'innerShadow' ? 'inset ' : '';
   return `${inset}${x}px ${y}px ${blur}px ${spread}px ${color}`;
 }
 
@@ -138,14 +138,14 @@ const STRIP_SEGMENTS = new Set([
 
 /** Shorten repeated or long segment names. */
 const RENAME_SEGMENTS: Record<string, string> = {
-  'paddings':   'pad',
-  'corners':    'radius',
-  'f-size':     'fs',
-  'f-line':     'lh',
-  'overlays':   'overlay',
+  'paddings': 'pad',
+  'corners': 'radius',
+  'f-size': 'fs',
+  'f-line': 'lh',
+  'overlays': 'overlay',
   'visibility': 'vis',
   'typography': 'typo',
-  'effect':     'effect',
+  'effect': 'effect',
 };
 
 /**
@@ -262,13 +262,13 @@ const CATEGORY_ORDER = [
 ];
 
 const CATEGORY_LABELS: Record<string, string> = {
-  'primitives':        'Primitives',
-  'semantic':          'Semantic',
-  'components':        'Components',
-  'columns':           'Columns',
-  '_styles/color':     'Styles: Color',
+  'primitives': 'Primitives',
+  'semantic': 'Semantic',
+  'components': 'Components',
+  'columns': 'Columns',
+  '_styles/color': 'Styles: Color',
   '_styles/typography': 'Styles: Typography',
-  '_styles/effect':    'Styles: Effect',
+  '_styles/effect': 'Styles: Effect',
 };
 
 const SEPARATOR_WIDTH = 66;
@@ -354,9 +354,74 @@ function generate(): void {
   for (const [dotPath, token] of allTokens) {
     const category = dotPath.split('.')[0];
     if (!groups.has(category)) groups.set(category, []);
+
+    // Handle typography objects explicitly
+    if (
+      token.type === 'typography' ||
+      (typeof token.value === 'object' && token.value !== null && 'fontFamily' in token.value && !Array.isArray(token.value))
+    ) {
+      const val = token.value as Record<string, string>;
+      const baseVar = cssVarName(dotPath);
+
+      const subPaths: Record<string, string> = {
+        fontFamily: 'font-family',
+        fontWeight: 'font-weight',
+        fontSize: 'font-size',
+        lineHeight: 'line-height',
+        letterSpacing: 'letter-spacing',
+        textCase: 'text-transform',
+        textDecoration: 'text-decoration',
+      };
+
+      const fw = String(val.fontWeight || '400');
+      const weightMap: Record<string, string> = {
+        Thin: '100',
+        ExtraLight: '200',
+        Light: '300',
+        Regular: '400',
+        Medium: '500',
+        SemiBold: '600',
+        Bold: '700',
+        ExtraBold: '800',
+        Black: '900',
+      };
+      const resolvedWeight = weightMap[fw] || fw;
+
+      const fs = String(val.fontSize || 'inherit');
+      const lh = String(val.lineHeight || 'normal');
+      let ff = String(val.fontFamily || 'inherit');
+      if (ff.includes(' ') && !ff.startsWith('"') && !ff.startsWith("'")) {
+        ff = `"${ff}"`;
+      }
+
+      // 1. Shorthand variable
+      groups.get(category)!.push({
+        cssVar: baseVar,
+        cssValue: `normal ${resolvedWeight} ${fs}/${lh} ${ff}`,
+        description: token.description ? `${token.description} (shorthand)` : 'shorthand',
+      });
+
+      // 2. Individual properties
+      for (const [k, v] of Object.entries(val)) {
+        if (!v || (k === 'textCase' && v === 'ORIGINAL') || (k === 'textDecoration' && v === 'NONE')) continue;
+        const propName = subPaths[k] || k;
+        let finalVal = String(v);
+
+        if (k === 'fontWeight') finalVal = resolvedWeight;
+        if (k === 'fontFamily') finalVal = ff;
+
+        groups.get(category)!.push({
+          cssVar: `${baseVar}-${propName}`,
+          cssValue: finalVal,
+          description: token.description,
+        });
+      }
+      continue;
+    }
+
     groups.get(category)!.push({
-      cssVar:      cssVarName(dotPath),
-      cssValue:    tokenValueToCSS(dotPath, token, allTokens, getRefAsVar, variableIdToPath),
+      cssVar: cssVarName(dotPath),
+      cssValue: tokenValueToCSS(dotPath, token, allTokens, getRefAsVar, variableIdToPath),
       description: token.description,
     });
   }

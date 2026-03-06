@@ -25,6 +25,7 @@ services:
       - "3000:3000"
     volumes:
       - uploads:/app/public/uploads
+    command: sh -c "npx prisma migrate deploy && node server.js"
 
 volumes:
   postgres_data:

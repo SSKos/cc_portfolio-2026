@@ -1,6 +1,6 @@
 /**
  * Design Tokens — auto-generated from tokens.json
- * Generated: 2026-03-05T21:37:26.225Z
+ * Generated: 2026-03-06T09:30:03.918Z
  * 🔄 Short naming enabled.
  *
  * ⚠️  Do not edit manually. Run `npm run tokens` to regenerate.
@@ -63,7 +63,7 @@
   --pad-2xl: 2rem;
   --pad-3xl: 3rem;
   --pad-4xl: 3.25rem;
-  --pad-64-52: 4rem;
+  --pad-5xl: 4rem;
   --radius-0: 0rem;
   --radius-xxs: 0.125rem;
   --radius-xs: 0.25rem;
@@ -76,7 +76,7 @@
   --radius-4xl: 2rem;
   --radius-5xl: 3rem;
   --radius-6xl: 3.25rem;
-  --radius-64-52: 4rem;
+  --radius-7xl: 4rem;
   --vis-max: var(--light-gray-1000);
   --vis-default: var(--light-gray-900);
   --vis-fuzzy: var(--brand-100);
@@ -133,13 +133,48 @@
   --columns-x12: 1360px;
 
   /* ─── Styles: Typography ──────────────────────────────────────────────── */
-  --typo-h2: 0px 0px 0px 0px rgba(0,0,0,0.25);
-  --typo-p: 0px 0px 0px 0px rgba(0,0,0,0.25);
-  --typo-Card-h1: 0px 0px 0px 0px rgba(0,0,0,0.25);
-  --typo-Card-p: 0px 0px 0px 0px rgba(0,0,0,0.25);
-  --typo-Card-number: 0px 0px 0px 0px rgba(0,0,0,0.25);
-  --typo-Header-item: 0px 0px 0px 0px rgba(0,0,0,0.25);
-  --typo-Button-primary: 0px 0px 0px 0px rgba(0,0,0,0.25);
+  --typo-h2: normal 500 3rem/3.75rem "Nunito Sans";   /* shorthand */
+  --typo-h2-font-family: "Nunito Sans";
+  --typo-h2-font-weight: 500;
+  --typo-h2-font-size: 3rem;
+  --typo-h2-line-height: 3.75rem;
+  --typo-h2-letter-spacing: 0%;
+  --typo-p: normal 300 1.5rem/2.25rem "Nunito Sans";   /* shorthand */
+  --typo-p-font-family: "Nunito Sans";
+  --typo-p-font-weight: 300;
+  --typo-p-font-size: 1.5rem;
+  --typo-p-line-height: 2.25rem;
+  --typo-p-letter-spacing: 0%;
+  --typo-Card-h1: normal 300 1.5rem/1.75rem "Nunito Sans";   /* shorthand */
+  --typo-Card-h1-font-family: "Nunito Sans";
+  --typo-Card-h1-font-weight: 300;
+  --typo-Card-h1-font-size: 1.5rem;
+  --typo-Card-h1-line-height: 1.75rem;
+  --typo-Card-h1-letter-spacing: 0%;
+  --typo-Card-p: normal 300 1rem/1.375rem "Nunito Sans";   /* shorthand */
+  --typo-Card-p-font-family: "Nunito Sans";
+  --typo-Card-p-font-weight: 300;
+  --typo-Card-p-font-size: 1rem;
+  --typo-Card-p-line-height: 1.375rem;
+  --typo-Card-p-letter-spacing: 0%;
+  --typo-Card-number: normal 300 6rem/5.75rem "Nunito Sans";   /* shorthand */
+  --typo-Card-number-font-family: "Nunito Sans";
+  --typo-Card-number-font-weight: 300;
+  --typo-Card-number-font-size: 6rem;
+  --typo-Card-number-line-height: 5.75rem;
+  --typo-Card-number-letter-spacing: 0%;
+  --typo-Header-item: normal 300 1.5rem/3rem "Nunito Sans";   /* shorthand */
+  --typo-Header-item-font-family: "Nunito Sans";
+  --typo-Header-item-font-weight: 300;
+  --typo-Header-item-font-size: 1.5rem;
+  --typo-Header-item-line-height: 3rem;
+  --typo-Header-item-letter-spacing: 0%;
+  --typo-Button-primary: normal 300 1rem/1.375rem "Nunito Sans";   /* shorthand */
+  --typo-Button-primary-font-family: "Nunito Sans";
+  --typo-Button-primary-font-weight: 300;
+  --typo-Button-primary-font-size: 1rem;
+  --typo-Button-primary-line-height: 1.375rem;
+  --typo-Button-primary-letter-spacing: 0%;
 
   /* ─── Styles: Effect ──────────────────────────────────────────────────── */
   --effect-card-shadow: 0px 0px 16pxpx 0pxpx #00000040;
