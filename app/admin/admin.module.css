@@ -1,0 +1,36 @@
+.wrap {
+  min-height: 100vh;
+  padding: var(--space-24);
+}
+
+.header {
+  margin-bottom: var(--space-48);
+}
+
+.title {
+  font: var(--text-style-h2);
+  color: var(--text-primary);
+  margin-bottom: var(--space-8);
+}
+
+.user {
+  font: var(--text-style-card-body);
+  color: var(--text-darker);
+}
+
+.main {
+  font: var(--text-style-body);
+  color: var(--text-secondary);
+}
+
+.placeholder {
+  margin-bottom: var(--space-24);
+}
+
+.nav a {
+  color: var(--text-accent);
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}

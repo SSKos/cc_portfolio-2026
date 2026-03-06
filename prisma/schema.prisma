@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id             Int      @id @default(autoincrement())
+  email          String   @unique
+  hashedPassword String
+  createdAt      DateTime @default(now())
+}
+
+model Page {
+  id          Int       @id @default(autoincrement())
+  slug        String    @unique
+  title       String
+  description String?
+  headerVariant String  @default("default")
+  footerVariant String  @default("default")
+  isVisible   Boolean   @default(false)
+  order       Int       @default(0)
+  sections    Section[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Section {
+  id        Int      @id @default(autoincrement())
+  pageId    Int
+  page      Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  type      SectionType
+  content   Json
+  order     Int      @default(0)
+  isVisible Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Media {
+  id           Int      @id @default(autoincrement())
+  filename     String
+  originalName String
+  mimeType     String
+  size         Int
+  url          String
+  createdAt    DateTime @default(now())
+}
+
+enum SectionType {
+  text
+  image
+  stat_card
+  hero
+  grid
+  divider
+  figma_block
+}

@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio CMS
 
-## Getting Started
+Self-hosted portfolio with custom admin panel. Next.js 16, PostgreSQL, NextAuth, Docker.
 
-First, run the development server:
+## Как запустить локально
+
+### 1. Переменные окружения
+
+Скопируйте пример и заполните:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+В `.env` обязательно:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **DATABASE_URL** — строка подключения к PostgreSQL. Для локального Docker:  
+  `postgresql://portfolio:portfolio@localhost:5432/portfolio`
+- **NEXTAUTH_SECRET** — секрет для сессий: `openssl rand -base64 32`
+- **NEXTAUTH_URL** — для dev: `http://localhost:3000`
+- Для сида админа: **ADMIN_EMAIL**, **ADMIN_PASSWORD**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. База данных
 
-## Learn More
+Поднять Postgres (Docker):
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+docker compose up -d postgres
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Применить схему и создать админа:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run db:migrate
+npm run seed:admin
+```
 
-## Deploy on Vercel
+(При первом запуске миграций Prisma создаст папку `prisma/migrations` и таблицы.)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 3. Запуск приложения
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm install
+npm run dev
+```
+
+Откройте [http://localhost:3000](http://localhost:3000):
+
+- **/** — публичная главная (пока заглушка create-next-app)
+- **/admin** — админка (редирект на логин, если не авторизован)
+- **/admin/login** — форма входа (логин/пароль из `ADMIN_EMAIL` / `ADMIN_PASSWORD`)
+
+### Полный запуск в Docker
+
+```bash
+docker compose up --build
+```
+
+Приложение на порту 3000, Postgres — 5432. Перед первым запуском нужны миграции и сид: удобнее один раз выполнить их локально с `DATABASE_URL=postgresql://portfolio:portfolio@localhost:5432/portfolio`, затем поднимать `docker compose up`.

@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(npx create-next-app@latest:*)",
+      "Bash(cp:*)",
+      "Bash(npm install:*)",
+      "Bash(npx prisma:*)",
+      "Bash(npx tsc:*)",
+      "Bash(node_modules/.bin/tsc:*)",
+      "Bash(node:*)",
+      "Bash(npm run:*)",
+      "mcp__figma__get_variable_defs",
+      "mcp__figma__get_metadata",
+      "mcp__figma__get_design_context",
+      "Bash(npx ts-node:*)"
+    ]
+  }
+}

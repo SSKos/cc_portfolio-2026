@@ -1,0 +1,2406 @@
+{
+  "c3-primitives/basic": {
+    "overlays": {
+      "dark-25": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "ALL_SCOPES"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "overlays.dark25",
+            "Android": "overlays.dark25",
+            "iOS": "overlays.dark25"
+          }
+        },
+        "$value": "#00000040",
+        "$type": "color"
+      },
+      "dark-50": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "ALL_SCOPES"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "overlays.dark50",
+            "Android": "overlays.dark50",
+            "iOS": "overlays.dark50"
+          }
+        },
+        "$value": "#00000080",
+        "$type": "color"
+      },
+      "dark-75": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "ALL_SCOPES"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "overlays.dark75",
+            "Android": "overlays.dark75",
+            "iOS": "overlays.dark75"
+          }
+        },
+        "$value": "#000000bf",
+        "$type": "color"
+      },
+      "dark-90": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "ALL_SCOPES"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "overlays.dark90",
+            "Android": "overlays.dark90",
+            "iOS": "overlays.dark90"
+          }
+        },
+        "$value": "#000000e6",
+        "$type": "color"
+      }
+    },
+    "card-shadow": {
+      "color": {
+        "$value": "#00000040",
+        "$type": "color"
+      },
+      "type": {
+        "$value": "dropShadow",
+        "$type": "type"
+      },
+      "x": {
+        "$value": 0,
+        "$type": "x"
+      },
+      "y": {
+        "$value": 8,
+        "$type": "y"
+      },
+      "blur": {
+        "$value": 16,
+        "$type": "blur"
+      },
+      "spread": {
+        "$value": 0,
+        "$type": "spread"
+      }
+    },
+    "fontFamilies": {
+      "nunito-sans": {
+        "$value": "Nunito Sans",
+        "$type": "fontFamilies"
+      }
+    },
+    "fontWeights": {
+      "nunito-sans-0": {
+        "$value": "Medium",
+        "$type": "fontWeights"
+      },
+      "nunito-sans-1": {
+        "$value": "Light",
+        "$type": "fontWeights"
+      }
+    },
+    "fontSize": {
+      "0": {
+        "$value": 16,
+        "$type": "fontSizes"
+      },
+      "1": {
+        "$value": 24,
+        "$type": "fontSizes"
+      },
+      "2": {
+        "$value": 48,
+        "$type": "fontSizes"
+      },
+      "3": {
+        "$value": 96,
+        "$type": "fontSizes"
+      }
+    },
+    "letterSpacing": {
+      "0": {
+        "$value": "0%",
+        "$type": "letterSpacing"
+      }
+    },
+    "paragraphSpacing": {
+      "0": {
+        "$value": 0,
+        "$type": "paragraphSpacing"
+      },
+      "1": {
+        "$value": 4,
+        "$type": "paragraphSpacing"
+      },
+      "2": {
+        "$value": 8,
+        "$type": "paragraphSpacing"
+      }
+    },
+    "h2": {
+      "fontFamily": {
+        "$value": "{fontFamilies.nunito-sans}",
+        "$type": "fontFamilies"
+      },
+      "fontWeight": {
+        "$value": "{fontWeights.nunito-sans-0}",
+        "$type": "fontWeights"
+      },
+      "lineHeight": {
+        "$value": "{f-line.60-52}",
+        "$type": "lineHeights"
+      },
+      "fontSize": {
+        "$value": "{fontSize.2}",
+        "$type": "fontSizes"
+      },
+      "letterSpacing": {
+        "$value": "{letterSpacing.0}",
+        "$type": "letterSpacing"
+      },
+      "paragraphSpacing": {
+        "$value": "{paragraphSpacing.0}",
+        "$type": "paragraphSpacing"
+      },
+      "paragraphIndent": {
+        "$value": "{paragraphIndent.0}",
+        "$type": "paragraphIndent"
+      },
+      "textCase": {
+        "$value": "{textCase.none}",
+        "$type": "textCase"
+      },
+      "textDecoration": {
+        "$value": "{textDecoration.none}",
+        "$type": "textDecoration"
+      }
+    },
+    "p": {
+      "fontFamily": {
+        "$value": "{fontFamilies.nunito-sans}",
+        "$type": "fontFamilies"
+      },
+      "fontWeight": {
+        "$value": "{fontWeights.nunito-sans-1}",
+        "$type": "fontWeights"
+      },
+      "lineHeight": {
+        "$value": "{f-line.36-28}",
+        "$type": "lineHeights"
+      },
+      "fontSize": {
+        "$value": "{fontSize.1}",
+        "$type": "fontSizes"
+      },
+      "letterSpacing": {
+        "$value": "{letterSpacing.0}",
+        "$type": "letterSpacing"
+      },
+      "paragraphSpacing": {
+        "$value": "{paragraphSpacing.2}",
+        "$type": "paragraphSpacing"
+      },
+      "paragraphIndent": {
+        "$value": "{paragraphIndent.0}",
+        "$type": "paragraphIndent"
+      },
+      "textCase": {
+        "$value": "{textCase.none}",
+        "$type": "textCase"
+      },
+      "textDecoration": {
+        "$value": "{textDecoration.none}",
+        "$type": "textDecoration"
+      }
+    },
+    "Card": {
+      "h1": {
+        "fontFamily": {
+          "$value": "{fontFamilies.nunito-sans}",
+          "$type": "fontFamilies"
+        },
+        "fontWeight": {
+          "$value": "{fontWeights.nunito-sans-1}",
+          "$type": "fontWeights"
+        },
+        "lineHeight": {
+          "$value": "{f-line.28-24}",
+          "$type": "lineHeights"
+        },
+        "fontSize": {
+          "$value": "{fontSize.1}",
+          "$type": "fontSizes"
+        },
+        "letterSpacing": {
+          "$value": "{letterSpacing.0}",
+          "$type": "letterSpacing"
+        },
+        "paragraphSpacing": {
+          "$value": "{paragraphSpacing.1}",
+          "$type": "paragraphSpacing"
+        },
+        "paragraphIndent": {
+          "$value": "{paragraphIndent.0}",
+          "$type": "paragraphIndent"
+        },
+        "textCase": {
+          "$value": "{textCase.none}",
+          "$type": "textCase"
+        },
+        "textDecoration": {
+          "$value": "{textDecoration.none}",
+          "$type": "textDecoration"
+        }
+      },
+      "p": {
+        "fontFamily": {
+          "$value": "{fontFamilies.nunito-sans}",
+          "$type": "fontFamilies"
+        },
+        "fontWeight": {
+          "$value": "{fontWeights.nunito-sans-1}",
+          "$type": "fontWeights"
+        },
+        "lineHeight": {
+          "$value": "{f-line.22-18}",
+          "$type": "lineHeights"
+        },
+        "fontSize": {
+          "$value": "{fontSize.0}",
+          "$type": "fontSizes"
+        },
+        "letterSpacing": {
+          "$value": "{letterSpacing.0}",
+          "$type": "letterSpacing"
+        },
+        "paragraphSpacing": {
+          "$value": "{paragraphSpacing.1}",
+          "$type": "paragraphSpacing"
+        },
+        "paragraphIndent": {
+          "$value": "{paragraphIndent.0}",
+          "$type": "paragraphIndent"
+        },
+        "textCase": {
+          "$value": "{textCase.none}",
+          "$type": "textCase"
+        },
+        "textDecoration": {
+          "$value": "{textDecoration.none}",
+          "$type": "textDecoration"
+        }
+      },
+      "number": {
+        "fontFamily": {
+          "$value": "{fontFamilies.nunito-sans}",
+          "$type": "fontFamilies"
+        },
+        "fontWeight": {
+          "$value": "{fontWeights.nunito-sans-1}",
+          "$type": "fontWeights"
+        },
+        "lineHeight": {
+          "$value": "{f-line.92-84}",
+          "$type": "lineHeights"
+        },
+        "fontSize": {
+          "$value": "{fontSize.3}",
+          "$type": "fontSizes"
+        },
+        "letterSpacing": {
+          "$value": "{letterSpacing.0}",
+          "$type": "letterSpacing"
+        },
+        "paragraphSpacing": {
+          "$value": "{paragraphSpacing.1}",
+          "$type": "paragraphSpacing"
+        },
+        "paragraphIndent": {
+          "$value": "{paragraphIndent.0}",
+          "$type": "paragraphIndent"
+        },
+        "textCase": {
+          "$value": "{textCase.none}",
+          "$type": "textCase"
+        },
+        "textDecoration": {
+          "$value": "{textDecoration.none}",
+          "$type": "textDecoration"
+        }
+      }
+    },
+    "Header": {
+      "item": {
+        "fontFamily": {
+          "$value": "{fontFamilies.nunito-sans}",
+          "$type": "fontFamilies"
+        },
+        "fontWeight": {
+          "$value": "{fontWeights.nunito-sans-1}",
+          "$type": "fontWeights"
+        },
+        "lineHeight": {
+          "$value": "{f-line.48-40}",
+          "$type": "lineHeights"
+        },
+        "fontSize": {
+          "$value": "{fontSize.1}",
+          "$type": "fontSizes"
+        },
+        "letterSpacing": {
+          "$value": "{letterSpacing.0}",
+          "$type": "letterSpacing"
+        },
+        "paragraphSpacing": {
+          "$value": "{paragraphSpacing.0}",
+          "$type": "paragraphSpacing"
+        },
+        "paragraphIndent": {
+          "$value": "{paragraphIndent.0}",
+          "$type": "paragraphIndent"
+        },
+        "textCase": {
+          "$value": "{textCase.none}",
+          "$type": "textCase"
+        },
+        "textDecoration": {
+          "$value": "{textDecoration.none}",
+          "$type": "textDecoration"
+        }
+      }
+    },
+    "Button": {
+      "primary": {
+        "fontFamily": {
+          "$value": "{fontFamilies.nunito-sans}",
+          "$type": "fontFamilies"
+        },
+        "fontWeight": {
+          "$value": "{fontWeights.nunito-sans-1}",
+          "$type": "fontWeights"
+        },
+        "lineHeight": {
+          "$value": "{f-line.22-18}",
+          "$type": "lineHeights"
+        },
+        "fontSize": {
+          "$value": "{fontSize.0}",
+          "$type": "fontSizes"
+        },
+        "letterSpacing": {
+          "$value": "{letterSpacing.0}",
+          "$type": "letterSpacing"
+        },
+        "paragraphSpacing": {
+          "$value": "{paragraphSpacing.0}",
+          "$type": "paragraphSpacing"
+        },
+        "paragraphIndent": {
+          "$value": "{paragraphIndent.0}",
+          "$type": "paragraphIndent"
+        },
+        "textCase": {
+          "$value": "{textCase.none}",
+          "$type": "textCase"
+        },
+        "textDecoration": {
+          "$value": "{textDecoration.none}",
+          "$type": "textDecoration"
+        }
+      }
+    },
+    "textCase": {
+      "none": {
+        "$value": "none",
+        "$type": "textCase"
+      }
+    },
+    "textDecoration": {
+      "none": {
+        "$value": "none",
+        "$type": "textDecoration"
+      }
+    },
+    "paragraphIndent": {
+      "0": {
+        "$value": "0px",
+        "$type": "dimension"
+      }
+    },
+    "dark": {
+      "neutral-0": {
+        "$extensions": {
+          "com.figma.codeSyntax": {
+            "Web": "dark.neutral0",
+            "Android": "dark.neutral0",
+            "iOS": "dark.neutral0"
+          }
+        },
+        "$value": "#000000",
+        "$type": "color"
+      },
+      "neutral-50": {
+        "$extensions": {
+          "com.figma.codeSyntax": {
+            "Web": "dark.neutral50",
+            "Android": "dark.neutral50",
+            "iOS": "dark.neutral50"
+          }
+        },
+        "$value": "#0c0c0d",
+        "$type": "color"
+      },
+      "neutral-100": {
+        "$extensions": {
+          "com.figma.codeSyntax": {
+            "Web": "dark.neutral100",
+            "Android": "dark.neutral100",
+            "iOS": "dark.neutral100"
+          }
+        },
+        "$value": "#18181a",
+        "$type": "color"
+      },
+      "neutral-200": {
+        "$extensions": {
+          "com.figma.codeSyntax": {
+            "Web": "dark.neutral200",
+            "Android": "dark.neutral200",
+            "iOS": "dark.neutral200"
+          }
+        },
+        "$value": "#1e1d21",
+        "$type": "color"
+      },
+      "neutral-300": {
+        "$extensions": {
+          "com.figma.codeSyntax": {
+            "Web": "dark.neutral300",
+            "Android": "dark.neutral300",
+            "iOS": "dark.neutral300"
+          }
+        },
+        "$value": "#242329",
+        "$type": "color"
+      },
+      "neutral-400": {
+        "$extensions": {
+          "com.figma.codeSyntax": {
+            "Web": "dark.neutral400",
+            "Android": "dark.neutral400",
+            "iOS": "dark.neutral400"
+          }
+        },
+        "$value": "#2c2a33",
+        "$type": "color"
+      },
+      "neutral-500": {
+        "$extensions": {
+          "com.figma.codeSyntax": {
+            "Web": "dark.neutral500",
+            "Android": "dark.neutral500",
+            "iOS": "dark.neutral500"
+          }
+        },
+        "$value": "#565559",
+        "$type": "color"
+      }
+    },
+    "light": {
+      "gray-1000": {
+        "$extensions": {
+          "com.figma.codeSyntax": {
+            "Web": "light.gray1000",
+            "Android": "light.gray1000",
+            "iOS": "light.gray1000"
+          }
+        },
+        "$value": "#ffffff",
+        "$type": "color"
+      },
+      "gray-900": {
+        "$extensions": {
+          "com.figma.codeSyntax": {
+            "Web": "light.gray900",
+            "Android": "light.gray900",
+            "iOS": "light.gray900"
+          }
+        },
+        "$value": "#f0f0f7",
+        "$type": "color"
+      },
+      "gray-800": {
+        "$extensions": {
+          "com.figma.codeSyntax": {
+            "Web": "light.gray800",
+            "Android": "light.gray800",
+            "iOS": "light.gray800"
+          }
+        },
+        "$value": "#cdccdf",
+        "$type": "color"
+      },
+      "gray-700": {
+        "$extensions": {
+          "com.figma.codeSyntax": {
+            "Web": "light.gray700",
+            "Android": "light.gray700",
+            "iOS": "light.gray700"
+          }
+        },
+        "$value": "#a5a3b6",
+        "$type": "color"
+      },
+      "gray-600": {
+        "$extensions": {
+          "com.figma.codeSyntax": {
+            "Web": "light.gray600",
+            "Android": "light.gray600",
+            "iOS": "light.gray600"
+          }
+        },
+        "$value": "#838293",
+        "$type": "color"
+      },
+      "gray-500": {
+        "$extensions": {
+          "com.figma.codeSyntax": {
+            "Web": "light.gray500",
+            "Android": "light.gray500",
+            "iOS": "light.gray500"
+          }
+        },
+        "$value": "#5b5a69",
+        "$type": "color"
+      }
+    },
+    "brand": {
+      "brand-50": {
+        "$extensions": {
+          "com.figma.codeSyntax": {
+            "Web": "brand.brand50",
+            "Android": "brand.brand50",
+            "iOS": "brand.brand50"
+          }
+        },
+        "$value": "#f8e9ff",
+        "$type": "color"
+      },
+      "brand-100": {
+        "$extensions": {
+          "com.figma.codeSyntax": {
+            "Web": "brand.brand100",
+            "Android": "brand.brand100",
+            "iOS": "brand.brand100"
+          }
+        },
+        "$value": "#eecefc",
+        "$type": "color"
+      },
+      "brand-200": {
+        "$extensions": {
+          "com.figma.codeSyntax": {
+            "Web": "brand.brand200",
+            "Android": "brand.brand200",
+            "iOS": "brand.brand200"
+          }
+        },
+        "$value": "#e5adfe",
+        "$type": "color"
+      },
+      "brand-300": {
+        "$extensions": {
+          "com.figma.codeSyntax": {
+            "Web": "brand.brand300",
+            "Android": "brand.brand300",
+            "iOS": "brand.brand300"
+          }
+        },
+        "$value": "#d280f8",
+        "$type": "color"
+      },
+      "brand-400": {
+        "$extensions": {
+          "com.figma.codeSyntax": {
+            "Web": "brand.brand400",
+            "Android": "brand.brand400",
+            "iOS": "brand.brand400"
+          }
+        },
+        "$value": "#9b46c2",
+        "$type": "color"
+      },
+      "gray-500": {
+        "$extensions": {
+          "com.figma.codeSyntax": {
+            "Web": "brand.gray500",
+            "Android": "brand.gray500",
+            "iOS": "brand.gray500"
+          }
+        },
+        "$value": "#7a0aad",
+        "$type": "color"
+      }
+    }
+  },
+  "c-symantic/basic": {
+    "surface": {
+      "body-bg": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "FRAME_FILL"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "surface.bodyBg",
+            "Android": "surface.bodyBg",
+            "iOS": "surface.bodyBg"
+          }
+        },
+        "$value": "{dark.neutral-100}",
+        "$type": "color"
+      },
+      "level-1": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "FRAME_FILL"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "surface.level1",
+            "Android": "surface.level1",
+            "iOS": "surface.level1"
+          }
+        },
+        "$value": "{dark.neutral-200}",
+        "$type": "color"
+      },
+      "level-2": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "FRAME_FILL"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "surface.level2",
+            "Android": "surface.level2",
+            "iOS": "surface.level2"
+          }
+        },
+        "$value": "{dark.neutral-300}",
+        "$type": "color"
+      },
+      "level-3": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "FRAME_FILL"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "surface.level3",
+            "Android": "surface.level3",
+            "iOS": "surface.level3"
+          }
+        },
+        "$value": "{dark.neutral-400}",
+        "$type": "color"
+      }
+    },
+    "visibility": {
+      "max": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "ALL_SCOPES"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "visibility.max",
+            "Android": "visibility.max",
+            "iOS": "visibility.max"
+          }
+        },
+        "$value": "{light.gray-1000}",
+        "$type": "color"
+      },
+      "default": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "ALL_SCOPES"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "visibility.default",
+            "Android": "visibility.default",
+            "iOS": "visibility.default"
+          }
+        },
+        "$value": "{light.gray-900}",
+        "$type": "color"
+      },
+      "fuzzy": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "ALL_SCOPES"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "visibility.fuzzy",
+            "Android": "visibility.fuzzy",
+            "iOS": "visibility.fuzzy"
+          }
+        },
+        "$value": "{light.gray-800}",
+        "$type": "color"
+      },
+      "dim": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "ALL_SCOPES"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "visibility.dim",
+            "Android": "visibility.dim",
+            "iOS": "visibility.dim"
+          }
+        },
+        "$value": "{light.gray-700}",
+        "$type": "color"
+      },
+      "fading": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "ALL_SCOPES"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "visibility.fading",
+            "Android": "visibility.fading",
+            "iOS": "visibility.fading"
+          }
+        },
+        "$value": "{light.gray-600}",
+        "$type": "color"
+      },
+      "inactive": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "ALL_SCOPES"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "visibility.inactive",
+            "Android": "visibility.inactive",
+            "iOS": "visibility.inactive"
+          }
+        },
+        "$value": "{light.gray-500}",
+        "$type": "color"
+      },
+      "accent-max": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "ALL_SCOPES"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "visibility.accentMax",
+            "Android": "visibility.accentMax",
+            "iOS": "visibility.accentMax"
+          }
+        },
+        "$value": "{brand.gray-500}",
+        "$type": "color"
+      },
+      "accent-fuzzy": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "ALL_SCOPES"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "visibility.accentFuzzy",
+            "Android": "visibility.accentFuzzy",
+            "iOS": "visibility.accentFuzzy"
+          }
+        },
+        "$value": "{brand.brand-400}",
+        "$type": "color"
+      },
+      "accent-dim": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "ALL_SCOPES"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "visibility.accentDim",
+            "Android": "visibility.accentDim",
+            "iOS": "visibility.accentDim"
+          }
+        },
+        "$value": "{brand.brand-300}",
+        "$type": "color"
+      }
+    },
+    "delete": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "delete",
+          "Android": "delete",
+          "iOS": "delete"
+        }
+      },
+      "$value": "#844748",
+      "$type": "color"
+    },
+    "edit": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "edit",
+          "Android": "edit",
+          "iOS": "edit"
+        }
+      },
+      "$value": "#716998",
+      "$type": "color"
+    },
+    "Coloradd": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "Coloradd",
+          "Android": "Coloradd",
+          "iOS": "Coloradd"
+        }
+      },
+      "$value": "#5982b1",
+      "$type": "color"
+    },
+    "preview": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "preview",
+          "Android": "preview",
+          "iOS": "preview"
+        }
+      },
+      "$value": "#886346",
+      "$type": "color"
+    },
+    "hide": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "hide",
+          "Android": "hide",
+          "iOS": "hide"
+        }
+      },
+      "$value": "#741c1c",
+      "$type": "color"
+    },
+    "online": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "online",
+          "Android": "online",
+          "iOS": "online"
+        }
+      },
+      "$value": "#3c634e",
+      "$type": "color"
+    },
+    "add": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "Coloradd",
+          "Android": "Coloradd",
+          "iOS": "Coloradd"
+        }
+      },
+      "$value": "#5982b1",
+      "$type": "color"
+    }
+  },
+  "c-components/basic": {
+    "text": {
+      "primary": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "SHAPE_FILL",
+            "TEXT_FILL"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "text.primary",
+            "Android": "text.primary",
+            "iOS": "text.primary"
+          }
+        },
+        "$value": "{visibility.default}",
+        "$type": "color"
+      },
+      "secondary": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "SHAPE_FILL",
+            "TEXT_FILL"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "text.secondary",
+            "Android": "text.secondary",
+            "iOS": "text.secondary"
+          }
+        },
+        "$value": "{visibility.fuzzy}",
+        "$type": "color"
+      },
+      "accent": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "SHAPE_FILL",
+            "TEXT_FILL"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "text.accent",
+            "Android": "text.accent",
+            "iOS": "text.accent"
+          }
+        },
+        "$value": "{visibility.accent-fuzzy}",
+        "$type": "color"
+      },
+      "darker": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "SHAPE_FILL",
+            "TEXT_FILL"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "text.darker",
+            "Android": "text.darker",
+            "iOS": "text.darker"
+          }
+        },
+        "$value": "{visibility.dim}",
+        "$type": "color"
+      }
+    },
+    "card": {
+      "bg": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "ALL_SCOPES"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "card.bg",
+            "Android": "card.bg",
+            "iOS": "card.bg"
+          }
+        },
+        "$value": "{surface.level-1}",
+        "$type": "color"
+      }
+    },
+    "header-bg": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "ALL_SCOPES"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "headerBg",
+          "Android": "headerBg",
+          "iOS": "headerBg"
+        }
+      },
+      "$value": "#242329e6",
+      "$type": "color"
+    }
+  },
+  "n-paddings/dp": {
+    "0": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "0",
+          "Android": "0",
+          "iOS": "0"
+        }
+      },
+      "$value": "0rem",
+      "$type": "dimension"
+    },
+    "2": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "2",
+          "Android": "2",
+          "iOS": "2"
+        }
+      },
+      "$value": "0.125rem",
+      "$type": "dimension"
+    },
+    "4": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "4",
+          "Android": "4",
+          "iOS": "4"
+        }
+      },
+      "$value": "0.25rem",
+      "$type": "dimension"
+    },
+    "8": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "8",
+          "Android": "8",
+          "iOS": "8"
+        }
+      },
+      "$value": "0.5rem",
+      "$type": "dimension"
+    },
+    "12": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "12",
+          "Android": "12",
+          "iOS": "12"
+        }
+      },
+      "$value": "0.75rem",
+      "$type": "dimension"
+    },
+    "16-12": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "1612",
+          "Android": "1612",
+          "iOS": "1612"
+        }
+      },
+      "$value": "1rem",
+      "$type": "dimension"
+    },
+    "20-16": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "2016",
+          "Android": "2016",
+          "iOS": "2016"
+        }
+      },
+      "$value": "1.25rem",
+      "$type": "dimension"
+    },
+    "24-20": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "2420",
+          "Android": "2420",
+          "iOS": "2420"
+        }
+      },
+      "$value": "1.5rem",
+      "$type": "dimension"
+    },
+    "28-24": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "2824",
+          "Android": "2824",
+          "iOS": "2824"
+        }
+      },
+      "$value": "1.75rem",
+      "$type": "dimension"
+    },
+    "32-28": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "3228",
+          "Android": "3228",
+          "iOS": "3228"
+        }
+      },
+      "$value": "2rem",
+      "$type": "dimension"
+    },
+    "48-36": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "4836",
+          "Android": "4836",
+          "iOS": "4836"
+        }
+      },
+      "$value": "3rem",
+      "$type": "dimension"
+    },
+    "52-44": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "5244",
+          "Android": "5244",
+          "iOS": "5244"
+        }
+      },
+      "$value": "3.25rem",
+      "$type": "dimension"
+    },
+    "64-52": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "6452",
+          "Android": "6452",
+          "iOS": "6452"
+        }
+      },
+      "$value": "4rem",
+      "$type": "dimension"
+    }
+  },
+  "n-paddings/mb": {
+    "0": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "0",
+          "Android": "0",
+          "iOS": "0"
+        }
+      },
+      "$value": "0rem",
+      "$type": "dimension"
+    },
+    "2": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "2",
+          "Android": "2",
+          "iOS": "2"
+        }
+      },
+      "$value": "0.125rem",
+      "$type": "dimension"
+    },
+    "4": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "4",
+          "Android": "4",
+          "iOS": "4"
+        }
+      },
+      "$value": "0.25rem",
+      "$type": "dimension"
+    },
+    "8": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "8",
+          "Android": "8",
+          "iOS": "8"
+        }
+      },
+      "$value": "0.5rem",
+      "$type": "dimension"
+    },
+    "12": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "12",
+          "Android": "12",
+          "iOS": "12"
+        }
+      },
+      "$value": "0.75rem",
+      "$type": "dimension"
+    },
+    "16-12": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "1612",
+          "Android": "1612",
+          "iOS": "1612"
+        }
+      },
+      "$value": "0.75rem",
+      "$type": "dimension"
+    },
+    "20-16": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "2016",
+          "Android": "2016",
+          "iOS": "2016"
+        }
+      },
+      "$value": "1rem",
+      "$type": "dimension"
+    },
+    "24-20": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "2420",
+          "Android": "2420",
+          "iOS": "2420"
+        }
+      },
+      "$value": "1.25rem",
+      "$type": "dimension"
+    },
+    "28-24": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "2824",
+          "Android": "2824",
+          "iOS": "2824"
+        }
+      },
+      "$value": "1.5rem",
+      "$type": "dimension"
+    },
+    "32-28": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "3228",
+          "Android": "3228",
+          "iOS": "3228"
+        }
+      },
+      "$value": "1.75rem",
+      "$type": "dimension"
+    },
+    "48-36": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "4836",
+          "Android": "4836",
+          "iOS": "4836"
+        }
+      },
+      "$value": "2.25rem",
+      "$type": "dimension"
+    },
+    "52-44": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "5244",
+          "Android": "5244",
+          "iOS": "5244"
+        }
+      },
+      "$value": "2.75rem",
+      "$type": "dimension"
+    },
+    "64-52": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "GAP",
+          "PARAGRAPH_SPACING"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "6452",
+          "Android": "6452",
+          "iOS": "6452"
+        }
+      },
+      "$value": "3.25rem",
+      "$type": "dimension"
+    }
+  },
+  "n-font/dp": {
+    "f-size": {
+      "24-20": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "FONT_SIZE"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fSize.2420",
+            "Android": "fSize.2420",
+            "iOS": "fSize.2420"
+          }
+        },
+        "$value": "1.5rem",
+        "$type": "dimension"
+      },
+      "48-40": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "FONT_SIZE"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fSize.4840",
+            "Android": "fSize.4840",
+            "iOS": "fSize.4840"
+          }
+        },
+        "$value": "3rem",
+        "$type": "dimension"
+      },
+      "16-14": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "FONT_SIZE"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fSize.1614",
+            "Android": "fSize.1614",
+            "iOS": "fSize.1614"
+          }
+        },
+        "$value": "1rem",
+        "$type": "dimension"
+      },
+      "56-48": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "FONT_SIZE"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fSize.5648",
+            "Android": "fSize.5648",
+            "iOS": "fSize.5648"
+          }
+        },
+        "$value": "3.5rem",
+        "$type": "dimension"
+      },
+      "64-56": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "FONT_SIZE"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fSize.6456",
+            "Android": "fSize.6456",
+            "iOS": "fSize.6456"
+          }
+        },
+        "$value": "4rem",
+        "$type": "dimension"
+      },
+      "96-80": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "FONT_SIZE"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fSize.9680",
+            "Android": "fSize.9680",
+            "iOS": "fSize.9680"
+          }
+        },
+        "$value": "6rem",
+        "$type": "dimension"
+      }
+    },
+    "f-line": {
+      "24-20": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "LINE_HEIGHT"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fLine.2420",
+            "Android": "fLine.2420",
+            "iOS": "fLine.2420"
+          }
+        },
+        "$value": "1.5rem",
+        "$type": "dimension"
+      },
+      "48-40": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "LINE_HEIGHT"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fLine.4840",
+            "Android": "fLine.4840",
+            "iOS": "fLine.4840"
+          }
+        },
+        "$value": "3rem",
+        "$type": "dimension"
+      },
+      "60-52": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "LINE_HEIGHT"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fLine.6052",
+            "Android": "fLine.6052",
+            "iOS": "fLine.6052"
+          }
+        },
+        "$value": "3.75rem",
+        "$type": "dimension"
+      },
+      "36-28": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "LINE_HEIGHT"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fLine.3628",
+            "Android": "fLine.3628",
+            "iOS": "fLine.3628"
+          }
+        },
+        "$value": "2.25rem",
+        "$type": "dimension"
+      },
+      "22-18": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "LINE_HEIGHT"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fLine.2218",
+            "Android": "fLine.2218",
+            "iOS": "fLine.2218"
+          }
+        },
+        "$value": "1.375rem",
+        "$type": "dimension"
+      },
+      "28-24": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "LINE_HEIGHT"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fLine.2824",
+            "Android": "fLine.2824",
+            "iOS": "fLine.2824"
+          }
+        },
+        "$value": "1.75rem",
+        "$type": "dimension"
+      },
+      "32-28": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "LINE_HEIGHT"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fLine.3228",
+            "Android": "fLine.3228",
+            "iOS": "fLine.3228"
+          }
+        },
+        "$value": "2rem",
+        "$type": "dimension"
+      },
+      "72-64": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "LINE_HEIGHT"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fLine.7264",
+            "Android": "fLine.7264",
+            "iOS": "fLine.7264"
+          }
+        },
+        "$value": "4.5rem",
+        "$type": "dimension"
+      },
+      "92-84": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "LINE_HEIGHT"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fLine.9284",
+            "Android": "fLine.9284",
+            "iOS": "fLine.9284"
+          }
+        },
+        "$value": "5.75rem",
+        "$type": "dimension"
+      }
+    }
+  },
+  "n-font/mb": {
+    "f-size": {
+      "24-20": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "FONT_SIZE"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fSize.2420",
+            "Android": "fSize.2420",
+            "iOS": "fSize.2420"
+          }
+        },
+        "$value": "1.25rem",
+        "$type": "dimension"
+      },
+      "48-40": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "FONT_SIZE"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fSize.4840",
+            "Android": "fSize.4840",
+            "iOS": "fSize.4840"
+          }
+        },
+        "$value": "2.5rem",
+        "$type": "dimension"
+      },
+      "16-14": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "FONT_SIZE"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fSize.1614",
+            "Android": "fSize.1614",
+            "iOS": "fSize.1614"
+          }
+        },
+        "$value": "0.875rem",
+        "$type": "dimension"
+      },
+      "56-48": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "FONT_SIZE"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fSize.5648",
+            "Android": "fSize.5648",
+            "iOS": "fSize.5648"
+          }
+        },
+        "$value": "3rem",
+        "$type": "dimension"
+      },
+      "64-56": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "FONT_SIZE"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fSize.6456",
+            "Android": "fSize.6456",
+            "iOS": "fSize.6456"
+          }
+        },
+        "$value": "3.5rem",
+        "$type": "dimension"
+      },
+      "96-80": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "FONT_SIZE"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fSize.9680",
+            "Android": "fSize.9680",
+            "iOS": "fSize.9680"
+          }
+        },
+        "$value": "5rem",
+        "$type": "dimension"
+      }
+    },
+    "f-line": {
+      "24-20": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "LINE_HEIGHT"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fLine.2420",
+            "Android": "fLine.2420",
+            "iOS": "fLine.2420"
+          }
+        },
+        "$value": "1.25rem",
+        "$type": "dimension"
+      },
+      "48-40": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "LINE_HEIGHT"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fLine.4840",
+            "Android": "fLine.4840",
+            "iOS": "fLine.4840"
+          }
+        },
+        "$value": "2.5rem",
+        "$type": "dimension"
+      },
+      "60-52": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "LINE_HEIGHT"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fLine.6052",
+            "Android": "fLine.6052",
+            "iOS": "fLine.6052"
+          }
+        },
+        "$value": "3.25rem",
+        "$type": "dimension"
+      },
+      "36-28": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "LINE_HEIGHT"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fLine.3628",
+            "Android": "fLine.3628",
+            "iOS": "fLine.3628"
+          }
+        },
+        "$value": "1.75rem",
+        "$type": "dimension"
+      },
+      "22-18": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "LINE_HEIGHT"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fLine.2218",
+            "Android": "fLine.2218",
+            "iOS": "fLine.2218"
+          }
+        },
+        "$value": "1.125rem",
+        "$type": "dimension"
+      },
+      "28-24": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "LINE_HEIGHT"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fLine.2824",
+            "Android": "fLine.2824",
+            "iOS": "fLine.2824"
+          }
+        },
+        "$value": "1.5rem",
+        "$type": "dimension"
+      },
+      "32-28": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "LINE_HEIGHT"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fLine.3228",
+            "Android": "fLine.3228",
+            "iOS": "fLine.3228"
+          }
+        },
+        "$value": "1.75rem",
+        "$type": "dimension"
+      },
+      "72-64": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "LINE_HEIGHT"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fLine.7264",
+            "Android": "fLine.7264",
+            "iOS": "fLine.7264"
+          }
+        },
+        "$value": "4rem",
+        "$type": "dimension"
+      },
+      "92-84": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "LINE_HEIGHT"
+          ],
+          "com.figma.codeSyntax": {
+            "Web": "fLine.9284",
+            "Android": "fLine.9284",
+            "iOS": "fLine.9284"
+          }
+        },
+        "$value": "5.25rem",
+        "$type": "dimension"
+      }
+    }
+  },
+  "n-corners/dp": {
+    "0": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "0",
+          "Android": "0",
+          "iOS": "0"
+        }
+      },
+      "$value": "0rem",
+      "$type": "dimension"
+    },
+    "2": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "2",
+          "Android": "2",
+          "iOS": "2"
+        }
+      },
+      "$value": "0.125rem",
+      "$type": "dimension"
+    },
+    "4": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "4",
+          "Android": "4",
+          "iOS": "4"
+        }
+      },
+      "$value": "0.25rem",
+      "$type": "dimension"
+    },
+    "8": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "8",
+          "Android": "8",
+          "iOS": "8"
+        }
+      },
+      "$value": "0.5rem",
+      "$type": "dimension"
+    },
+    "12": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "12",
+          "Android": "12",
+          "iOS": "12"
+        }
+      },
+      "$value": "0.75rem",
+      "$type": "dimension"
+    },
+    "32-28": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "3228",
+          "Android": "3228",
+          "iOS": "3228"
+        }
+      },
+      "$value": "2rem",
+      "$type": "dimension"
+    },
+    "24-20": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "2420",
+          "Android": "2420",
+          "iOS": "2420"
+        }
+      },
+      "$value": "1.5rem",
+      "$type": "dimension"
+    },
+    "28-24": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "2824",
+          "Android": "2824",
+          "iOS": "2824"
+        }
+      },
+      "$value": "1.75rem",
+      "$type": "dimension"
+    },
+    "16-12": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "1612",
+          "Android": "1612",
+          "iOS": "1612"
+        }
+      },
+      "$value": "1rem",
+      "$type": "dimension"
+    },
+    "20-16": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "2016",
+          "Android": "2016",
+          "iOS": "2016"
+        }
+      },
+      "$value": "1.25rem",
+      "$type": "dimension"
+    },
+    "52-44": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "5244",
+          "Android": "5244",
+          "iOS": "5244"
+        }
+      },
+      "$value": "3.25rem",
+      "$type": "dimension"
+    },
+    "64-52": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "6452",
+          "Android": "6452",
+          "iOS": "6452"
+        }
+      },
+      "$value": "4rem",
+      "$type": "dimension"
+    },
+    "48-36": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "4836",
+          "Android": "4836",
+          "iOS": "4836"
+        }
+      },
+      "$value": "3rem",
+      "$type": "dimension"
+    }
+  },
+  "n-corners/mb": {
+    "0": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "0",
+          "Android": "0",
+          "iOS": "0"
+        }
+      },
+      "$value": "0rem",
+      "$type": "dimension"
+    },
+    "2": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "2",
+          "Android": "2",
+          "iOS": "2"
+        }
+      },
+      "$value": "0.125rem",
+      "$type": "dimension"
+    },
+    "4": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "4",
+          "Android": "4",
+          "iOS": "4"
+        }
+      },
+      "$value": "0.25rem",
+      "$type": "dimension"
+    },
+    "8": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "8",
+          "Android": "8",
+          "iOS": "8"
+        }
+      },
+      "$value": "0.5rem",
+      "$type": "dimension"
+    },
+    "12": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "12",
+          "Android": "12",
+          "iOS": "12"
+        }
+      },
+      "$value": "0.75rem",
+      "$type": "dimension"
+    },
+    "32-28": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "3228",
+          "Android": "3228",
+          "iOS": "3228"
+        }
+      },
+      "$value": "1.75rem",
+      "$type": "dimension"
+    },
+    "24-20": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "2420",
+          "Android": "2420",
+          "iOS": "2420"
+        }
+      },
+      "$value": "1.25rem",
+      "$type": "dimension"
+    },
+    "28-24": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "2824",
+          "Android": "2824",
+          "iOS": "2824"
+        }
+      },
+      "$value": "1.5rem",
+      "$type": "dimension"
+    },
+    "16-12": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "1612",
+          "Android": "1612",
+          "iOS": "1612"
+        }
+      },
+      "$value": "0.75rem",
+      "$type": "dimension"
+    },
+    "20-16": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "2016",
+          "Android": "2016",
+          "iOS": "2016"
+        }
+      },
+      "$value": "1rem",
+      "$type": "dimension"
+    },
+    "52-44": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "5244",
+          "Android": "5244",
+          "iOS": "5244"
+        }
+      },
+      "$value": "3.25rem",
+      "$type": "dimension"
+    },
+    "64-52": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "6452",
+          "Android": "6452",
+          "iOS": "6452"
+        }
+      },
+      "$value": "4rem",
+      "$type": "dimension"
+    },
+    "48-36": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "4836",
+          "Android": "4836",
+          "iOS": "4836"
+        }
+      },
+      "$value": "3rem",
+      "$type": "dimension"
+    }
+  },
+  "columns/basic": {
+    "1": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "1",
+          "Android": "1",
+          "iOS": "1"
+        }
+      },
+      "$value": "5.25rem",
+      "$type": "dimension"
+    },
+    "2": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "2",
+          "Android": "2",
+          "iOS": "2"
+        }
+      },
+      "$value": "12.5rem",
+      "$type": "dimension"
+    },
+    "3": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "3",
+          "Android": "3",
+          "iOS": "3"
+        }
+      },
+      "$value": "19.75rem",
+      "$type": "dimension"
+    },
+    "4": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "4",
+          "Android": "4",
+          "iOS": "4"
+        }
+      },
+      "$value": "27rem",
+      "$type": "dimension"
+    },
+    "5": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "5",
+          "Android": "5",
+          "iOS": "5"
+        }
+      },
+      "$value": "34.25rem",
+      "$type": "dimension"
+    },
+    "6": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "6",
+          "Android": "6",
+          "iOS": "6"
+        }
+      },
+      "$value": "41.5rem",
+      "$type": "dimension"
+    },
+    "7": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "7",
+          "Android": "7",
+          "iOS": "7"
+        }
+      },
+      "$value": "48.75rem",
+      "$type": "dimension"
+    },
+    "8": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "8",
+          "Android": "8",
+          "iOS": "8"
+        }
+      },
+      "$value": "56rem",
+      "$type": "dimension"
+    },
+    "9": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "9",
+          "Android": "9",
+          "iOS": "9"
+        }
+      },
+      "$value": "63.25rem",
+      "$type": "dimension"
+    },
+    "10": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "10",
+          "Android": "10",
+          "iOS": "10"
+        }
+      },
+      "$value": "70.5rem",
+      "$type": "dimension"
+    },
+    "11": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "11",
+          "Android": "11",
+          "iOS": "11"
+        }
+      },
+      "$value": "77.75rem",
+      "$type": "dimension"
+    },
+    "12": {
+      "$extensions": {
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT"
+        ],
+        "com.figma.codeSyntax": {
+          "Web": "12",
+          "Android": "12",
+          "iOS": "12"
+        }
+      },
+      "$value": "85rem",
+      "$type": "dimension"
+    }
+  },
+  "$themes": [],
+  "$metadata": {
+    "tokenSetOrder": [
+      "c3-primitives/basic",
+      "c-symantic/basic",
+      "c-components/basic",
+      "n-paddings/dp",
+      "n-paddings/mb",
+      "n-font/dp",
+      "n-font/mb",
+      "n-corners/dp",
+      "n-corners/mb",
+      "columns/basic"
+    ]
+  }
+}

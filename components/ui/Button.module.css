@@ -1,0 +1,100 @@
+/**
+ * Button — стили по состояниям
+ *
+ * Где править:
+ *   .button         — общие (размер, шрифт, transition)
+ *   .primary        — основной вариант: default
+ *   .primary:hover  — основной: hover
+ *   .primary.iconOnly / .primary.iconOnly:hover — только иконка
+ *   .inactive       — неактивный вариант: default
+ *   .inactive:hover — неактивный: hover
+ *   .button:disabled — любая кнопка в disabled
+ *   .icon / .label  — обёртки иконки и текста
+ *
+ * Цвета/отступы — только через токены из styles/tokens.css (var(--…)).
+ */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+
+  height: 52px;
+  padding: 0 var(--space-28);
+  border-radius: var(--radius-lg);
+  border: 1px solid transparent;
+
+  font: var(--text-style-button);
+  letter-spacing: var(--text-style-button-tracking);
+  font-variation-settings: 'YTLC' 500, 'wdth' 100;
+  white-space: nowrap;
+  cursor: pointer;
+
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base);
+}
+
+/* ── Icon-only square ─────────────────────────────────────── */
+.iconOnly {
+  width: 52px;
+  padding: 0;
+}
+
+/* ── Primary ──────────────────────────────────────────────── */
+.primary {
+  background-color: var(--surface-3);
+  border-color: var(--visibility-fading);
+  color: var(--text-secondary);
+}
+
+.primary:hover {
+  background-color: var(--accent-bg-hover);
+  border-color: var(--visibility-accent-max);
+  color: var(--visibility-accent-fuzzy);
+}
+
+.primary.iconOnly {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.primary.iconOnly:hover {
+  background-color: var(--surface-3);
+  border-color: transparent;
+}
+
+/* ── Inactive ─────────────────────────────────────────────── */
+.inactive {
+  background-color: transparent;
+  border-color: var(--visibility-inactive);
+  color: var(--visibility-inactive);
+}
+
+.inactive:hover {
+  border-color: var(--visibility-fading);
+  color: var(--text-darker);
+}
+
+/* ── Disabled ─────────────────────────────────────────────── */
+.button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Parts ────────────────────────────────────────────────── */
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.label {
+  flex-shrink: 0;
+}
