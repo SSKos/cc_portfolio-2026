@@ -5,7 +5,6 @@
 }
 
 .title {
-  font: var(--text-style-h2);
   color: var(--text-primary);
   margin-bottom: var(--space-48);
 }
