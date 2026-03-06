@@ -15,90 +15,109 @@
  */
 
 .button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--xs);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--xs);
 
-  height: var(--button-default);
-  padding: 0 var(--pad-xl);
-  border-radius: var(--radius-md);
-  border: 1px solid transparent;
+    height: var(--button-default);
+    padding: 0 var(--pad-xl);
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
 
-  font-size: var(--fs-md);
-  line-height: var(--lh-md);
-  font-family: 'Nunito Sans', sans-serif;
-  font-weight: 400;
-  letter-spacing: 0.32px;
-  font-variation-settings: 'YTLC' 500, 'wdth' 100;
-  white-space: nowrap;
-  cursor: pointer;
+    font: var(--typo-Button-primary);
+    cursor: pointer;
 
-  transition:
-    background-color 0.2s ease,
+    transition: background-color 0.2s ease,
     border-color 0.2s ease,
     color 0.2s ease;
 }
 
 /* ── Icon-only square ─────────────────────────────────────── */
 .iconOnly {
-  width: var(--button-default);
-  padding: 0;
+    width: var(--button-default);
+    padding: 0;
 }
 
 /* ── Primary ──────────────────────────────────────────────── */
 .primary {
-  background-color: var(--surface-level-2);
-  border-color: var(--vis-fading);
-  color: var(--text-secondary);
+    background-color: var(--button-primary-bg);
+    border-color: var(--button-primary-stroke);
+    color: var(--button-primary-txt);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.15);
 }
 
 .primary:hover {
-  /* --brand-gray-500 (#7a0aad) at 15% opacity — нет алиаса в токенах */
-  background-color: rgba(122, 10, 173, 0.15);
-  border-color: var(--vis-accent-max);
-  color: var(--vis-accent-fuzzy);
+    background-color: var(--button-primary-bg-hover);
+    border-color: var(--vis-max-accent);
+    color: var(--button-primary-txt-hover);
 }
 
 .primary.iconOnly {
-  background-color: transparent;
-  border-color: transparent;
+    background-color: transparent;
+    border-color: transparent;
 }
 
 .primary.iconOnly:hover {
-  background-color: var(--surface-level-2);
-  border-color: transparent;
+    background-color: var(--surface-level-3);
+    border-color: transparent;
 }
 
 /* ── Inactive ─────────────────────────────────────────────── */
-.inactive {
-  background-color: transparent;
-  border-color: var(--vis-inactive);
-  color: var(--vis-inactive);
+.secondary {
+    background-color: transparent;
+    border-color: var(--button-srcondary-stroke);
+    color: var(--button-srcondary-txt);
 }
 
-.inactive:hover {
-  border-color: var(--vis-fading);
-  color: var(--text-darker);
+.secondary:hover {
+    background-color: var(--button-srcondary-bg-hover);
+    color: var(--button-srcondary-txt-hover);
+    border-color: var(--button-srcondary-stroke-hover);
+
 }
+
+/* ── Action (icon-only, colored) ──────────────────────────── */
+.action {
+    width: var(--button-default);
+    height: var(--button-default);
+    padding: 0;
+    background-color: transparent;
+    border-color: transparent;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.action_delete  { color: var(--action-default-delete); }
+.action_add     { color: var(--action-default-add); }
+.action_edit    { color: var(--action-default-edit); }
+.action_hide    { color: var(--action-default-hide); }
+.action_online  { color: var(--action-default-online); }
+.action_preview { color: var(--action-default-preview); }
+
+.action_delete:hover  { color: var(--action-hover-delete);  background-color: var(--surface-level-2); }
+.action_add:hover     { color: var(--action-hover-add);     background-color: var(--surface-level-2); }
+.action_edit:hover    { color: var(--action-hover-edit);    background-color: var(--surface-level-2); }
+.action_hide:hover    { color: var(--action-hover-hide);    background-color: var(--surface-level-2); }
+.action_online:hover  { color: var(--action-hover-online);  background-color: var(--surface-level-2); }
+.action_preview:hover { color: var(--action-hover-preview); background-color: var(--surface-level-2); }
 
 /* ── Disabled ─────────────────────────────────────────────── */
 .button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  pointer-events: none;
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 /* ── Parts ────────────────────────────────────────────────── */
 .icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
 }
 
 .label {
-  flex-shrink: 0;
+    flex-shrink: 0;
 }

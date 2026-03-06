@@ -13,7 +13,13 @@
       "mcp__figma__get_variable_defs",
       "mcp__figma__get_metadata",
       "mcp__figma__get_design_context",
-      "Bash(npx ts-node:*)"
+      "Bash(npx ts-node:*)",
+      "Bash(git remote:*)",
+      "Bash(lsof:*)",
+      "Bash(xargs -I{} lsof -p {})",
+      "Bash(python3:*)",
+      "Bash(claude mcp:*)",
+      "Bash(git add:*)"
     ]
   }
 }

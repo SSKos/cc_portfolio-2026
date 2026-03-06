@@ -1,0 +1,108 @@
+/**
+ * base.css — базовые стили сайта
+ *
+ * Что здесь:
+ *   - CSS-переменная --font-primary (подключается из next/font через layout.tsx)
+ *   - Шкала rem: 16px (desktop) → 14px (≤768px)
+ *   - Сброс и нормализация браузерных стилей
+ *   - Базовые стили элементов (html, body, типографика, медиа, ссылки)
+ *
+ * Порядок импорта в globals.css:
+ *   1. tokens.css   — дизайн-токены
+ *   2. base.css     — этот файл
+ */
+
+/* ─── Шрифт ────────────────────────────────────────────────────────────────
+   next/font регистрирует @font-face и делает 'Nunito Sans' доступным по имени.
+   --font-primary используется во всех компонентах через токены.
+   Если позднее добавить другой шрифт — менять только здесь.
+   ────────────────────────────────────────────────────────────────────────── */
+:root {
+  --font-primary: 'Nunito Sans', sans-serif;
+}
+
+/* ─── Rem-шкала ────────────────────────────────────────────────────────────
+   Desktop: 1rem = 16px
+   Mobile (≤768px): 1rem = 14px — все token-значения масштабируются автоматически
+   ────────────────────────────────────────────────────────────────────────── */
+html {
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+/* ─── Сброс ─────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Базовые свойства html ─────────────────────────────────────────────── */
+html {
+  color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  text-size-adjust: 100%;
+}
+
+/* ─── Body ──────────────────────────────────────────────────────────────── */
+body {
+  font: var(--typo-p);
+  font-family: var(--font-primary);
+  color: var(--text-primary);
+  background-color: var(--surface-body-bg);
+  min-height: 100dvh;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* ─── Ссылки ────────────────────────────────────────────────────────────── */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ─── Медиа ─────────────────────────────────────────────────────────────── */
+img,
+video,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* ─── Формы ─────────────────────────────────────────────────────────────── */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* ─── Типографика ───────────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: inherit;
+  font-size: inherit;
+}
+
+p, ul, ol {
+  line-height: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}

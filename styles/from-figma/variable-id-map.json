@@ -10,11 +10,16 @@
   "1:16": "primitives.colors.light.gray-600",
   "1:24": "primitives.colors.dark.neutral-400",
   "1:25": "primitives.colors.brand.brand-400",
-  "1:26": "primitives.colors.brand.gray-500",
+  "1:26": "primitives.colors.brand.brand-500",
   "1:30": "primitives.colors.dark.neutral-300",
+  "1:34": "primitives.colors.dark.neutral-400",
   "1:38": "primitives.colors.light.gray-900",
   "1:39": "primitives.colors.light.gray-800",
   "1:40": "primitives.colors.light.gray-700",
   "1:43": "primitives.colors.light.gray-500",
-  "1:49": "primitives.colors.brand.brand-400"
+  "1:49": "primitives.colors.brand.brand-400",
+  "29:260": "semantic.colors.visibility.empty",
+  "36:396": "primitives.colors.brand.gray-500-tr",
+  "45:408": "primitives.colors.brand.brand-1000",
+  "1:36": "semantic.colors.visibility.max"
 }

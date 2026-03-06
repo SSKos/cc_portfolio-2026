@@ -1,0 +1,343 @@
+/* Высота хедера — используется в layout.tsx для спейсера */
+:root {
+  --header-height: 88px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --header-height: 56px;
+  }
+}
+
+/* ── Оболочка ──────────────────────────────────────────────────────────── */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: var(--header-background);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: var(--columns-x12);
+  height: 88px;
+  margin: 0 auto;
+  padding: 0 var(--md);
+}
+
+/* ── Десктоп: обёртка ──────────────────────────────────────────────────── */
+
+.desktop {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.desktopL1 {
+  justify-content: center;
+}
+
+.desktopL2 {
+  justify-content: space-between;
+  position: relative; /* для абсолютного центрирования хлебных крошек */
+}
+
+/* ── Навигация Level 1 ─────────────────────────────────────────────────── */
+
+.nav {
+  position: relative; /* якорь для .underline */
+  display: flex;
+  align-items: stretch;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 88px;
+  padding: 0 var(--lg);
+  color: inherit;
+  text-decoration: none;
+}
+
+.label {
+  font-size: var(--typo-Header-item-font-size);
+  font-weight: var(--typo-Header-item-font-weight);
+  line-height: var(--typo-Header-item-line-height);
+  color: var(--text-darker);
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.labelActive {
+  color: var(--text-primary);
+}
+
+.navItem:hover .label {
+  color: var(--text-primary);
+}
+
+/* ── Линия подчёркивания ───────────────────────────────────────────────── */
+
+.underline {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background-color: var(--vis-default);
+  pointer-events: none;
+  opacity: 0;
+  /* left и width задаются inline-стилем из JS */
+}
+
+.ulVisible {
+  opacity: 1;
+}
+
+.ulAnimated {
+  transition:
+    left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Level 2 desktop: назад + крошки + CV ──────────────────────────────── */
+
+.backLink {
+  display: flex;
+  align-items: center;
+  gap: var(--xs);
+  color: var(--text-darker);
+  font-size: var(--typo-Header-item-font-size);
+  font-weight: var(--typo-Header-item-font-weight);
+  line-height: var(--typo-Header-item-line-height);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+.backLink:hover {
+  color: var(--text-primary);
+}
+
+.backLink svg {
+  flex-shrink: 0;
+}
+
+/* Хлебные крошки — абсолютно по центру */
+.breadcrumb {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.crumbGroup {
+  display: inline-flex;
+  align-items: center;
+}
+
+.crumbSep {
+  font-size: var(--typo-Header-item-font-size);
+  font-weight: var(--typo-Header-item-font-weight);
+  line-height: var(--typo-Header-item-line-height);
+  color: var(--text-darker);
+  padding: 0 var(--xs);
+}
+
+.crumbLink {
+  font-size: var(--typo-Header-item-font-size);
+  font-weight: var(--typo-Header-item-font-weight);
+  line-height: var(--typo-Header-item-line-height);
+  color: var(--text-darker);
+  pointer-events: auto;
+  transition: color 0.2s ease;
+}
+
+.crumbLink:hover {
+  color: var(--text-primary);
+}
+
+.crumbCurrent {
+  font-size: var(--typo-Header-item-font-size);
+  font-weight: var(--typo-Header-item-font-weight);
+  line-height: var(--typo-Header-item-line-height);
+  color: var(--text-darker);
+}
+
+/* Активный пункт крошки: ярче + подчёркивание */
+.crumbActive {
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--vis-default);
+}
+
+.cvBtn {
+  font-size: var(--typo-Header-item-font-size);
+  font-weight: var(--typo-Header-item-font-weight);
+  line-height: var(--typo-Header-item-line-height);
+  color: var(--text-darker);
+  flex-shrink: 0;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.cvBtn:hover {
+  color: var(--text-primary);
+}
+
+/* ── Мобильный хедер ───────────────────────────────────────────────────── */
+
+.mobile {
+  display: none;
+}
+
+/* ── Мобильное меню (оверлей под хедером) ──────────────────────────────── */
+
+.mobileMenu {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 90;
+  background-color: var(--surface-body-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 769px) {
+  .mobileMenu {
+    display: none;
+  }
+}
+
+.mobileMenuNav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mobileMenuLink {
+  display: block;
+  font-size: var(--fs-lg);
+  font-weight: 300;
+  line-height: var(--lh-4xl);
+  color: var(--text-darker);
+  text-decoration: none;
+  padding: var(--pad-sm) var(--pad-4xl);
+  white-space: nowrap;
+  text-align: center;
+  transition: color 0.2s ease;
+}
+
+.mobileMenuLink:hover {
+  color: var(--text-primary);
+}
+
+/* ── Адаптив ───────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .desktop {
+    display: none;
+  }
+
+  .inner {
+    height: 56px;
+    padding: 0 var(--s);
+  }
+
+  .mobile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: var(--xxs);
+  }
+
+  .mobileLeft {
+    flex-shrink: 0;
+  }
+
+  .mobileIconBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    color: var(--text-primary);
+    border-radius: var(--radius-md);
+    transition: background-color 0.2s;
+  }
+
+  .mobileIconBtn:hover {
+    background-color: var(--surface-level-2);
+  }
+
+  .mobileCenter {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0 var(--xxs);
+  }
+
+  .mobilePageName {
+    font-size: var(--fs-md);
+    font-weight: 500;
+    line-height: var(--lh-2xl);
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--vis-default);
+    white-space: nowrap;
+  }
+
+  .mobileBreadcrumb {
+    display: inline-flex;
+    align-items: center;
+    font-size: var(--fs-md);
+    font-weight: 500;
+    line-height: var(--lh-2xl);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .mobileSep {
+    color: var(--text-darker);
+    padding: 0 2px;
+  }
+
+  .mobileCrumbActive {
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--vis-default);
+  }
+
+  .mobileCrumbDim {
+    color: var(--text-darker);
+  }
+
+  .mobileCvBtn {
+    font-size: var(--fs-md);
+    font-weight: 500;
+    line-height: var(--lh-2xl);
+    color: var(--text-darker);
+    flex-shrink: 0;
+    padding: 0;
+    transition: color 0.2s ease;
+  }
+
+  .mobileCvBtn:hover {
+    color: var(--text-primary);
+  }
+}

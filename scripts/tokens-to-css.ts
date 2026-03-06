@@ -27,6 +27,7 @@ const FROM_FIGMA_DIR = path.join(PROJECT_ROOT, 'styles', 'from-figma');
 const TOKENS_PATH = path.join(FROM_FIGMA_DIR, 'tokens.json');
 const VARIABLE_ID_MAP_PATH = path.join(FROM_FIGMA_DIR, 'variable-id-map.json');
 const OUTPUT_PATH = path.join(PROJECT_ROOT, 'styles', 'tokens.css');
+const BASE_CSS_PATH = path.join(PROJECT_ROOT, 'styles', 'base.css');
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -112,16 +113,58 @@ function resolveAlias(value: string, allTokens: Map<string, Token>, seen = new S
   return resolveAlias(resolved, allTokens, new Set([...seen, refPath]));
 }
 
+// ─── base.css font family vars ───────────────────────────────────────────────
+
+const GENERIC_FAMILIES = new Set([
+  'serif', 'sans-serif', 'monospace', 'cursive', 'fantasy',
+  'system-ui', 'ui-serif', 'ui-sans-serif', 'ui-monospace',
+  'inherit', 'initial', 'unset', 'revert',
+]);
+
+/**
+ * Reads styles/base.css and returns a map of font family name → CSS var name.
+ * e.g. "Nunito Sans" → "--font-primary"
+ *
+ * Looks for declarations like:
+ *   --font-primary: var(--font-nunito-sans), 'Nunito Sans', sans-serif;
+ * and extracts all quoted font names from the value.
+ */
+function parseFontFamilyVars(cssPath: string): Map<string, string> {
+  const result = new Map<string, string>();
+  if (!fs.existsSync(cssPath)) return result;
+
+  const css = fs.readFileSync(cssPath, 'utf-8');
+  const declRe = /--([\w-]+)\s*:\s*([^;]+);/g;
+  let m: RegExpExecArray | null;
+
+  while ((m = declRe.exec(css)) !== null) {
+    const varName = `--${m[1]}`;
+    const value = m[2];
+    const quotedRe = /['"]([^'"]+)['"]/g;
+    let qm: RegExpExecArray | null;
+
+    while ((qm = quotedRe.exec(value)) !== null) {
+      const fontName = qm[1].trim();
+      if (!GENERIC_FAMILIES.has(fontName.toLowerCase())) {
+        result.set(fontName.toLowerCase(), varName);
+      }
+    }
+  }
+
+  return result;
+}
+
 // ─── Shadow object → CSS ─────────────────────────────────────────────────────
 
 function shadowObjectToCSS(s: Record<string, unknown>): string {
-  const x = s.x ?? 0;
-  const y = s.y ?? 0;
-  const blur = s.blur ?? 0;
-  const spread = s.spread ?? 0;
+  const px = (v: unknown) => { const str = String(v ?? 0); return str.endsWith('px') ? str : `${str}px`; };
+  const x = px(s.offsetX ?? s.x);
+  const y = px(s.offsetY ?? s.y);
+  const blur = px(s.blur);
+  const spread = px(s.spread);
   const color = s.color ?? 'rgba(0,0,0,0.25)';
   const inset = s.type === 'innerShadow' ? 'inset ' : '';
-  return `${inset}${x}px ${y}px ${blur}px ${spread}px ${color}`;
+  return `${inset}${x} ${y} ${blur} ${spread} ${color}`;
 }
 
 // ─── Short naming: strip, rename, dedupe ───────────────────────────────────────
@@ -309,6 +352,10 @@ function generate(): void {
   }
 
   const allTokens = flattenTokens(tree);
+  const fontFamilyVars = parseFontFamilyVars(BASE_CSS_PATH);
+  if (fontFamilyVars.size > 0) {
+    console.log(`✓ base.css: found ${fontFamilyVars.size} font family var(s): ${[...fontFamilyVars.entries()].map(([f, v]) => `"${f}" → ${v}`).join(', ')}`);
+  }
 
   // Collision detection: short name → list of dot-paths that map to it
   const shortNameToPaths = new Map<string, string[]>();
@@ -394,10 +441,15 @@ function generate(): void {
         ff = `"${ff}"`;
       }
 
+      // Replace literal font family with CSS var if base.css declares one for it
+      const ffUnquoted = ff.replace(/^["']|["']$/g, '');
+      const fontVar = fontFamilyVars.get(ffUnquoted.toLowerCase());
+      const ffResolved = fontVar ? `var(${fontVar})` : ff;
+
       // 1. Shorthand variable
       groups.get(category)!.push({
         cssVar: baseVar,
-        cssValue: `normal ${resolvedWeight} ${fs}/${lh} ${ff}`,
+        cssValue: `normal ${resolvedWeight} ${fs}/${lh} ${ffResolved}`,
         description: token.description ? `${token.description} (shorthand)` : 'shorthand',
       });
 
@@ -408,7 +460,7 @@ function generate(): void {
         let finalVal = String(v);
 
         if (k === 'fontWeight') finalVal = resolvedWeight;
-        if (k === 'fontFamily') finalVal = ff;
+        if (k === 'fontFamily') finalVal = ffResolved;
 
         groups.get(category)!.push({
           cssVar: `${baseVar}-${propName}`,
