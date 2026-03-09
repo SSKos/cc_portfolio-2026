@@ -20,7 +20,7 @@
     align-items: center;
     justify-content: space-between;
     height: var(--button-default);
-    padding: 0 var(--pad-xxxs) 0 var(--md);
+    padding: 0 var(--pad-md) 0 var(--pad-md);
     border-radius: var(--radius-xl);
     border: 1px solid var(--dropdown-def-stroke);
     background: var(--dropdown-def-bg);
@@ -78,7 +78,7 @@
     border: 1px solid var(--dropdown-def-stroke);
     border-radius: var(--radius-xl);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
-    padding: var(--xs) 0;
+    padding: 0;
     z-index: 100;
     list-style: none;
     margin: 0;
@@ -89,7 +89,7 @@
     display: flex;
     align-items: center;
     height: var(--button-default);
-    padding: 0 var(--md);
+    padding: 0 var(--pad-md);
     font-size: 1.25rem;
     font-weight: 300;
     color: var(--dropdown-def-text);

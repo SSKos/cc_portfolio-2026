@@ -1,6 +1,6 @@
 .wrap {
   padding: var(--pad-3xl);
-  max-width: var(--container-max);
+  max-width: var(--columns-x12);
   margin: 0 auto;
 }
 
