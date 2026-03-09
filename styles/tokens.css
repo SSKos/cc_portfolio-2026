@@ -1,6 +1,6 @@
 /**
  * Design Tokens — auto-generated from tokens.json
- * Generated: 2026-03-06T21:47:01.890Z
+ * Generated: 2026-03-07T21:27:20.988Z
  * 🔄 Short naming enabled.
  *
  * ⚠️  Do not edit manually. Run `npm run tokens` to regenerate.
@@ -16,7 +16,7 @@
   --dark-neutral-200: #1e1d21;
   --dark-neutral-300: #242329;
   --dark-neutral-400: #2c2a33;
-  --dark-neutral-500: #565559;
+  --dark-neutral-500: #4f4e57;
   --light-gray-1000: #ffffff;
   --light-gray-900: #f0f0f7;
   --light-gray-800: #cdccdf;
@@ -40,15 +40,20 @@
   --overlay-dark-50: #00000080;
   --overlay-dark-75: #000000bf;
   --overlay-dark-90: #000000e5;
+  --alerts-error: #cc0000;
+  --alerts-error-bg: #cc00001a;
 
   /* ─── Semantic ────────────────────────────────────────────────────────── */
   --semantic-0: 0rem;
+  --fs-sm: 0.75rem;
   --fs-md: 1rem;
   --fs-lg: 1.5rem;
-  --fs-xl: 3rem;
-  --fs-2xl: 3.5rem;
-  --fs-3xl: 4rem;
-  --fs-4xl: 6rem;
+  --fs-xl: 2rem;
+  --fs-2xl: 3rem;
+  --fs-3xl: 3.5rem;
+  --fs-4xl: 4rem;
+  --fs-5xl: 4.5rem;
+  --fs-6xl: 6rem;
   --lh-md: 1.375rem;
   --lh-lg: 1.5rem;
   --lh-xl: 1.75rem;
@@ -98,6 +103,7 @@
   --surface-level-1: var(--dark-neutral-200);
   --surface-level-2: var(--dark-neutral-300);
   --surface-level-3: var(--dark-neutral-400);
+  --surface-level-4: var(--light-gray-500);
   --action-hover-delete: #9e4244;
   --action-hover-edit: #776da7;
   --action-hover-add: #5a88bc;
@@ -126,23 +132,40 @@
 
   /* ─── Components ──────────────────────────────────────────────────────── */
   --button-default: 52px;
-  --button-primary-bg: var(--surface-level-3);
-  --button-primary-stroke: var(--vis-empty);
-  --button-primary-txt: var(--text-primary);
+  --dropdown-def-bg: var(--surface-level-4);
+  --dropdown-def-stroke: var(--surface-body-bg);
+  --dropdown-def-text: var(--text-primary);
+  --button-primary-bg: var(--surface-level-4);
+  --button-primary-stroke: var(--vis-fading);
+  --button-primary-txt: var(--vis-max);
   --button-primary-bg-hover: var(--brand-gray-500-tr);
+  --button-primary-stroke-hover: var(--vis-dim-accent);
   --button-primary-txt-hover: var(--brand-1000);
-  --button-srcondary-bg: var(--vis-empty);
-  --button-srcondary-stroke: var(--vis-dim);
-  --button-srcondary-txt: var(--text-primary);
-  --button-srcondary-stroke-hover: var(--vis-max);
-  --button-srcondary-txt-hover: var(--vis-max);
-  --button-srcondary-bg-hover: var(--brand-gray-500-tr);
+  --button-secondary-bg: var(--vis-empty);
+  --button-secondary-stroke: var(--vis-dim);
+  --button-secondary-txt: var(--text-primary);
+  --button-secondary-stroke-hover: var(--vis-max);
+  --button-secondary-txt-hover: var(--vis-max);
+  --button-secondary-bg-hover: var(--brand-gray-500-tr);
   --text-primary: var(--vis-default);
   --text-secondary: var(--vis-fuzzy);
   --text-darker: var(--vis-dim);
   --text-accent: var(--vis-fuzzy-accent);
   --card-bg: var(--surface-level-1);
   --header-background: #242329e5;
+  --input-def-bg: var(--surface-level-2);
+  --input-def-stroke: var(--vis-inactive);
+  --input-def-txt: var(--text-darker);
+  --input-focus-bg: var(--surface-level-1);
+  --input-focus-stroke: var(--vis-default);
+  --input-focus-txt: var(--text-primary);
+  --input-inactive-bg: var(--surface-level-3);
+  --input-inactive-stroke: var(--vis-empty);
+  --input-inactive-txt: var(--vis-fading);
+  --input-secondary-stroke-hover: var(--vis-max);
+  --input-info-txt: var(--vis-dim);
+  --input-error: var(--alerts-error);
+  --input-error-bg: var(--alerts-error-bg);
 
   /* ─── Columns ─────────────────────────────────────────────────────────── */
   --columns-x1: 84px;
@@ -157,6 +180,9 @@
   --columns-x10: 1128px;
   --columns-x11: 1244px;
   --columns-x12: 1360px;
+
+  /* ─── Styles: Color ───────────────────────────────────────────────────── */
+  --color-btn-prim-def: #5b5a69;
 
   /* ─── Styles: Typography ──────────────────────────────────────────────── */
   --typo-h2: normal 500 3rem/3.75rem var(--font-primary);   /* shorthand */
@@ -195,12 +221,30 @@
   --typo-Header-item-font-size: 1.5rem;
   --typo-Header-item-line-height: 3rem;
   --typo-Header-item-letter-spacing: 0%;
-  --typo-Button-primary: normal 300 1rem/1.375rem var(--font-primary);   /* shorthand */
-  --typo-Button-primary-font-family: var(--font-primary);
-  --typo-Button-primary-font-weight: 300;
-  --typo-Button-primary-font-size: 1rem;
-  --typo-Button-primary-line-height: 1.375rem;
-  --typo-Button-primary-letter-spacing: 0%;
+  --typo-ui-Button-primary: normal 500 1rem/1.375rem var(--font-primary);   /* shorthand */
+  --typo-ui-Button-primary-font-family: var(--font-primary);
+  --typo-ui-Button-primary-font-weight: 500;
+  --typo-ui-Button-primary-font-size: 1rem;
+  --typo-ui-Button-primary-line-height: 1.375rem;
+  --typo-ui-Button-primary-letter-spacing: 2%;
+  --typo-ui-input-text: normal 300 1.25rem/1.375rem var(--font-primary);   /* shorthand */
+  --typo-ui-input-text-font-family: var(--font-primary);
+  --typo-ui-input-text-font-weight: 300;
+  --typo-ui-input-text-font-size: 1.25rem;
+  --typo-ui-input-text-line-height: 1.375rem;
+  --typo-ui-input-text-letter-spacing: 2%;
+  --typo-ui-input-label: normal 600 1rem/1.375rem var(--font-primary);   /* shorthand */
+  --typo-ui-input-label-font-family: var(--font-primary);
+  --typo-ui-input-label-font-weight: 600;
+  --typo-ui-input-label-font-size: 1rem;
+  --typo-ui-input-label-line-height: 1.375rem;
+  --typo-ui-input-label-letter-spacing: 2%;
+  --typo-ui-input-info: normal 300 1rem/1.375rem var(--font-primary);   /* shorthand */
+  --typo-ui-input-info-font-family: var(--font-primary);
+  --typo-ui-input-info-font-weight: 300;
+  --typo-ui-input-info-font-size: 1rem;
+  --typo-ui-input-info-line-height: 1.375rem;
+  --typo-ui-input-info-letter-spacing: 2%;
 
   /* ─── Styles: Effect ──────────────────────────────────────────────────── */
   --effect-card-shadow: 0px 8px 16px 0px #00000040;

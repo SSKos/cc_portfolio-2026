@@ -1,0 +1,38 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-dark-75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal {
+  background: var(--surface-level-1);
+  border: 1px solid var(--surface-level-3);
+  border-radius: var(--radius-xl);
+  padding: var(--pad-3xl);
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-2xl);
+}
+
+.title {
+  font-size: var(--fs-lg);
+  font-weight: 400;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-lg);
+}
+
+.submitBtn {
+  align-self: flex-end;
+}

@@ -1,0 +1,52 @@
+/**
+ * Carousel — proportional sizing (like <img width="100%">)
+ *
+ * .outer        — position:relative; height driven by .sizer
+ * .sizer        — invisible img in normal flow; sets container height proportionally
+ * .slide        — absolute fill over sizer; object-fit:cover for same-ratio slides
+ * .slideAnimated — opacity crossfade (only when slides.length > 1)
+ * .coverOverlay — PNG overlay above slides; pointer-events:none
+ * .empty        — placeholder when slides array is empty
+ */
+
+.outer {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.sizer {
+  display: block;
+  width: 100%;
+  height: auto;
+  visibility: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slideAnimated {
+  transition: opacity 2000ms ease-in-out;
+}
+
+.coverOverlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.empty {
+  position: absolute;
+  inset: 0;
+  background: var(--surface-level-2);
+}

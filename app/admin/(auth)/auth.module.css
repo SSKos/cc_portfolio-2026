@@ -1,0 +1,5 @@
+.main {
+  min-height: 100vh;
+  background: var(--surface-body-bg);
+  padding-bottom: var(--pad-5xl);
+}

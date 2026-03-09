@@ -21,14 +21,16 @@
     gap: var(--xs);
 
     height: var(--button-default);
-    padding: 0 var(--pad-xl);
+    padding: 0 var(--semantic-3xl);
     border-radius: var(--radius-md);
     border: 1px solid transparent;
 
-    font: var(--typo-Button-primary);
+    font: var(--typo-ui-Button-primary);
+    font-weight: 500;
+    letter-spacing: 0.02em;
     cursor: pointer;
 
-    transition: background-color 0.2s ease,
+    transition: background 0.2s ease,
     border-color 0.2s ease,
     color 0.2s ease;
 }
@@ -41,40 +43,55 @@
 
 /* ── Primary ──────────────────────────────────────────────── */
 .primary {
-    background-color: var(--button-primary-bg);
-    border-color: var(--button-primary-stroke);
-    color: var(--button-primary-txt);
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.15);
+    background: var(--surface-level-3);
+    border-color: #4f4e57;
+    color: var(--light-gray-1000);
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.6);
 }
 
 .primary:hover {
-    background-color: var(--button-primary-bg-hover);
-    border-color: var(--vis-max-accent);
+    background: var(--button-primary-bg-hover);
+    border-color: var(--vis-dim-accent);
     color: var(--button-primary-txt-hover);
 }
 
 .primary.iconOnly {
-    background-color: transparent;
+    background: transparent;
     border-color: transparent;
+    box-shadow: none;
 }
 
 .primary.iconOnly:hover {
-    background-color: var(--surface-level-3);
+    background: var(--surface-level-3);
     border-color: transparent;
 }
 
-/* ── Inactive ─────────────────────────────────────────────── */
+/* ── Create (filled, icon+label) ─────────────────────────── */
+.create {
+    background: var(--surface-level-4);
+    border-color: var(--vis-fading);
+    color: var(--text-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    padding-left: var(--lg);
+    gap: var(--md);
+}
+
+.create:hover {
+    background: var(--surface-level-3);
+    border-color: var(--vis-dim);
+}
+
+/* ── Secondary ────────────────────────────────────────────── */
 .secondary {
-    background-color: transparent;
-    border-color: var(--button-srcondary-stroke);
-    color: var(--button-srcondary-txt);
+    background: transparent;
+    border-color: var(--button-secondary-stroke);
+    color: var(--button-secondary-txt);
 }
 
 .secondary:hover {
-    background-color: var(--button-srcondary-bg-hover);
-    color: var(--button-srcondary-txt-hover);
-    border-color: var(--button-srcondary-stroke-hover);
-
+    background: var(--button-secondary-bg-hover);
+    color: var(--text-secondary);
+    border-color: var(--button-secondary-stroke-hover);
 }
 
 /* ── Action (icon-only, colored) ──────────────────────────── */

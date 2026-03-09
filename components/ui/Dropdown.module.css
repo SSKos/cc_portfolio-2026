@@ -1,0 +1,112 @@
+.wrap {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    gap: var(--xxs);
+    width: 100%;
+}
+
+.label {
+    font-size: var(--fs-md);
+    font-weight: 600;
+    line-height: var(--lh-xl);
+    color: var(--text-darker);
+    padding-left: var(--md);
+}
+
+/* ── Trigger ───────────────────────────────────────────────── */
+.trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--button-default);
+    padding: 0 var(--pad-xxxs) 0 var(--md);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--dropdown-def-stroke);
+    background: var(--dropdown-def-bg);
+    cursor: pointer;
+    width: 100%;
+    transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.trigger:hover {
+    border-color: var(--vis-fading);
+}
+
+.trigger.open {
+    border-color: var(--vis-inactive);
+}
+
+.trigger:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ── Text ──────────────────────────────────────────────────── */
+.text {
+    font-size: 1.25rem;
+    font-weight: 300;
+    color: var(--dropdown-def-text);
+    text-align: left;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.placeholder {
+    color: var(--text-darker);
+}
+
+/* ── Caret ─────────────────────────────────────────────────── */
+.caret {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--dropdown-def-text);
+}
+
+/* ── Menu ──────────────────────────────────────────────────── */
+.menu {
+    position: absolute;
+    top: calc(100% + var(--xs));
+    left: 0;
+    right: 0;
+    background: var(--dropdown-def-bg);
+    border: 1px solid var(--dropdown-def-stroke);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+    padding: var(--xs) 0;
+    z-index: 100;
+    list-style: none;
+    margin: 0;
+}
+
+/* ── Item ──────────────────────────────────────────────────── */
+.item {
+    display: flex;
+    align-items: center;
+    height: var(--button-default);
+    padding: 0 var(--md);
+    font-size: 1.25rem;
+    font-weight: 300;
+    color: var(--dropdown-def-text);
+    cursor: pointer;
+    border-bottom: 1px solid var(--dropdown-def-stroke);
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.item:last-child {
+    border-bottom: none;
+}
+
+.item:hover {
+    background: var(--surface-level-3);
+    color: var(--text-primary);
+}
+
+.itemSelected {
+    color: var(--brand-1000);
+}

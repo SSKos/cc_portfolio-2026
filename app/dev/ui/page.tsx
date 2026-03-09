@@ -1,4 +1,7 @@
 import { Button } from '@/components/ui/Button'
+import { InputShowcase } from './InputShowcase'
+import { DropdownShowcase } from './DropdownShowcase'
+import { CarouselShowcase } from './CarouselShowcase'
 import styles from './page.module.css'
 
 export default function DevUiPage() {
@@ -34,6 +37,13 @@ export default function DevUiPage() {
         <div className={styles.row}>
           <Button action="delete" disabled aria-label="Удалить (disabled)" />
         </div>
+      </section>
+
+      <InputShowcase />
+      <DropdownShowcase />
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Carousel</h2>
+        <CarouselShowcase />
       </section>
     </div>
   )

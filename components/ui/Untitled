@@ -1,1 +1,0 @@
-npx ts-node scripts/tokens-to-css.ts 2>&1

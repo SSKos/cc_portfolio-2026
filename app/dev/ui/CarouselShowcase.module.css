@@ -1,0 +1,170 @@
+/**
+ * CarouselShowcase — management panel styles
+ */
+
+/* ── Preview area ──────────────────────────────────────────────────────────── */
+
+.previewWrap {
+  height: 480px;
+  background: var(--surface-body-bg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--surface-level-3);
+  overflow: hidden;
+  margin-bottom: var(--pad-xl);
+}
+
+/* ── Management panel ──────────────────────────────────────────────────────── */
+
+.panel {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: var(--pad-2xl);
+  align-items: start;
+}
+
+.panelSection {
+  background: var(--surface-level-1);
+  border-radius: var(--radius-lg);
+  padding: var(--pad-2xl);
+}
+
+.panelTitle {
+  font: var(--typo-Card-h1);
+  color: var(--text-secondary);
+  margin-bottom: var(--pad-xs);
+  display: flex;
+  align-items: center;
+  gap: var(--pad-xs);
+}
+
+.optionalBadge {
+  font: var(--typo-Card-p);
+  color: var(--text-darker);
+  opacity: 0.6;
+  font-weight: 300;
+}
+
+.panelHint {
+  font: var(--typo-Card-p);
+  color: var(--text-darker);
+  opacity: 0.7;
+  margin-bottom: var(--pad-lg);
+}
+
+/* ── Cover ─────────────────────────────────────────────────────────────────── */
+
+.coverPreview {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: var(--surface-level-2);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--pad-md);
+}
+
+.coverEmpty {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--surface-level-2);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--pad-md);
+}
+
+.coverActions {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-xs);
+}
+
+/* ── Slides list ───────────────────────────────────────────────────────────── */
+
+.slideList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-xs);
+  margin-bottom: var(--pad-md);
+}
+
+.slideItem {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-md);
+  background: var(--surface-level-2);
+  border-radius: var(--radius-md);
+  padding: var(--pad-xs) var(--pad-md);
+}
+
+.dragHandle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: grab;
+  color: var(--text-darker);
+  border-radius: var(--radius-xs);
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.dragHandle:hover {
+  color: var(--text-primary);
+  background: var(--surface-level-3);
+}
+
+.dragHandle:active {
+  cursor: grabbing;
+}
+
+.thumb {
+  width: 56px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: var(--radius-xs);
+  flex-shrink: 0;
+  background: var(--surface-level-3);
+}
+
+.slideLabel {
+  font: var(--typo-Card-p);
+  color: var(--text-darker);
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slideActions {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-xs);
+  flex-shrink: 0;
+}
+
+/* ── Shared utilities ──────────────────────────────────────────────────────── */
+
+.fileInputHidden {
+  display: none;
+}
+
+.emptyHint {
+  font: var(--typo-Card-p);
+  color: var(--text-darker);
+  margin-bottom: var(--pad-md);
+  opacity: 0.6;
+}
+
+.errorHint {
+  font: var(--typo-Card-p);
+  color: var(--input-error);
+  margin-bottom: var(--pad-md);
+}
+
+.addBtn {
+  width: 100%;
+  margin-top: var(--pad-xs);
+}

@@ -1,8 +1,13 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { IconClose } from './icons'
 import styles from './CvModal.module.css'
+
+interface CvUrls {
+  ru: { url: string } | null
+  en: { url: string } | null
+}
 
 interface CvModalProps {
   open: boolean
@@ -10,6 +15,15 @@ interface CvModalProps {
 }
 
 export function CvModal({ open, onClose }: CvModalProps) {
+  const [urls, setUrls] = useState<CvUrls>({ ru: null, en: null })
+
+  useEffect(() => {
+    fetch('/api/cv')
+      .then(r => r.ok ? r.json() : { ru: null, en: null })
+      .then(setUrls)
+      .catch(() => {})
+  }, [])
+
   useEffect(() => {
     if (!open) return
     function onKey(e: KeyboardEvent) {
@@ -30,12 +44,28 @@ export function CvModal({ open, onClose }: CvModalProps) {
         <h2 className={styles.title}>Скачать резюме</h2>
         <p className={styles.subtitle}>Выберите язык</p>
         <div className={styles.buttons}>
-          <a href="/cv-ru.pdf" download className={styles.downloadBtn}>
-            Русский
-          </a>
-          <a href="/cv-en.pdf" download className={styles.downloadBtn}>
-            English
-          </a>
+          {urls.ru ? (
+            <a
+              href={urls.ru.url}
+              download="Константин Кузниченко UX-дизайнер CV.pdf"
+              className={styles.downloadBtn}
+            >
+              Русский
+            </a>
+          ) : (
+            <span className={styles.downloadBtnDisabled}>Русский</span>
+          )}
+          {urls.en ? (
+            <a
+              href={urls.en.url}
+              download="Konstantin Kuznichenko UX-designer CV.pdf"
+              className={styles.downloadBtn}
+            >
+              English
+            </a>
+          ) : (
+            <span className={styles.downloadBtnDisabled}>English</span>
+          )}
         </div>
       </div>
     </div>

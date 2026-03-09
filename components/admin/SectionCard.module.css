@@ -1,0 +1,39 @@
+.card {
+  background: var(--surface-level-1);
+  border-radius: var(--radius-2xl);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  gap: var(--xs);
+  padding: var(--xl);
+}
+
+.title {
+  flex: 1;
+  font-size: var(--fs-lg);
+  font-weight: 300;
+  color: var(--text-primary);
+  cursor: grab;
+  user-select: none;
+}
+
+.title:active {
+  cursor: grabbing;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--xl);
+  padding: 0 var(--xl) var(--xl);
+}
+
+.secondaryList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--xl);
+  padding-left: 72px;
+}

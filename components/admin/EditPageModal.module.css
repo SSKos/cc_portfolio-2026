@@ -1,0 +1,148 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-dark-75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.modal {
+  background: var(--surface-level-1);
+  border: 1px solid var(--surface-level-3);
+  border-radius: var(--radius-xl);
+  padding: var(--pad-2xl);
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-xl);
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modalTitle {
+  font-size: var(--fs-lg);
+  font-weight: 400;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: var(--text-darker);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: var(--pad-xxs);
+  transition: color 0.15s;
+}
+
+.closeBtn:hover {
+  color: var(--text-primary);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-lg);
+}
+
+.slugWrap {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+}
+
+.slugPrefix {
+  background: var(--surface-level-3);
+  border: 1px solid var(--vis-inactive);
+  border-right: none;
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
+  color: var(--text-darker);
+  font-size: 1.25rem;
+  font-weight: 300;
+  height: var(--button-default);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--md);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* When the slug input is inside a slugWrap, flatten the left border-radius */
+.slugInput input {
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-sm);
+  cursor: pointer;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--brand-1000);
+  cursor: pointer;
+}
+
+.cvSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-lg);
+}
+
+.pdfRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-xs);
+}
+
+.currentFile {
+  font-size: 0.875rem;
+  font-weight: 300;
+  color: var(--text-darker);
+}
+
+.fileInput {
+  font-size: 0.875rem;
+  font-family: inherit;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+/* Резервирует высоту под плавающий лейбл — поля не прыгают */
+/* label(22px) + margin(8px) + input(52px) = 82px */
+.fieldSlot {
+  min-height: 82px;
+}
+
+.labelText {
+  font-size: var(--fs-md);
+  font-weight: 300;
+  color: var(--text-secondary);
+}
+
+.errorText {
+  font-size: var(--fs-md);
+  font-weight: 300;
+  color: var(--alerts-error);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--pad-sm);
+  margin-top: var(--pad-xs);
+}

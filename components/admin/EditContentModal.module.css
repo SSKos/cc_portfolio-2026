@@ -1,0 +1,196 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-dark-75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.modal {
+  background: var(--surface-level-1);
+  border: 1px solid var(--surface-level-3);
+  border-radius: var(--radius-xl);
+  padding: var(--pad-2xl);
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-xl);
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modalTitle {
+  font-size: var(--fs-lg);
+  font-weight: 400;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: var(--text-darker);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: var(--pad-xxs);
+  transition: color 0.15s;
+}
+
+.closeBtn:hover {
+  color: var(--text-primary);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-lg);
+}
+
+/* Резервирует высоту под плавающий лейбл — поля не прыгают */
+.fieldSlot {
+  min-height: 82px;
+}
+
+.fileHint {
+  background: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  border: 1px solid color-mix(in srgb, var(--text-primary) 10%, transparent);
+  border-radius: var(--radius-md);
+  padding: var(--md) var(--lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--xs);
+}
+
+.fileHintTitle {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text-darker);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.filePath {
+  font-family: monospace;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  word-break: break-all;
+}
+
+.fileHintDesc {
+  font-size: var(--fs-sm);
+  font-weight: 300;
+  color: var(--text-darker);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.fileHintLink {
+  color: var(--text-secondary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s;
+}
+
+.fileHintLink:hover {
+  color: var(--text-primary);
+}
+
+/* ── Success-панель после создания ───────────────────────────────────────── */
+
+.successPanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-sm);
+}
+
+.successTitle {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--action-hover-online);
+  margin: 0;
+}
+
+.fileRow {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-xs);
+  background: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  border: 1px solid color-mix(in srgb, var(--text-primary) 10%, transparent);
+  border-radius: var(--radius-md);
+  padding: var(--pad-xxs) var(--pad-sm);
+}
+
+.copyBtn {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-family: inherit;
+  font-weight: 400;
+  color: var(--text-darker);
+  background: none;
+  border: 1px solid var(--surface-level-3);
+  border-radius: var(--radius-xs);
+  padding: 2px var(--pad-xs);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.copyBtn:hover {
+  color: var(--text-primary);
+  border-color: var(--vis-dim);
+}
+
+.successHint {
+  font-size: var(--fs-sm);
+  color: var(--text-darker);
+  line-height: 1.5;
+}
+
+.successActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pad-sm);
+  margin-top: var(--pad-xs);
+}
+
+/* idea:// — URL-scheme JetBrains IDE */
+.ideLink {
+  font-size: 0.875rem;
+  color: var(--text-darker);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s;
+}
+
+.ideLink:hover {
+  color: var(--text-primary);
+}
+
+/* ── Ошибки ───────────────────────────────────────────────────────────────── */
+
+.errorText {
+  font-size: var(--fs-md);
+  font-weight: 300;
+  color: var(--alerts-error);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--pad-sm);
+  margin-top: var(--pad-xs);
+}

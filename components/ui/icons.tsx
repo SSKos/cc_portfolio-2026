@@ -1,5 +1,13 @@
 // SVG-иконки для action-кнопок. Используют currentColor — цвет задаётся через CSS.
 
+export function IconPlus() {
+    return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.25 2.75a1.25 1.25 0 0 0-2.5 0V10.75H2.75a1.25 1.25 0 0 0 0 2.5H10.75V21.25a1.25 1.25 0 0 0 2.5 0V13.25H21.25a1.25 1.25 0 0 0 0-2.5H13.25V2.75Z" fill="currentColor"/>
+        </svg>
+    )
+}
+
 export function IconBurger() {
     return (
         <svg width="25" height="19" viewBox="0 0 25 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -79,6 +87,22 @@ export function IconOnline() {
             <path
                 d="M13.25 0C20.5678 0 26.5 5.93223 26.5 13.25C26.5 20.5678 20.5678 26.5 13.25 26.5C5.93223 26.5 0 20.5678 0 13.25C0 5.93223 5.93223 0 13.25 0ZM13.25 2.5C7.31294 2.5 2.5 7.31294 2.5 13.25C2.5 19.1871 7.31294 24 13.25 24C19.1871 24 24 19.1871 24 13.25C24 7.31294 19.1871 2.5 13.25 2.5ZM17.3662 9.36621C17.8544 8.87806 18.6456 8.87806 19.1338 9.36621C19.6219 9.85437 19.6219 10.6456 19.1338 11.1338L12.1338 18.1338C11.6456 18.6219 10.8544 18.6219 10.3662 18.1338L7.36621 15.1338C6.87806 14.6456 6.87806 13.8544 7.36621 13.3662C7.85437 12.8781 8.64563 12.8781 9.13379 13.3662L11.25 15.4824L17.3662 9.36621Z"
                 fill="currentColor"/>
+        </svg>
+    )
+}
+
+export function IconCaretDown() {
+    return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4.22 8.47a.75.75 0 0 1 1.06 0L12 15.19l6.72-6.72a.75.75 0 1 1 1.06 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L4.22 9.53a.75.75 0 0 1 0-1.06Z" fill="currentColor"/>
+        </svg>
+    )
+}
+
+export function IconCaretUp() {
+    return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19.78 15.53a.75.75 0 0 1-1.06 0L12 8.81l-6.72 6.72a.75.75 0 1 1-1.06-1.06l7.25-7.25a.75.75 0 0 1 1.06 0l7.25 7.25a.75.75 0 0 1 0 1.06Z" fill="currentColor"/>
         </svg>
     )
 }

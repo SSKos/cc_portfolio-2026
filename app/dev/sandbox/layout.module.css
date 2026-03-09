@@ -1,0 +1,82 @@
+:root {
+  --sandbox-toolbar-height: 44px;
+}
+
+.toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  height: var(--sandbox-toolbar-height);
+  display: flex;
+  align-items: center;
+  gap: var(--xl);
+  padding: 0 var(--xl);
+  background: color-mix(in srgb, var(--surface-level-3) 96%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid color-mix(in srgb, var(--text-primary) 10%, transparent);
+}
+
+.toolbarOffset {
+  height: var(--sandbox-toolbar-height);
+}
+
+.back {
+  font-size: 0.8125rem;
+  color: var(--text-darker);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+
+.back:hover {
+  color: var(--text-primary);
+}
+
+.name {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.name::before {
+  content: '›';
+  margin-right: var(--s);
+  color: var(--text-darker);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+  margin-left: auto;
+}
+
+.uiLink {
+  font-size: 0.8125rem;
+  color: var(--text-darker);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.uiLink:hover {
+  color: var(--text-primary);
+}
+
+.copyBtn {
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  background: color-mix(in srgb, var(--text-primary) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--text-primary) 20%, transparent);
+  border-radius: var(--radius-md);
+  padding: 4px var(--md);
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.copyBtn:hover {
+  background: color-mix(in srgb, var(--text-primary) 20%, transparent);
+}

@@ -1,0 +1,43 @@
+.container {
+  position: fixed;
+  bottom: var(--xl);
+  right: var(--xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--xs);
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.toast {
+  padding: var(--s) var(--md);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-md);
+  font-weight: 300;
+  color: var(--text-primary);
+  background: var(--surface-level-3);
+  border-left: 3px solid transparent;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  min-width: 260px;
+  max-width: 400px;
+  animation: slideIn 0.2s ease forwards;
+}
+
+.success {
+  border-left-color: var(--action-hover-online);
+}
+
+.error {
+  border-left-color: var(--action-hover-delete);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(calc(100% + var(--xl)));
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

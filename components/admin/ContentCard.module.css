@@ -1,0 +1,53 @@
+.card {
+  background: var(--surface-level-2);
+  border-radius: var(--radius-2xl);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  padding: var(--md) var(--xl) var(--xl);
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  gap: var(--xs);
+}
+
+.nameBox {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+  min-width: 0;
+}
+
+.name {
+  font-size: var(--fs-lg);
+  font-weight: 300;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  gap: var(--xl);
+  padding-left: calc(var(--button-default) + var(--xs));
+}
+
+.infoItem {
+  font-size: var(--fs-md);
+  font-weight: 300;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.infoLabel {
+  color: var(--text-darker);
+}
+
+.noContent {
+  opacity: 0.6;
+}

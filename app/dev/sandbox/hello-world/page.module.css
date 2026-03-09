@@ -1,0 +1,63 @@
+.page {
+  min-height: 100vh;
+  padding: var(--pad-3xl) var(--xl);
+  max-width: var(--columns-x12);
+  margin: 0 auto;
+}
+
+/* CAROUSEL: контейнер карусели.
+   height — единственное что нужно задать: карусель заполнит всё пространство как cover.
+   Меняй высоту под нужды макета. */
+.carouselWrap {
+  height: 480px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  margin-bottom: var(--pad-3xl);
+}
+/* END CAROUSEL */
+
+.hero {
+  padding: var(--pad-3xl) 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--text-primary) 10%, transparent);
+  margin-bottom: var(--pad-3xl);
+}
+
+.heroTitle {
+  font: var(--typo-h1);
+  color: var(--text-primary);
+  margin-bottom: var(--lg);
+}
+
+.heroSubtitle {
+  font-size: 1.125rem;
+  color: var(--text-darker);
+  max-width: 560px;
+  line-height: 1.6;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--xl);
+}
+
+.card {
+  background: var(--surface-level-1);
+  border-radius: var(--radius-xl);
+  padding: var(--pad-3xl) var(--xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardLabel {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-darker);
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

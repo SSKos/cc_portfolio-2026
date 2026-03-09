@@ -1,0 +1,71 @@
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--pad-sm) var(--pad-lg);
+  border-radius: var(--radius-sm);
+  background: var(--surface-level-2);
+  border: 1px solid var(--surface-level-3);
+  gap: var(--pad-md);
+}
+
+.row:hover {
+  border-color: var(--text-darker);
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-sm);
+  min-width: 0;
+  flex: 1;
+}
+
+.dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--surface-level-3);
+  border: 1px solid var(--text-darker);
+}
+
+.dotVisible {
+  background: var(--action-default-online);
+  border-color: var(--action-hover-online);
+}
+
+.slug {
+  font-size: 0.875rem;
+  font-weight: 300;
+  color: var(--text-darker);
+  white-space: nowrap;
+  font-family: monospace;
+}
+
+.title {
+  font-size: var(--fs-md);
+  font-weight: 300;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.badge {
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: var(--text-darker);
+  background: var(--surface-level-3);
+  border-radius: var(--radius-xs);
+  padding: 2px var(--pad-xxs);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-xs);
+  flex-shrink: 0;
+}

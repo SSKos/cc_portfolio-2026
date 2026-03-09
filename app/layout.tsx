@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
-import { Header } from "@/components/layout/Header";
+import { PublicHeader } from "@/components/layout/PublicHeader";
 
 const nunitoSans = Nunito_Sans({
   subsets: ["latin", "cyrillic"],
@@ -24,9 +24,7 @@ export default function RootLayout({
     <html lang="ru">
       <body className={nunitoSans.className}>
         <Providers>
-          <Header />
-          {/* Спейсер под фиксированным хедером */}
-          <div style={{ height: 'var(--header-height)' }} aria-hidden />
+          <PublicHeader />
           {children}
         </Providers>
       </body>

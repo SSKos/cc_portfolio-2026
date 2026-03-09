@@ -1,0 +1,110 @@
+/**
+ * Input — floating label pattern
+ *
+ * States (class on .wrapper):
+ *   .isFocused  — field has focus
+ *   .hasError   — validation error
+ *   .isDisabled — disabled / inactive
+ *
+ * Label behaviour:
+ *   Hidden (collapsed) by default.
+ *   .labelVisible — expands when focused or field has a value.
+ */
+
+/* ── Wrapper ──────────────────────────────────────────────── */
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
+  width: 100%;
+}
+
+/* ── Label (absolutely positioned above input) ─────────────── */
+.label {
+  /* Typography — SemiBold 600, 16px */
+  font-size: var(--fs-md);
+  font-weight: 600;
+  line-height: var(--lh-md);
+  letter-spacing: 0.02em;
+  color: var(--text-darker);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 0 var(--md);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.labelVisible {
+  opacity: 1;
+}
+
+/* ── Input field ──────────────────────────────────────────── */
+.input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+
+  height: var(--button-default); /* 52px — same as buttons */
+  padding: 0 var(--md);          /* 16px horizontal */
+  border-radius: var(--radius-md);
+  border: 1px solid var(--vis-inactive); /* #5b5a69 default */
+  background: var(--surface-level-3);   /* #2c2a33 default */
+
+  font-family: var(--font-primary);
+  font-size: 1.25rem;   /* 20px — per Figma, between --fs-md and --fs-lg */
+  font-weight: 300;
+  line-height: var(--lh-md);
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+
+  outline: none;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.input::placeholder {
+  color: var(--text-darker); /* #a5a3b6 */
+  font-weight: 300;
+}
+
+/* ── Focused ──────────────────────────────────────────────── */
+.isFocused .input {
+  background: var(--surface-level-1); /* #1e1d21 */
+  border-color: var(--text-primary);  /* #f0f0f7 */
+}
+
+/* ── Error ────────────────────────────────────────────────── */
+.hasError .input {
+  background: var(--alerts-error-bg);
+  border-color: var(--alerts-error);
+}
+
+/* ── Disabled / inactive ──────────────────────────────────── */
+.isDisabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ── Hint / error message ─────────────────────────────────── */
+.hint {
+  display: block;
+  font-size: var(--fs-md);
+  font-weight: 300;
+  line-height: var(--lh-md);
+  letter-spacing: 0.02em;
+  color: var(--text-darker);
+
+  padding: 0 var(--md);
+  margin-top: var(--xs);
+}
+
+.hintError {
+  color: #cc0000;
+}

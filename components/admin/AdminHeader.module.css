@@ -1,0 +1,61 @@
+:root {
+  --admin-header-height: 64px;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--admin-header-height);
+  background: var(--surface-level-1);
+  border-bottom: 1px solid var(--surface-level-3);
+  z-index: 50;
+}
+
+.inner {
+  max-width: var(--columns-x12);
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 var(--pad-2xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: var(--fs-md);
+  font-weight: 400;
+  color: var(--text-primary);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-md);
+}
+
+.linkBtn {
+  font-size: var(--fs-md);
+  font-weight: 300;
+  color: var(--text-darker);
+  text-decoration: none;
+  padding: var(--pad-xs) var(--pad-md);
+  border-radius: var(--radius-sm);
+  transition: color 0.15s;
+}
+
+.linkBtn:hover {
+  color: var(--text-primary);
+}
+
+/* Override secondary button colours for the logout action */
+.logoutBtn {
+  color: var(--brand-1000);
+  border-color: var(--brand-1000);
+}
+
+.logoutBtn:hover {
+  color: var(--brand-1000);
+  border-color: var(--brand-1000);
+}

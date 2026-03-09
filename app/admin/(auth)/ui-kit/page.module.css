@@ -1,0 +1,281 @@
+/* ── Page layout ─────────────────────────────────────────────────────────── */
+
+.layout {
+  display: flex;
+  gap: var(--pad-3xl);
+  max-width: var(--columns-x12);
+  margin: 0 auto;
+  padding: var(--pad-3xl) var(--pad-2xl) var(--pad-5xl);
+  align-items: flex-start;
+}
+
+.sidebar {
+  width: 160px;
+  flex-shrink: 0;
+  position: sticky;
+  /* AdminTopBar is ~232px tall; 15rem ≈ 240px keeps sidebar below it */
+  top: 15rem;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.pageTitle {
+  font: var(--typo-Card-h1);
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: var(--pad-3xl);
+}
+
+/* ── Sidebar nav ─────────────────────────────────────────────────────────── */
+
+.sidebarLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-darker);
+  margin-bottom: var(--pad-sm);
+}
+
+.navLink,
+.navLinkActive {
+  display: block;
+  padding: var(--pad-xxxs) 0;
+  font-size: 0.9375rem;
+  font-weight: 300;
+  text-decoration: none;
+  transition: color 0.15s;
+  margin-bottom: var(--pad-xxs);
+}
+
+.navLink {
+  color: var(--text-darker);
+}
+
+.navLink:hover {
+  color: var(--text-secondary);
+}
+
+.navLinkActive {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* ── Sidebar upload button ───────────────────────────────────────────────── */
+
+.sidebarDivider {
+  height: 1px;
+  background: var(--surface-level-3);
+  margin: var(--pad-sm) 0;
+}
+
+.sidebarUpload {
+  margin-top: var(--pad-lg);
+}
+
+.addImgBtn {
+  width: 100%;
+}
+
+/* ── Component block ─────────────────────────────────────────────────────── */
+
+.block {
+  background: var(--surface-level-1);
+  border: 1px solid var(--surface-level-3);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: var(--pad-3xl);
+  /* offset for sticky AdminTopBar when jumping via anchor links */
+  scroll-margin-top: 15rem;
+}
+
+.blockHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--pad-sm) var(--pad-lg);
+  border-bottom: 1px solid var(--surface-level-3);
+}
+
+.blockTitle {
+  font: var(--typo-Card-h1);
+  color: var(--text-primary);
+  font-weight: 400;
+}
+
+/* ── Tabs ────────────────────────────────────────────────────────────────── */
+
+.tabBar {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--surface-level-3);
+  padding: 0 var(--pad-sm);
+}
+
+.tab,
+.tabActive {
+  padding: var(--pad-xs) var(--pad-sm);
+  font-size: 0.8125rem;
+  font-weight: 300;
+  font-family: inherit;
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-darker);
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.tab:hover {
+  color: var(--text-secondary);
+}
+
+.tabActive {
+  color: var(--text-primary);
+  border-bottom-color: var(--text-primary);
+  font-weight: 400;
+}
+
+.tabContent {
+  min-height: 120px;
+}
+
+/* ── Preview area ────────────────────────────────────────────────────────── */
+
+.preview {
+  padding: var(--pad-2xl) var(--pad-lg);
+}
+
+.previewRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pad-xl);
+  align-items: center;
+  margin-bottom: var(--pad-xl);
+}
+
+.previewRow:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Source code ─────────────────────────────────────────────────────────── */
+
+.code {
+  margin: 0;
+  padding: var(--pad-lg);
+  font-family: 'Courier New', Courier, 'Lucida Console', monospace;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+  background: var(--surface-level-2);
+  overflow: auto;
+  max-height: 480px;
+  white-space: pre;
+  tab-size: 2;
+}
+
+.code code {
+  font: inherit;
+}
+
+/* ── Block actions row ───────────────────────────────────────────────────── */
+
+.blockActions {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-xs);
+}
+
+/* ── Editor (textarea) ───────────────────────────────────────────────────── */
+
+.editor {
+  display: block;
+  width: 100%;
+  min-height: 320px;
+  max-height: 560px;
+  padding: var(--pad-lg);
+  font-family: 'Courier New', Courier, 'Lucida Console', monospace;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+  background: var(--surface-level-2);
+  border: none;
+  outline: none;
+  resize: vertical;
+  white-space: pre;
+  overflow: auto;
+  tab-size: 2;
+  field-sizing: content; /* grow with content where supported */
+}
+
+/* ── Dirty indicator dot on tab label ────────────────────────────────────── */
+
+.dirtyDot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--text-accent);
+  margin-left: var(--pad-xxs);
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+/* ── Save button ─────────────────────────────────────────────────────────── */
+
+.saveBtn {
+  font-size: 0.8125rem;
+  font-weight: 400;
+  font-family: inherit;
+  color: var(--text-darker);
+  background: none;
+  border: 1px solid var(--surface-level-3);
+  border-radius: var(--radius-sm);
+  padding: var(--pad-xxxs) var(--pad-sm);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, opacity 0.15s;
+}
+
+.saveBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.saveBtnDirty {
+  color: var(--text-accent);
+  border-color: var(--text-accent);
+}
+
+.saveBtnDirty:hover:not(:disabled) {
+  background: var(--brand-gray-500-tr);
+}
+
+.saveBtnError {
+  color: var(--alerts-error);
+  border-color: var(--alerts-error);
+}
+
+/* ── Copy button ─────────────────────────────────────────────────────────── */
+
+.copyBtn {
+  font-size: 0.8125rem;
+  font-weight: 400;
+  font-family: inherit;
+  color: var(--text-darker);
+  background: none;
+  border: 1px solid var(--surface-level-3);
+  border-radius: var(--radius-sm);
+  padding: var(--pad-xxxs) var(--pad-sm);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.copyBtn:hover {
+  color: var(--text-secondary);
+  border-color: var(--vis-dim);
+}

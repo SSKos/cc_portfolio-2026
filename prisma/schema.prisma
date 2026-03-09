@@ -14,17 +14,22 @@ model User {
 }
 
 model Page {
-  id          Int       @id @default(autoincrement())
-  slug        String    @unique
-  title       String
-  description String?
-  headerVariant String  @default("default")
-  footerVariant String  @default("default")
-  isVisible   Boolean   @default(false)
-  order       Int       @default(0)
-  sections    Section[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id            Int       @id @default(autoincrement())
+  slug          String    @unique
+  title         String
+  description   String?
+  headerVariant String    @default("default")
+  footerVariant String    @default("default")
+  isVisible     Boolean   @default(false)
+  order         Int       @default(0)
+  parentId      Int?
+  parent        Page?     @relation("PageHierarchy", fields: [parentId], references: [id])
+  children      Page[]    @relation("PageHierarchy")
+  contentName   String?
+  meta          Json?
+  sections      Section[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model Section {

@@ -7,21 +7,17 @@ import {IconBurger, IconCaretLeft, IconClose, IconCV} from '../ui/icons'
 import { CvModal } from '../ui/CvModal'
 import styles from './Header.module.css'
 
-// ── Конфигурация навигации ──────────────────────────────────────────────────
-// Добавляй новые пункты сюда по мере развития сайта.
-// isCv: true — открывает модальное окно вместо перехода по ссылке.
-
 interface NavItem {
   label: string
   href?: string
   isCv?: boolean
 }
 
-const NAV_ITEMS: NavItem[] = [
-  { label: 'Обо мне', href: '/' },
-  { label: 'Проекты', href: '/projects' },
-  { label: 'CV', isCv: true },
-]
+function slugToNavItem(slug: string, title: string): NavItem {
+  if (slug === 'cv') return { label: title, isCv: true }
+  if (slug === 'index') return { label: title, href: '/' }
+  return { label: title, href: '/' + slug }
+}
 
 // ── Типы ────────────────────────────────────────────────────────────────────
 
@@ -42,8 +38,18 @@ export function Header({ breadcrumb }: HeaderProps) {
   const pathname = usePathname()
   const isLevel2 = !!breadcrumb?.length
 
+  const [navItems, setNavItems] = useState<NavItem[]>([])
   const [cvOpen, setCvOpen] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+
+  useEffect(() => {
+    fetch('/api/nav')
+      .then(r => r.ok ? r.json() : [])
+      .then((pages: { slug: string; title: string }[]) =>
+        setNavItems(pages.map(p => slugToNavItem(p.slug, p.title)))
+      )
+      .catch(() => {})
+  }, [])
 
   // Refs для измерения позиции меток (текста без паддингов)
   const navRef = useRef<HTMLDivElement>(null)
@@ -57,8 +63,8 @@ export function Header({ breadcrumb }: HeaderProps) {
 
   // Активный пункт по pathname
   const activeIndex = (() => {
-    for (let i = 0; i < NAV_ITEMS.length; i++) {
-      const item = NAV_ITEMS[i]
+    for (let i = 0; i < navItems.length; i++) {
+      const item = navItems[i]
       if (!item.href) continue
       if (item.href === '/') {
         if (pathname === '/') return i
@@ -153,7 +159,7 @@ export function Header({ breadcrumb }: HeaderProps) {
     return () => window.removeEventListener('keydown', onKey)
   }, [mobileOpen])
 
-  const backLabel = NAV_ITEMS.find(item => item.href === '/')?.label ?? 'Назад'
+  const backLabel = navItems.find(item => item.href === '/')?.label ?? 'Назад'
 
   return (
     <>
@@ -166,7 +172,7 @@ export function Header({ breadcrumb }: HeaderProps) {
             {!isLevel2 ? (
               /* Level 1: центрированная навигация */
               <nav className={styles.nav} ref={navRef} onMouseLeave={onNavLeave} aria-label="Навигация">
-                {NAV_ITEMS.map((item, i) => {
+                {navItems.map((item, i) => {
                   const isActive = i === activeIndex
                   const labelEl = (
                     <span
@@ -288,7 +294,7 @@ export function Header({ breadcrumb }: HeaderProps) {
                 </span>
               ) : (
                 <span className={styles.mobilePageName}>
-                  {activeIndex >= 0 ? NAV_ITEMS[activeIndex].label : ''}
+                  {activeIndex >= 0 ? navItems[activeIndex].label : ''}
                 </span>
               )}
             </div>
@@ -306,7 +312,7 @@ export function Header({ breadcrumb }: HeaderProps) {
       {mobileOpen && (
         <div className={styles.mobileMenu} role="dialog" aria-modal aria-label="Меню навигации">
           <nav className={styles.mobileMenuNav}>
-            {NAV_ITEMS.map(item => {
+            {navItems.map(item => {
               if (item.isCv) {
                 return (
                   <button

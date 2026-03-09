@@ -4,7 +4,10 @@ import { z } from 'zod'
 import bcrypt from 'bcryptjs'
 import { prisma } from './prisma'
 
+import { authConfig } from './auth.config'
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  ...authConfig,
   providers: [
     Credentials({
       credentials: {
@@ -32,8 +35,4 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
-  pages: {
-    signIn: '/admin/login',
-  },
-  session: { strategy: 'jwt' },
 })
