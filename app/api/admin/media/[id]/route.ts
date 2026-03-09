@@ -13,7 +13,7 @@ type Params = { params: Promise<{ id: string }> }
  * originalName намеренно не обновляется — остаётся от исходной загрузки.
  */
 export async function PATCH(req: NextRequest, { params }: Params) {
-  const { error } = await requireSession()
+  const { session, error } = await requireSession()
   if (error) return error
 
   const id = parseInt((await params).id, 10)
@@ -41,6 +41,12 @@ export async function PATCH(req: NextRequest, { params }: Params) {
         // originalName не меняем — название остаётся от первой загрузки
       },
     })
+    console.log(JSON.stringify({
+      ts: new Date().toISOString(),
+      admin: session?.user?.email,
+      action: 'media.replace',
+      resource: { id, newFilename: saved.filename },
+    }))
     return NextResponse.json(updated)
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : 'Replace failed'
@@ -50,7 +56,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
 /** DELETE /api/admin/media/[id] — удалить файл с диска и из БД */
 export async function DELETE(_req: NextRequest, { params }: Params) {
-  const { error } = await requireSession()
+  const { session, error } = await requireSession()
   if (error) return error
 
   const id = parseInt((await params).id, 10)
@@ -63,6 +69,13 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
   await deleteUploadedFile(media.filename)
 
   await prisma.media.delete({ where: { id } })
+
+  console.log(JSON.stringify({
+    ts: new Date().toISOString(),
+    admin: session?.user?.email,
+    action: 'media.delete',
+    resource: { id, filename: media.filename },
+  }))
 
   return new NextResponse(null, { status: 204 })
 }

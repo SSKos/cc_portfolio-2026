@@ -1,46 +1,51 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { requireSession } from '@/lib/apiAuth'
-import { readContent, writeContent } from '@/lib/contentStore'
+import { updateContentItem, deleteContentItem } from '@/lib/contentStore'
 
 type Params = { params: Promise<{ id: string }> }
 
 /** PATCH /api/admin/content/[id] */
 export async function PATCH(req: NextRequest, { params }: Params) {
-  const { error } = await requireSession()
+  const { session, error } = await requireSession()
   if (error) return error
 
   const { id } = await params
-  const items = readContent()
-  const idx = items.findIndex(i => i.id === id)
-  if (idx === -1) return NextResponse.json({ error: 'Not found' }, { status: 404 })
-
   const body = await req.json()
-  const updated = { ...items[idx] }
 
-  if (typeof body.name === 'string') updated.name = body.name.trim()
-  if (typeof body.description === 'string') updated.description = body.description.trim()
-  if (typeof body.isVisible === 'boolean') updated.isVisible = body.isVisible
+  const data: { name?: string; description?: string; isVisible?: boolean } = {}
+  if (typeof body.name === 'string') data.name = body.name.trim()
+  if (typeof body.description === 'string') data.description = body.description.trim()
+  if (typeof body.isVisible === 'boolean') data.isVisible = body.isVisible
 
-  items[idx] = updated
-  writeContent(items)
+  const updated = await updateContentItem(id, data)
+  if (!updated) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+
+  console.log(JSON.stringify({
+    ts: new Date().toISOString(),
+    admin: session?.user?.email,
+    action: 'content.update',
+    resource: { id },
+  }))
 
   return NextResponse.json(updated)
 }
 
 /** DELETE /api/admin/content/[id] */
 export async function DELETE(_req: NextRequest, { params }: Params) {
-  const { error } = await requireSession()
+  const { session, error } = await requireSession()
   if (error) return error
 
   const { id } = await params
-  const items = readContent()
-
-  if (!items.some(i => i.id === id)) {
-    return NextResponse.json({ error: 'Not found' }, { status: 404 })
-  }
+  const deleted = await deleteContentItem(id)
+  if (!deleted) return NextResponse.json({ error: 'Not found' }, { status: 404 })
 
   // Sandbox files are NOT deleted — preserve the work
-  writeContent(items.filter(i => i.id !== id))
+  console.log(JSON.stringify({
+    ts: new Date().toISOString(),
+    admin: session?.user?.email,
+    action: 'content.delete',
+    resource: { id },
+  }))
 
   return new NextResponse(null, { status: 204 })
 }

@@ -31,7 +31,7 @@ export async function GET() {
 
 /** POST /api/admin/pages — создать страницу */
 export async function POST(req: NextRequest) {
-  const { error } = await requireSession()
+  const { session, error } = await requireSession()
   if (error) return error
 
   const body = await req.json().catch(() => null)
@@ -45,6 +45,12 @@ export async function POST(req: NextRequest) {
 
   try {
     const page = await prisma.page.create({ data: parsed.data })
+    console.log(JSON.stringify({
+      ts: new Date().toISOString(),
+      admin: session?.user?.email,
+      action: 'page.create',
+      resource: { id: page.id, slug: page.slug },
+    }))
     return NextResponse.json(page, { status: 201 })
   } catch (e: unknown) {
     if ((e as { code?: string }).code === 'P2002') {

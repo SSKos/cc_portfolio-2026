@@ -29,7 +29,7 @@ export async function GET(_req: NextRequest, { params }: Params) {
 
 /** PATCH /api/admin/pages/[id] — обновить поля страницы */
 export async function PATCH(req: NextRequest, { params }: Params) {
-  const { error } = await requireSession()
+  const { session, error } = await requireSession()
   if (error) return error
 
   const id = parseId((await params).id)
@@ -46,6 +46,12 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
   try {
     const page = await prisma.page.update({ where: { id }, data: parsed.data })
+    console.log(JSON.stringify({
+      ts: new Date().toISOString(),
+      admin: session?.user?.email,
+      action: 'page.update',
+      resource: { id, fields: Object.keys(parsed.data) },
+    }))
     return NextResponse.json(page)
   } catch (e: unknown) {
     const code = (e as { code?: string }).code
@@ -57,7 +63,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 
 /** DELETE /api/admin/pages/[id] — удалить страницу (каскадно удаляет секции) */
 export async function DELETE(_req: NextRequest, { params }: Params) {
-  const { error } = await requireSession()
+  const { session, error } = await requireSession()
   if (error) return error
 
   const id = parseId((await params).id)
@@ -65,6 +71,12 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
 
   try {
     await prisma.page.delete({ where: { id } })
+    console.log(JSON.stringify({
+      ts: new Date().toISOString(),
+      admin: session?.user?.email,
+      action: 'page.delete',
+      resource: { id },
+    }))
     return new NextResponse(null, { status: 204 })
   } catch (e: unknown) {
     if ((e as { code?: string }).code === 'P2025') {

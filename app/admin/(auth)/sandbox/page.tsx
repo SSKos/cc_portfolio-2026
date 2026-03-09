@@ -5,8 +5,8 @@ import styles from './page.module.css'
 
 export const dynamic = 'force-dynamic'
 
-export default function AdminSandboxPage() {
-  const items = readContent()
+export default async function AdminSandboxPage() {
+  const items = await readContent()
 
   return (
     <div className={styles.wrap}>

@@ -37,7 +37,11 @@ function detectMime(buf: Buffer): string | null {
   // PDF: %PDF
   if (buf[0] === 0x25 && buf[1] === 0x50 && buf[2] === 0x44 && buf[3] === 0x46) return 'application/pdf'
 
-  // SVG: XML-based, check text header
+  // SVG: XML-based, check text header.
+  // Audit note (SVG XSS): all uploaded SVGs are rendered only via <img src="...">
+  // tags in the admin media gallery, never inline. Browsers sandbox SVGs loaded
+  // through <img>, so script execution is not possible. If inline SVG rendering is
+  // ever added, sanitize content server-side before returning this MIME type.
   const head = buf.slice(0, 128).toString('utf8').trimStart().toLowerCase()
   if (head.startsWith('<svg') || head.startsWith('<?xml') || head.startsWith('<!--')) {
     if (head.includes('<svg')) return 'image/svg+xml'

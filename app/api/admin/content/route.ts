@@ -3,7 +3,7 @@ import { randomUUID } from 'crypto'
 import fs from 'fs'
 import path from 'path'
 import { requireSession } from '@/lib/apiAuth'
-import { readContent, writeContent, type ContentItem } from '@/lib/contentStore'
+import { readContent, createContentItem, contentSlugExists, type ContentItem } from '@/lib/contentStore'
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 
@@ -26,15 +26,12 @@ function toPascalCase(slug: string): string {
 }
 
 interface CreatedFiles {
-  tsxAbs: string   // абсолютный путь к tsx — для IDE-ссылки
-  tsxRel: string   // относительный путь — для отображения в UI
+  tsxAbs: string
+  tsxRel: string
   cssRel: string
 }
 
 function createSandboxFiles(slug: string, name: string): CreatedFiles {
-  // Каждый контент-юнит живёт в собственной папке sandbox-content/{slug}/.
-  // Файлы называются так же, как папка: {slug}.tsx / {slug}.module.css.
-  // Импорт `@/sandbox-content/${slug}/${slug}` резолвится webpack'ом.
   const dir = path.join(process.cwd(), 'sandbox-content', slug)
   fs.mkdirSync(dir, { recursive: true })
 
@@ -103,12 +100,12 @@ export async function GET() {
   const { error } = await requireSession()
   if (error) return error
 
-  return NextResponse.json(readContent())
+  return NextResponse.json(await readContent())
 }
 
 /** POST /api/admin/content */
 export async function POST(req: NextRequest) {
-  const { error } = await requireSession()
+  const { session, error } = await requireSession()
   if (error) return error
 
   const body = await req.json()
@@ -120,28 +117,31 @@ export async function POST(req: NextRequest) {
   if (!name) return NextResponse.json({ error: 'name required' }, { status: 400 })
   if (!slug) return NextResponse.json({ error: 'slug required' }, { status: 400 })
 
-  const items = readContent()
-
   // Ensure slug uniqueness
-  if (items.some(i => i.slug === slug)) {
+  if (await contentSlugExists(slug)) {
     slug = `${slug}-${Date.now()}`
   }
 
-  const item: ContentItem = {
+  const item: Omit<ContentItem, 'createdAt'> = {
     id: randomUUID(),
     name,
     slug,
     description,
     isVisible: false,
-    createdAt: new Date().toISOString(),
   }
 
   const files = createSandboxFiles(slug, name)
-  writeContent([...items, item])
+  const created = await createContentItem(item)
 
-  // tsxAbs и cssRel возвращаются только в ответе POST — не хранятся в content.json
+  console.log(JSON.stringify({
+    ts: new Date().toISOString(),
+    admin: session?.user?.email,
+    action: 'content.create',
+    resource: { id: created.id, slug: created.slug },
+  }))
+
   return NextResponse.json(
-    { ...item, tsxAbs: files.tsxAbs, tsxRel: files.tsxRel, cssRel: files.cssRel },
+    { ...created, tsxAbs: files.tsxAbs, tsxRel: files.tsxRel, cssRel: files.cssRel },
     { status: 201 },
   )
 }

@@ -1,5 +1,4 @@
-import fs from 'fs'
-import path from 'path'
+import { prisma } from './prisma'
 
 export type ContentItem = {
   id: string
@@ -10,18 +9,64 @@ export type ContentItem = {
   createdAt: string
 }
 
-const DATA_FILE = path.join(process.cwd(), 'data', 'content.json')
+function toItem(row: {
+  id: string
+  name: string
+  slug: string
+  description: string
+  isVisible: boolean
+  createdAt: Date
+}): ContentItem {
+  return { ...row, createdAt: row.createdAt.toISOString() }
+}
 
-export function readContent(): ContentItem[] {
+export async function readContent(): Promise<ContentItem[]> {
+  const rows = await prisma.content.findMany({ orderBy: { createdAt: 'asc' } })
+  return rows.map(toItem)
+}
+
+export async function findContentBySlug(slug: string): Promise<ContentItem | null> {
+  const row = await prisma.content.findUnique({ where: { slug } })
+  return row ? toItem(row) : null
+}
+
+export async function createContentItem(
+  data: Omit<ContentItem, 'createdAt'>,
+): Promise<ContentItem> {
+  const row = await prisma.content.create({
+    data: {
+      id: data.id,
+      name: data.name,
+      slug: data.slug,
+      description: data.description,
+      isVisible: data.isVisible,
+    },
+  })
+  return toItem(row)
+}
+
+export async function updateContentItem(
+  id: string,
+  data: Partial<Pick<ContentItem, 'name' | 'description' | 'isVisible'>>,
+): Promise<ContentItem | null> {
   try {
-    return JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'))
+    const row = await prisma.content.update({ where: { id }, data })
+    return toItem(row)
   } catch {
-    return []
+    return null
   }
 }
 
-export function writeContent(items: ContentItem[]): void {
-  const dir = path.dirname(DATA_FILE)
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
-  fs.writeFileSync(DATA_FILE, JSON.stringify(items, null, 2))
+export async function deleteContentItem(id: string): Promise<boolean> {
+  try {
+    await prisma.content.delete({ where: { id } })
+    return true
+  } catch {
+    return false
+  }
+}
+
+export async function contentSlugExists(slug: string): Promise<boolean> {
+  const row = await prisma.content.findUnique({ where: { slug }, select: { id: true } })
+  return row !== null
 }

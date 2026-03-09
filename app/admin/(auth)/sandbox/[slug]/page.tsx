@@ -18,7 +18,7 @@ export default async function AdminSandboxSlugPage({ params }: Props) {
 
   if (!/^[a-z0-9-]+$/.test(slug)) notFound()
 
-  const items = readContent()
+  const items = await readContent()
   const item = items.find(i => i.slug === slug)
   if (!item) notFound()
 

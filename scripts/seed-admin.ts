@@ -18,6 +18,19 @@ async function main() {
     throw new Error('Set ADMIN_EMAIL and ADMIN_PASSWORD in .env')
   }
 
+  if (password.length < 12) {
+    throw new Error('ADMIN_PASSWORD must be at least 12 characters')
+  }
+  const hasUpper = /[A-Z]/.test(password)
+  const hasLower = /[a-z]/.test(password)
+  const hasDigit = /\d/.test(password)
+  const hasSpecial = /[^A-Za-z0-9]/.test(password)
+  if (!hasUpper || !hasLower || !hasDigit || !hasSpecial) {
+    throw new Error(
+      'ADMIN_PASSWORD must contain uppercase, lowercase, a digit, and a special character',
+    )
+  }
+
   // ── Admin user ─────────────────────────────────────────────────────────────
   const existing = await prisma.user.findUnique({ where: { email } })
   if (existing) {

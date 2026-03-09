@@ -63,3 +63,13 @@ enum SectionType {
   divider
   figma_block
 }
+
+model Content {
+  id          String   @id @default(uuid())
+  name        String
+  slug        String   @unique
+  description String   @default("")
+  isVisible   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
