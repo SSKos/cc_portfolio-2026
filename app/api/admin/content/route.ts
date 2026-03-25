@@ -128,6 +128,7 @@ export async function POST(req: NextRequest) {
     slug,
     description,
     isVisible: false,
+    data: null,
   }
 
   const files = createSandboxFiles(slug, name)

@@ -62,13 +62,14 @@ export function Carousel({ slides, cover, className }: CarouselProps) {
   const isAnimated = slides.length > 1
 
   return (
-    <div className={outerCn}>
+    <div className={outerCn} data-carousel-role="outer">
       {/* Sizer: invisible image in normal flow — drives container height proportionally */}
       {slides.length > 0 && (
         <img
           src={slides[0].src}
           alt=""
           className={styles.sizer}
+          data-carousel-role="sizer"
           aria-hidden="true"
           draggable={false}
         />
@@ -82,6 +83,7 @@ export function Carousel({ slides, cover, className }: CarouselProps) {
             src={slide.src}
             alt={slide.alt ?? ''}
             className={isAnimated ? `${styles.slide} ${styles.slideAnimated}` : styles.slide}
+            data-carousel-role="slide"
             style={{ opacity: opacityFor(idx) }}
             draggable={false}
           />
@@ -92,6 +94,7 @@ export function Carousel({ slides, cover, className }: CarouselProps) {
           src={cover}
           alt=""
           className={styles.coverOverlay}
+          data-carousel-role="cover"
           draggable={false}
         />
       )}

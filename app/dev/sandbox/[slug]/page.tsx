@@ -1,5 +1,6 @@
 import { readContent } from '@/lib/contentStore'
 import { notFound } from 'next/navigation'
+import { SandboxTextProvider } from '@/lib/sandboxText'
 import styles from './page.module.css'
 
 type Props = { params: Promise<{ slug: string }> }
@@ -21,7 +22,7 @@ export default async function SandboxSlugPage({ params }: Props) {
   // Prevent path traversal
   if (!/^[a-z0-9-]+$/.test(slug)) notFound()
 
-  const items = readContent()
+  const items = await readContent()
   const item = items.find(i => i.slug === slug)
   // Also accessible from /admin/sandbox/[slug]
   if (!item) notFound()
@@ -44,5 +45,12 @@ export default async function SandboxSlugPage({ params }: Props) {
     )
   }
 
-  return <Component />
+  return (
+    <SandboxTextProvider
+      contentId={item.id}
+      initialTexts={(item.data as Record<string, string>) ?? {}}
+    >
+      <Component />
+    </SandboxTextProvider>
+  )
 }

@@ -10,43 +10,39 @@
  */
 
 .outer {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
 }
 
 .sizer {
-  display: block;
-  width: 100%;
-  height: auto;
-  visibility: hidden;
-  pointer-events: none;
-  user-select: none;
+    display: block;
+    width: 100%;
+    height: auto;
+    visibility: hidden;
+    pointer-events: none;
+    user-select: none;
 }
 
 .slide {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
 }
 
 .slideAnimated {
-  transition: opacity 2000ms ease-in-out;
+    transition: opacity 2000ms ease-in-out;
 }
 
 .coverOverlay {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 10;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
 }
 
 .empty {
-  position: absolute;
-  inset: 0;
-  background: var(--surface-level-2);
+    position: absolute;
+    inset: 0;
+    background: var(--surface-level-2);
 }

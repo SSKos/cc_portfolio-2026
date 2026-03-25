@@ -3,7 +3,7 @@
 import { useState, useRef, useLayoutEffect, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import {IconBurger, IconCaretLeft, IconClose, IconCV} from '../ui/icons'
+import { IconBurger, IconClose, IconCV } from '../ui/icons'
 import { CvModal } from '../ui/CvModal'
 import styles from './Header.module.css'
 
@@ -11,6 +11,12 @@ interface NavItem {
   label: string
   href?: string
   isCv?: boolean
+}
+
+interface PageInfo {
+  slug: string
+  title: string
+  parentId: number | null
 }
 
 function slugToNavItem(slug: string, title: string): NavItem {
@@ -36,30 +42,50 @@ export interface HeaderProps {
 
 export function Header({ breadcrumb }: HeaderProps) {
   const pathname = usePathname()
-  const isLevel2 = !!breadcrumb?.length
 
   const [navItems, setNavItems] = useState<NavItem[]>([])
+  const [pages, setPages] = useState<PageInfo[]>([])
   const [cvOpen, setCvOpen] = useState(false)
-  const [mobileOpen, setMobileOpen] = useState(false)
+  const [mobileMenuPath, setMobileMenuPath] = useState<string | null>(null)
 
   useEffect(() => {
     fetch('/api/nav')
-      .then(r => r.ok ? r.json() : [])
-      .then((pages: { slug: string; title: string }[]) =>
-        setNavItems(pages.map(p => slugToNavItem(p.slug, p.title)))
-      )
+      .then(r => r.ok ? r.json() : { navItems: [], pages: [] })
+      .then((data: { navItems: PageInfo[]; pages: PageInfo[] }) => {
+        setNavItems(data.navItems.map(p => slugToNavItem(p.slug, p.title)))
+        setPages(data.pages)
+      })
       .catch(() => {})
   }, [])
 
+  const autoBreadcrumb = (() => {
+    if (breadcrumb?.length) return breadcrumb
+    if (pathname === '/') return undefined
+
+    const segments = pathname.split('/').filter(Boolean)
+    if (segments.length <= 1) return undefined
+
+    const items: BreadcrumbItem[] = []
+
+    for (let i = 0; i < segments.length; i++) {
+      const slug = segments.slice(0, i + 1).join('/')
+      const page = pages.find(candidate => candidate.slug === slug)
+
+      if (!page) continue
+
+      items.push({
+        label: page.title,
+        href: i === segments.length - 1 ? undefined : `/${slug}`,
+      })
+    }
+
+    return items.length > 1 ? items : undefined
+  })()
+
   // Refs для измерения позиции меток (текста без паддингов)
   const navRef = useRef<HTMLDivElement>(null)
+  const underlineRef = useRef<HTMLSpanElement>(null)
   const labelRefs = useRef<(HTMLSpanElement | null)[]>([])
-
-  // Состояние линии подчёркивания
-  const [ulLeft, setUlLeft] = useState(0)
-  const [ulWidth, setUlWidth] = useState(0)
-  const [ulVisible, setUlVisible] = useState(false)
-  const [ulAnimated, setUlAnimated] = useState(false)
 
   // Активный пункт по pathname
   const activeIndex = (() => {
@@ -75,6 +101,15 @@ export function Header({ breadcrumb }: HeaderProps) {
     return -1
   })()
 
+  const resolvedBreadcrumb = autoBreadcrumb
+  const isLevel2 = !!resolvedBreadcrumb?.length
+  const mobilePrimaryLabel = resolvedBreadcrumb?.at(-1)?.label
+    ?? (activeIndex >= 0 ? navItems[activeIndex].label : '')
+  const mobileSecondaryLabel = resolvedBreadcrumb && resolvedBreadcrumb.length > 1
+    ? resolvedBreadcrumb[resolvedBreadcrumb.length - 2]?.label
+    : undefined
+  const mobileOpen = mobileMenuPath === pathname
+
   // Refs стабильны — deps пуст намеренно
   const measureLabel = useCallback((index: number) => {
     const nav = navRef.current
@@ -85,63 +120,66 @@ export function Header({ breadcrumb }: HeaderProps) {
     return { left: lr.left - nr.left, width: lr.width }
   }, [])
 
-  // При смене маршрута: снапаем линию без анимации → включаем анимацию
-  useLayoutEffect(() => {
-    if (isLevel2 || activeIndex < 0) {
-      setUlVisible(false)
-      setUlAnimated(false)
+  const applyUnderline = useCallback((index: number, options?: { animate?: boolean }) => {
+    const underline = underlineRef.current
+    const pos = measureLabel(index)
+
+    if (!underline || !pos) return
+
+    underline.style.opacity = '1'
+    underline.style.left = `${pos.left}px`
+    underline.style.width = `${pos.width}px`
+
+    if (options?.animate === false) {
+      underline.style.transition = 'none'
       return
     }
-    setUlAnimated(false)
-    const pos = measureLabel(activeIndex)
-    if (pos) {
-      setUlLeft(pos.left)
-      setUlWidth(pos.width)
-      setUlVisible(true)
+
+    underline.style.transition = [
+      'left 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+    ].join(', ')
+  }, [measureLabel])
+
+  // При смене маршрута: снапаем линию без анимации → включаем анимацию
+  useLayoutEffect(() => {
+    const underline = underlineRef.current
+    if (!underline) return
+
+    if (isLevel2 || activeIndex < 0) {
+      underline.style.opacity = '0'
+      underline.style.transition = 'none'
+      return
     }
+
+    applyUnderline(activeIndex, { animate: false })
+
     // Включаем transition только после того как позиция зафиксирована
     const raf = requestAnimationFrame(() =>
-      requestAnimationFrame(() => setUlAnimated(true))
+      requestAnimationFrame(() => applyUnderline(activeIndex))
     )
     return () => cancelAnimationFrame(raf)
-  }, [pathname, isLevel2, activeIndex, measureLabel])
+  }, [pathname, isLevel2, activeIndex, applyUnderline])
 
   // Переcчёт позиции при ресайзе окна
   useEffect(() => {
     function onResize() {
       if (isLevel2 || activeIndex < 0) return
-      const pos = measureLabel(activeIndex)
-      if (pos) {
-        setUlLeft(pos.left)
-        setUlWidth(pos.width)
-      }
+      applyUnderline(activeIndex, { animate: false })
     }
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
-  }, [activeIndex, isLevel2, measureLabel])
+  }, [activeIndex, isLevel2, applyUnderline])
 
   function onItemHover(index: number) {
-    const pos = measureLabel(index)
-    if (pos) {
-      setUlLeft(pos.left)
-      setUlWidth(pos.width)
-    }
+    applyUnderline(index)
   }
 
   function onNavLeave() {
     if (activeIndex >= 0) {
-      const pos = measureLabel(activeIndex)
-      if (pos) {
-        setUlLeft(pos.left)
-        setUlWidth(pos.width)
-      }
+      applyUnderline(activeIndex)
     }
   }
-
-  // Закрываем мобильное меню при переходе
-  useEffect(() => {
-    setMobileOpen(false)
-  }, [pathname])
 
   // Блокируем скролл body при открытом мобильном меню
   useEffect(() => {
@@ -158,8 +196,6 @@ export function Header({ breadcrumb }: HeaderProps) {
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [mobileOpen])
-
-  const backLabel = navItems.find(item => item.href === '/')?.label ?? 'Назад'
 
   return (
     <>
@@ -211,26 +247,20 @@ export function Header({ breadcrumb }: HeaderProps) {
 
                 {/* Анимированная линия подчёркивания */}
                 <span
-                  className={[
-                    styles.underline,
-                    ulVisible ? styles.ulVisible : '',
-                    ulAnimated ? styles.ulAnimated : '',
-                  ].join(' ')}
-                  style={{ left: ulLeft, width: ulWidth }}
+                  className={styles.underline}
+                  ref={underlineRef}
                   aria-hidden="true"
                 />
               </nav>
             ) : (
-              /* Level 2: назад + хлебные крошки + CV */
-              <>
-                <Link href="/" className={styles.backLink}>
-                  <IconCaretLeft />
-                  <span>{backLabel}</span>
+              /* Level 2: единая строка навигации */
+              <nav className={styles.level2Nav} aria-label="Навигация">
+                <Link href="/" className={styles.level2Item}>
+                  <span className={styles.label}>{navItems.find(item => item.href === '/')?.label ?? 'Главная'}</span>
                 </Link>
-
                 <div className={styles.breadcrumb} aria-label="Навигационная цепочка">
-                  {breadcrumb!.map((crumb, i) => {
-                    const isLast = i === breadcrumb!.length - 1
+                  {resolvedBreadcrumb!.map((crumb, i) => {
+                    const isLast = i === resolvedBreadcrumb!.length - 1
                     return (
                       <span key={i} className={styles.crumbGroup}>
                         {i > 0 && <span className={styles.crumbSep} aria-hidden>/</span>}
@@ -249,9 +279,9 @@ export function Header({ breadcrumb }: HeaderProps) {
                 </div>
 
                 <button className={styles.cvBtn} onClick={() => setCvOpen(true)}>
-                    <IconCV />
+                  <span className={styles.label}>CV</span>
                 </button>
-              </>
+              </nav>
             )}
           </div>
 
@@ -260,41 +290,28 @@ export function Header({ breadcrumb }: HeaderProps) {
 
             {/* Слева: бургер или кнопка «назад» */}
             <div className={styles.mobileLeft}>
-              {isLevel2 ? (
-                <Link href="/" className={styles.mobileIconBtn} aria-label="Назад">
-                  <IconCaretLeft />
-                </Link>
-              ) : (
-                <button
-                  className={styles.mobileIconBtn}
-                  onClick={() => setMobileOpen(v => !v)}
-                  aria-label={mobileOpen ? 'Закрыть меню' : 'Открыть меню'}
-                  aria-expanded={mobileOpen}
-                >
-                  {mobileOpen ? <IconClose /> : <IconBurger />}
-                </button>
-              )}
+              <button
+                className={styles.mobileIconBtn}
+                onClick={() => setMobileMenuPath(current => current === pathname ? null : pathname)}
+                aria-label={mobileOpen ? 'Закрыть меню' : 'Открыть меню'}
+                aria-expanded={mobileOpen}
+              >
+                {mobileOpen ? <IconClose /> : <IconBurger />}
+              </button>
             </div>
 
             {/* По центру: название текущей страницы или хлебные крошки */}
             <div className={styles.mobileCenter}>
               {isLevel2 ? (
-                <span className={styles.mobileBreadcrumb}>
-                  {breadcrumb!.map((crumb, i) => {
-                    const isLast = i === breadcrumb!.length - 1
-                    return (
-                      <span key={i}>
-                        {i > 0 && <span className={styles.mobileSep} aria-hidden>/</span>}
-                        <span className={isLast ? styles.mobileCrumbActive : styles.mobileCrumbDim}>
-                          {crumb.label}
-                        </span>
-                      </span>
-                    )
-                  })}
-                </span>
+                <div className={styles.mobileTitleGroup}>
+                  {mobileSecondaryLabel && (
+                    <span className={styles.mobileSectionName}>{mobileSecondaryLabel}</span>
+                  )}
+                  <span className={styles.mobilePageName}>{mobilePrimaryLabel}</span>
+                </div>
               ) : (
                 <span className={styles.mobilePageName}>
-                  {activeIndex >= 0 ? navItems[activeIndex].label : ''}
+                  {mobilePrimaryLabel}
                 </span>
               )}
             </div>
@@ -318,7 +335,10 @@ export function Header({ breadcrumb }: HeaderProps) {
                   <button
                     key={item.label}
                     className={styles.mobileMenuLink}
-                    onClick={() => { setCvOpen(true); setMobileOpen(false) }}
+                    onClick={() => {
+                      setCvOpen(true)
+                      setMobileMenuPath(null)
+                    }}
                   >
                     {item.label}
                   </button>

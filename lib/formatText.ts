@@ -10,6 +10,8 @@ const NON_BREAKING_HYPHEN = '\u2011';
 const LEFT_QUOTE = '\u00AB'; // «
 const RIGHT_QUOTE = '\u00BB'; // »
 const LONG_DASH = '\u2014'; // —
+const LETTER = '[а-яёА-ЯЁa-zA-Z]';
+const LONG_WORD = `${LETTER}{3,}(?:${NON_BREAKING_HYPHEN}${LETTER}+)*`;
 
 /** Граница слова (не после буквы/цифры) — работает с кириллицей */
 const WB = '(?<![а-яёА-ЯЁa-zA-Z0-9])';
@@ -129,10 +131,21 @@ export function applyTypography(text: string): string {
     });
   });
 
-  // Защита последнего слова от висячей строки
-  s = s.replace(/\s+(\S+)$/, `${NON_BREAKING_SPACE}$1`);
+  // Защита последнего слова от висячей строки.
+  // После двоеточия оставляем обычный пробел, чтобы короткие заголовки могли переноситься.
+  s = s.replace(/\s+(\S+)$/, (match, lastWord, offset, whole) => {
+    const previousChar = whole[offset - 1];
+    if (previousChar === ':') return ` ${lastWord}`;
+    return `${NON_BREAKING_SPACE}${lastWord}`;
+  });
 
-  return s;
+  return normalizeLongWordNbsp(s);
+}
+
+export function normalizeLongWordNbsp(text: string): string {
+  if (!text) return '';
+  const longWordPair = new RegExp(`(${LONG_WORD})${NON_BREAKING_SPACE}(${LONG_WORD})`, 'g');
+  return text.replace(longWordPair, '$1 $2');
 }
 
 /**

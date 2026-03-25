@@ -1,4 +1,4 @@
-# Portfolio CMS — Claude Code Instructions
+# Portfolio CMS — Codex Instructions
 
 ## Project Overview
 A self-hosted portfolio website with a custom CMS admin panel.
@@ -126,8 +126,6 @@ Example: `CC_Фаза1_Скелет.md`, `CC_Дизайн_Система.md`, `C
 These docs form the owner's personal knowledge base about this project.
 
 ---
-## Frontend / UI
-For all frontend and UI tasks, read `CLAUDE_UI.md` before starting.
 
 ## Do Not Touch Without Explicit Instruction
 - `styles/tokens.css` — design token changes affect the entire system

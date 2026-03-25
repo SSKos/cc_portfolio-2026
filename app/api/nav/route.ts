@@ -4,10 +4,15 @@ import { prisma } from '@/lib/prisma'
 /** GET /api/nav — visible top-level sections for public navigation */
 export async function GET() {
   const pages = await prisma.page.findMany({
-    where: { parentId: null, isVisible: true },
+    where: { isVisible: true },
     orderBy: { order: 'asc' },
-    select: { slug: true, title: true },
+    select: { slug: true, title: true, parentId: true },
   })
 
-  return NextResponse.json(pages)
+  const navItems = pages.filter(page => page.parentId === null)
+
+  return NextResponse.json({
+    navItems,
+    pages,
+  })
 }

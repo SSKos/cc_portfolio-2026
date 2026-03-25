@@ -118,7 +118,7 @@
 .tab,
 .tabActive {
   padding: var(--pad-xs) var(--pad-sm);
-  font-size: 0.8125rem;
+  font-size: 1.125rem;
   font-weight: 300;
   font-family: inherit;
   cursor: pointer;
@@ -168,7 +168,7 @@
   margin: 0;
   padding: var(--pad-lg);
   font-family: 'Courier New', Courier, 'Lucida Console', monospace;
-  font-size: 0.8125rem;
+  font-size: 1.125rem;
   line-height: 1.7;
   color: var(--text-primary);
   background: var(--surface-level-2);
@@ -199,7 +199,7 @@
   max-height: 560px;
   padding: var(--pad-lg);
   font-family: 'Courier New', Courier, 'Lucida Console', monospace;
-  font-size: 0.8125rem;
+  font-size: 1.125rem;
   line-height: 1.7;
   color: var(--text-primary);
   background: var(--surface-level-2);
@@ -229,7 +229,7 @@
 /* ── Save button ─────────────────────────────────────────────────────────── */
 
 .saveBtn {
-  font-size: 0.8125rem;
+  font-size: 1.125rem;
   font-weight: 400;
   font-family: inherit;
   color: var(--text-darker);
@@ -263,7 +263,7 @@
 /* ── Copy button ─────────────────────────────────────────────────────────── */
 
 .copyBtn {
-  font-size: 0.8125rem;
+  font-size: 1.125rem;
   font-weight: 400;
   font-family: inherit;
   color: var(--text-darker);

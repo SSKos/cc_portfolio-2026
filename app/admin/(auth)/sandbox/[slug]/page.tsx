@@ -1,5 +1,8 @@
 import { readContent } from '@/lib/contentStore'
 import { notFound } from 'next/navigation'
+import { SandboxTextProvider } from '@/lib/sandboxText'
+import { hasUseText, injectUseText } from '@/lib/sandboxInject'
+import { AutoReload } from './AutoReload'
 import styles from './page.module.css'
 
 type Props = { params: Promise<{ slug: string }> }
@@ -39,9 +42,26 @@ export default async function AdminSandboxSlugPage({ params }: Props) {
     )
   }
 
+  // Dev-only: auto-inject useText() if the component doesn't use it yet
+  if (process.env.NODE_ENV !== 'production' && !hasUseText(slug)) {
+    injectUseText(slug)
+    return (
+      <div className={styles.placeholder}>
+        <AutoReload delayMs={1500} />
+        <p className={styles.label}>useText() добавлен в {slug}.tsx</p>
+        <p className={styles.hint}>Страница обновится автоматически...</p>
+      </div>
+    )
+  }
+
   return (
-    <div className={styles.canvas}>
-      <Component />
-    </div>
+    <SandboxTextProvider
+      contentId={item.id}
+      initialTexts={(item.data as Record<string, string>) ?? {}}
+    >
+      <div className={styles.canvas}>
+        <Component />
+      </div>
+    </SandboxTextProvider>
   )
 }

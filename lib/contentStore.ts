@@ -6,6 +6,7 @@ export type ContentItem = {
   slug: string
   description: string
   isVisible: boolean
+  data: Record<string, string> | null
   createdAt: string
 }
 
@@ -15,9 +16,14 @@ function toItem(row: {
   slug: string
   description: string
   isVisible: boolean
+  data: unknown
   createdAt: Date
 }): ContentItem {
-  return { ...row, createdAt: row.createdAt.toISOString() }
+  return {
+    ...row,
+    data: row.data && typeof row.data === 'object' ? row.data as Record<string, string> : null,
+    createdAt: row.createdAt.toISOString(),
+  }
 }
 
 export async function readContent(): Promise<ContentItem[]> {

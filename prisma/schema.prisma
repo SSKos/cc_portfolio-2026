@@ -70,6 +70,7 @@ model Content {
   slug        String   @unique
   description String   @default("")
   isVisible   Boolean  @default(false)
+  data        Json?    // key-value store for sandbox text content
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

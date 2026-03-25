@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { requireSession } from '@/lib/apiAuth'
 import { saveUploadedFile, deleteUploadedFile } from '@/lib/mediaStorage'
+import { buildMediaUrl, withStableMediaUrl } from '@/lib/mediaUrl'
 
 type Params = { params: Promise<{ id: string }> }
 
@@ -37,7 +38,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
         filename: saved.filename,
         mimeType: saved.mimeType,
         size: saved.size,
-        url: saved.url,
+        url: buildMediaUrl(id),
         // originalName не меняем — название остаётся от первой загрузки
       },
     })
@@ -47,7 +48,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
       action: 'media.replace',
       resource: { id, newFilename: saved.filename },
     }))
-    return NextResponse.json(updated)
+    return NextResponse.json(withStableMediaUrl(updated))
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : 'Replace failed'
     return NextResponse.json({ error: message }, { status: 422 })

@@ -3,9 +3,9 @@
   --header-height: 88px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   :root {
-    --header-height: 56px;
+    --header-height: 64px;
   }
 }
 
@@ -47,8 +47,7 @@
 }
 
 .desktopL2 {
-  justify-content: space-between;
-  position: relative; /* для абсолютного центрирования хлебных крошек */
+  justify-content: center;
 }
 
 /* ── Навигация Level 1 ─────────────────────────────────────────────────── */
@@ -108,38 +107,34 @@
     width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Level 2 desktop: назад + крошки + CV ──────────────────────────────── */
+/* ── Level 2 desktop: единая строка навигации ───────────────────────────── */
 
-.backLink {
+.level2Nav {
   display: flex;
   align-items: center;
-  gap: var(--xs);
-  color: var(--text-darker);
-  font-size: var(--typo-Header-item-font-size);
-  font-weight: var(--typo-Header-item-font-weight);
-  line-height: var(--typo-Header-item-line-height);
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: color 0.2s ease;
+  justify-content: center;
+  gap: var(--lg);
 }
 
-.backLink:hover {
+.level2Item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 88px;
+  padding: 0 var(--lg);
+  color: var(--text-darker);
+  text-decoration: none;
+}
+
+.level2Item:hover .label {
   color: var(--text-primary);
 }
 
-.backLink svg {
-  flex-shrink: 0;
-}
-
-/* Хлебные крошки — абсолютно по центру */
 .breadcrumb {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   align-items: center;
   white-space: nowrap;
-  pointer-events: none;
+  min-height: 88px;
 }
 
 .crumbGroup {
@@ -182,12 +177,12 @@
 }
 
 .cvBtn {
-  font-size: var(--typo-Header-item-font-size);
-  font-weight: var(--typo-Header-item-font-weight);
-  line-height: var(--typo-Header-item-line-height);
   color: var(--text-darker);
-  flex-shrink: 0;
-  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 88px;
+  padding: 0 var(--lg);
   transition: color 0.2s ease;
 }
 
@@ -217,7 +212,7 @@
   justify-content: center;
 }
 
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   .mobileMenu {
     display: none;
   }
@@ -248,13 +243,13 @@
 
 /* ── Адаптив ───────────────────────────────────────────────────────────── */
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .desktop {
     display: none;
   }
 
   .inner {
-    height: 56px;
+    height: 64px;
     padding: 0 var(--s);
   }
 
@@ -281,6 +276,11 @@
     transition: background-color 0.2s;
   }
 
+  .mobileIconBtn svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
   .mobileIconBtn:hover {
     background-color: var(--surface-level-2);
   }
@@ -294,47 +294,51 @@
     padding: 0 var(--xxs);
   }
 
-  .mobilePageName {
-    font-size: var(--fs-md);
-    font-weight: 500;
-    line-height: var(--lh-2xl);
-    color: var(--text-primary);
-    border-bottom: 2px solid var(--vis-default);
-    white-space: nowrap;
-  }
-
-  .mobileBreadcrumb {
-    display: inline-flex;
+  .mobileTitleGroup {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    font-size: var(--fs-md);
-    font-weight: 500;
-    line-height: var(--lh-2xl);
+    gap: var(--xxxs);
+    max-width: 100%;
+  }
+
+  .mobileSectionName {
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: var(--lh-lg);
+    color: var(--text-darker);
     white-space: nowrap;
+    max-width: 100%;
     overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  .mobileSep {
-    color: var(--text-darker);
-    padding: 0 2px;
-  }
-
-  .mobileCrumbActive {
+  .mobilePageName {
+    font-size: 1.375rem;
+    font-weight: 500;
+    line-height: var(--lh-xl);
     color: var(--text-primary);
-    border-bottom: 2px solid var(--vis-default);
-  }
-
-  .mobileCrumbDim {
-    color: var(--text-darker);
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .mobileCvBtn {
-    font-size: var(--fs-md);
-    font-weight: 500;
-    line-height: var(--lh-2xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: var(--text-darker);
     flex-shrink: 0;
+    width: 44px;
+    height: 44px;
     padding: 0;
     transition: color 0.2s ease;
+  }
+
+  .mobileCvBtn svg {
+    width: 1.625rem;
+    height: auto;
   }
 
   .mobileCvBtn:hover {

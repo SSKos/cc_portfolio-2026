@@ -133,7 +133,7 @@ export function ImageGallery() {
         </h2>
         {/* Подсказка: что копирует кнопка Copy path */}
         <p className={styles.hint}>
-          Copy path копирует URL вида <code className={styles.code}>/uploads/filename.jpg</code> — вставляй в <code className={styles.code}>src</code> напрямую.
+          Copy path копирует стабильный URL вида <code className={styles.code}>/media/123</code>. При замене файла ссылка остаётся той же, даже если изменится имя файла или расширение.
         </p>
       </div>
 

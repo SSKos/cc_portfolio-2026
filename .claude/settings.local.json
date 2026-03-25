@@ -52,7 +52,12 @@
       "Bash(PLUGIN_ROOT=~/.claude/plugins/cache/thedotmack/claude-mem/10.5.4 node:*)",
       "Bash(CLAUDE_PLUGIN_ROOT=~/.claude/plugins/cache/thedotmack/claude-mem/10.5.4 node:*)",
       "Bash(do:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(openssl rand:*)",
+      "Bash(npx tsx:*)",
+      "Skill(claude-md-management:revise-claude-md)",
+      "mcp__plugin_playwright_playwright__browser_evaluate",
+      "Bash(git add: *)"
     ]
   }
 }

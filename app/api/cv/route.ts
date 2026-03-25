@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { buildMediaUrl } from '@/lib/mediaUrl'
 
 /**
  * GET /api/cv
@@ -25,9 +26,13 @@ export async function GET() {
     if (typeof mediaId !== 'number') return null
     const media = await prisma.media.findUnique({
       where: { id: mediaId },
-      select: { url: true, originalName: true },
+      select: { id: true, originalName: true },
     })
-    return media ?? null
+    if (!media) return null
+    return {
+      url: buildMediaUrl(media.id),
+      originalName: media.originalName,
+    }
   }
 
   const [ru, en] = await Promise.all([resolve(meta.ruPdfId), resolve(meta.enPdfId)])
