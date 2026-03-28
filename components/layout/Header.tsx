@@ -47,6 +47,7 @@ export function Header({ breadcrumb }: HeaderProps) {
   const [pages, setPages] = useState<PageInfo[]>([])
   const [cvOpen, setCvOpen] = useState(false)
   const [mobileMenuPath, setMobileMenuPath] = useState<string | null>(null)
+  const [dropdownOpen, setDropdownOpen] = useState(false)
 
   useEffect(() => {
     fetch('/api/nav')
@@ -87,6 +88,11 @@ export function Header({ breadcrumb }: HeaderProps) {
   const underlineRef = useRef<HTMLSpanElement>(null)
   const labelRefs = useRef<(HTMLSpanElement | null)[]>([])
 
+  // Level 2: refs для позиционирования подчёркивания и дропдауна
+  const level2NavRef = useRef<HTMLElement>(null)
+  const crumbActiveRef = useRef<HTMLSpanElement>(null)
+  const dropdownRef = useRef<HTMLSpanElement>(null)
+
   // Активный пункт по pathname
   const activeIndex = (() => {
     for (let i = 0; i < navItems.length; i++) {
@@ -110,10 +116,28 @@ export function Header({ breadcrumb }: HeaderProps) {
     : undefined
   const mobileOpen = mobileMenuPath === pathname
 
+  // Siblings для дропдауна на level 2 (страницы с тем же parentId)
+  const siblings = (() => {
+    if (!isLevel2 || !pages.length) return []
+    const currentSlug = pathname.split('/').filter(Boolean).join('/')
+    const currentPage = pages.find(p => p.slug === currentSlug)
+    if (!currentPage || currentPage.parentId === null) return []
+    return pages.filter(p => p.parentId === currentPage.parentId && p.slug !== currentSlug)
+  })()
+
   // Refs стабильны — deps пуст намеренно
   const measureLabel = useCallback((index: number) => {
     const nav = navRef.current
     const label = labelRefs.current[index]
+    if (!nav || !label) return null
+    const nr = nav.getBoundingClientRect()
+    const lr = label.getBoundingClientRect()
+    return { left: lr.left - nr.left, width: lr.width }
+  }, [])
+
+  const measureCrumbActive = useCallback(() => {
+    const nav = level2NavRef.current
+    const label = crumbActiveRef.current
     if (!nav || !label) return null
     const nr = nav.getBoundingClientRect()
     const lr = label.getBoundingClientRect()
@@ -146,7 +170,17 @@ export function Header({ breadcrumb }: HeaderProps) {
     const underline = underlineRef.current
     if (!underline) return
 
-    if (isLevel2 || activeIndex < 0) {
+    if (isLevel2) {
+      const pos = measureCrumbActive()
+      if (!pos) { underline.style.opacity = '0'; return }
+      underline.style.opacity = '1'
+      underline.style.left = `${pos.left}px`
+      underline.style.width = `${pos.width}px`
+      underline.style.transition = 'none'
+      return
+    }
+
+    if (activeIndex < 0) {
       underline.style.opacity = '0'
       underline.style.transition = 'none'
       return
@@ -159,17 +193,42 @@ export function Header({ breadcrumb }: HeaderProps) {
       requestAnimationFrame(() => applyUnderline(activeIndex))
     )
     return () => cancelAnimationFrame(raf)
-  }, [pathname, isLevel2, activeIndex, applyUnderline])
+  }, [pathname, isLevel2, activeIndex, applyUnderline, measureCrumbActive])
 
   // Переcчёт позиции при ресайзе окна
   useEffect(() => {
     function onResize() {
-      if (isLevel2 || activeIndex < 0) return
+      const underline = underlineRef.current
+      if (!underline) return
+      if (isLevel2) {
+        const pos = measureCrumbActive()
+        if (!pos) return
+        underline.style.left = `${pos.left}px`
+        underline.style.width = `${pos.width}px`
+        underline.style.transition = 'none'
+        return
+      }
+      if (activeIndex < 0) return
       applyUnderline(activeIndex, { animate: false })
     }
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
-  }, [activeIndex, isLevel2, applyUnderline])
+  }, [activeIndex, isLevel2, applyUnderline, measureCrumbActive])
+
+  // Закрытие дропдауна при навигации
+  useEffect(() => { setDropdownOpen(false) }, [pathname])
+
+  // Закрытие дропдауна при клике вне
+  useEffect(() => {
+    if (!dropdownOpen) return
+    function handleOutside(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleOutside)
+    return () => document.removeEventListener('mousedown', handleOutside)
+  }, [dropdownOpen])
 
   function onItemHover(index: number) {
     applyUnderline(index)
@@ -191,7 +250,7 @@ export function Header({ breadcrumb }: HeaderProps) {
   useEffect(() => {
     if (!mobileOpen) return
     function onKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') setMobileOpen(false)
+      if (e.key === 'Escape') setMobileMenuPath(null)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
@@ -254,7 +313,7 @@ export function Header({ breadcrumb }: HeaderProps) {
               </nav>
             ) : (
               /* Level 2: единая строка навигации */
-              <nav className={styles.level2Nav} aria-label="Навигация">
+              <nav className={styles.level2Nav} ref={level2NavRef} aria-label="Навигация">
                 <Link href="/" className={styles.level2Item}>
                   <span className={styles.label}>{navItems.find(item => item.href === '/')?.label ?? 'Главная'}</span>
                 </Link>
@@ -268,8 +327,45 @@ export function Header({ breadcrumb }: HeaderProps) {
                           <Link href={crumb.href} className={styles.crumbLink}>
                             {crumb.label}
                           </Link>
+                        ) : isLast && siblings.length > 0 ? (
+                          <span className={styles.crumbDropdown} ref={dropdownRef}>
+                            <button
+                              className={[styles.crumbCurrent, styles.crumbActive, styles.crumbTrigger].join(' ')}
+                              onClick={() => setDropdownOpen(o => !o)}
+                              aria-expanded={dropdownOpen}
+                              aria-haspopup="listbox"
+                            >
+                              <span ref={crumbActiveRef}>{crumb.label}</span>
+                              <svg
+                                className={`${styles.chevron} ${dropdownOpen ? styles.chevronOpen : ''}`}
+                                width="10" height="6" viewBox="0 0 10 6"
+                                fill="none" aria-hidden
+                              >
+                                <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                              </svg>
+                            </button>
+                            {dropdownOpen && (
+                              <div className={styles.dropdownPanel} role="listbox">
+                                {siblings.map(sib => (
+                                  <Link
+                                    key={sib.slug}
+                                    href={'/' + sib.slug}
+                                    className={styles.dropdownItem}
+                                    role="option"
+                                    aria-selected={false}
+                                    onClick={() => setDropdownOpen(false)}
+                                  >
+                                    {sib.title}
+                                  </Link>
+                                ))}
+                              </div>
+                            )}
+                          </span>
                         ) : (
-                          <span className={[styles.crumbCurrent, isLast ? styles.crumbActive : ''].join(' ')}>
+                          <span
+                            ref={isLast ? crumbActiveRef : undefined}
+                            className={[styles.crumbCurrent, isLast ? styles.crumbActive : ''].join(' ')}
+                          >
                             {crumb.label}
                           </span>
                         )}
@@ -281,6 +377,13 @@ export function Header({ breadcrumb }: HeaderProps) {
                 <button className={styles.cvBtn} onClick={() => setCvOpen(true)}>
                   <span className={styles.label}>CV</span>
                 </button>
+
+                {/* Анимированная линия подчёркивания (level 2) */}
+                <span
+                  className={styles.underline}
+                  ref={underlineRef}
+                  aria-hidden="true"
+                />
               </nav>
             )}
           </div>

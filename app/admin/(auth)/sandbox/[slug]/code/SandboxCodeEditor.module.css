@@ -1,0 +1,141 @@
+/* ── Wrap ─────────────────────────────────────────────────────────────────── */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--admin-topbar-height, 232px));
+  max-width: var(--columns-x12);
+  margin: 0 auto;
+  padding: var(--pad-2xl) var(--pad-2xl) 0;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--pad-lg);
+  gap: var(--md);
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-xs);
+}
+
+.back {
+  font-size: var(--fs-md);
+  font-weight: 300;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.back:hover {
+  color: var(--text-primary);
+}
+
+.separator {
+  color: var(--text-darker);
+  font-weight: 300;
+}
+
+.current {
+  font-size: var(--fs-md);
+  font-weight: 400;
+  color: var(--text-primary);
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+}
+
+.saveBtn {
+  padding: var(--xs) var(--md);
+  border-radius: var(--radius-md);
+  font-size: 1.125rem;
+  font-weight: 400;
+  cursor: pointer;
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-txt);
+  transition: background-color 0.15s, opacity 0.15s;
+}
+
+.saveBtn:hover:not(:disabled) {
+  background-color: var(--button-primary-bg-hover);
+}
+
+.saveBtn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.errorMsg {
+  font-size: 0.875rem;
+  color: var(--input-error);
+}
+
+.savedMsg {
+  font-size: 0.875rem;
+  color: var(--action-hover-online);
+}
+
+/* ── Tabs ─────────────────────────────────────────────────────────────────── */
+
+.tabs {
+  display: flex;
+  gap: var(--pad-xxs);
+  margin-bottom: var(--pad-sm);
+  flex-shrink: 0;
+}
+
+.tab {
+  padding: var(--pad-xxxs) var(--pad-sm);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  font-size: 0.875rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 400;
+  color: var(--text-darker);
+  background: var(--surface-level-1);
+  border: 1px solid var(--surface-level-3);
+  border-bottom: none;
+  cursor: pointer;
+  transition: color 0.15s, background-color 0.15s;
+}
+
+.tab:hover {
+  color: var(--text-secondary);
+}
+
+.tabActive {
+  color: var(--text-primary);
+  background: var(--surface-level-2);
+}
+
+.tabDirty::after {
+  content: ' •';
+  color: var(--action-hover-online);
+}
+
+/* ── Editor ───────────────────────────────────────────────────────────────── */
+
+.editorWrap {
+  flex: 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--surface-level-3);
+  min-height: 0;
+}
+
+.stateMsg {
+  font: var(--typo-Card-p);
+  color: var(--text-darker);
+  padding: var(--pad-3xl);
+  opacity: 0.6;
+}

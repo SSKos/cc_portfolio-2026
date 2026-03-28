@@ -104,8 +104,10 @@ export function applyTypography(text: string): string {
   // Неразрывный пробел перед длинным тире
   s = s.replace(/\s+—/g, `${NON_BREAKING_SPACE}—`);
 
-  // «не» + слово
-  s = s.replace(new RegExp(`${WB}не\\s+([а-яё]+)`, 'gi'), `не${NON_BREAKING_SPACE}$1`);
+  // «не» + слово — сохраняем исходный регистр частицы
+  s = s.replace(new RegExp(`${WB}(не)\\s+([а-яё]+)`, 'gi'), (_match, word, nextWord) => {
+    return `${word}${NON_BREAKING_SPACE}${nextWord}`;
+  });
 
   // Слово + частицы «бы», «ли», «же»
   s = s.replace(new RegExp(`\\s+(бы|ли|же)${WA}`, 'gi'), `${NON_BREAKING_SPACE}$1`);
@@ -124,10 +126,11 @@ export function applyTypography(text: string): string {
 
   // Предлоги и союзы (дополнительная страховка)
   [...ONE_LETTER_PREPOSITIONS, ...TWO_LETTER_WORDS, ...CONJUNCTIONS].forEach(prep => {
-    const re = new RegExp(`${WB}${prep}(\\s+)(?!\\d)`, 'gi');
-    s = s.replace(re, (match, spaces) => {
+    const escaped = prep.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const re = new RegExp(`${WB}(${escaped})(\\s+)(?!\\d)`, 'gi');
+    s = s.replace(re, (match, word, spaces) => {
       if (spaces.includes(NON_BREAKING_SPACE)) return match;
-      return `${prep}${NON_BREAKING_SPACE}`;
+      return `${word}${NON_BREAKING_SPACE}`;
     });
   });
 

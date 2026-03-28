@@ -45,8 +45,9 @@ next-env.d.ts
 /app/generated/prisma
 /public/uploads
 
-# sandbox content — user-authored files, not tracked in git
-/sandbox-content/
+# sandbox content — tracked in git
+# /sandbox-content/
 
 # playwright mcp artifacts
 /.playwright-mcp/
+.claude.json

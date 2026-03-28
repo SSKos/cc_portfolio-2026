@@ -1,0 +1,414 @@
+/**
+ * design-systems.module.css
+ * Все значения — через CSS-токены из styles/tokens.css.
+ * Цвета:    var(--text-primary) var(--text-secondary) var(--text-accent)
+ *           var(--surface-level-1) var(--card-bg)
+ * Отступы:  var(--pad-*) var(--semantic-*) var(--xs) … var(--xl)
+ * Шрифты:   var(--typo-h2) var(--typo-p)
+ * Радиусы:  var(--radius-md) var(--radius-2xl) var(--radius-4xl)
+ */
+
+/* ── Страница ──────────────────────────────────────────── */
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 7.5rem;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* ── Герой ─────────────────────────────────────────────── */
+.hero {
+    position: relative;
+    align-self: stretch;
+    height: 38vw;
+    min-height: 35vh;
+    max-height: 600px;
+    overflow: hidden;       /* единственный overflow:hidden — здесь */
+    flex-shrink: 0;
+}
+
+/* Слой 1: фон — заполняет весь контейнер, прижат к верху */
+.heroBg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: left top;
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+/* Обёртка для группы экранов — ограничена 75% ширины героя */
+.heroScreens {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(75%, 56rem);
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Внутренние обёртки для отдельных экранов */
+.heroScreenMidWrap,
+.heroScreenTopWrap {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+.heroScreenMidWrap {
+    left: 0;
+    width: 100%;
+}
+
+.heroScreenTopWrap {
+    right: 0;
+    width: 66.6667%;
+}
+
+/* Слой 2: средний экран — прижат к правому краю, масштабируется пропорционально */
+.heroMidScreen {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: auto;
+    max-width: none;
+    filter: drop-shadow(0 0 1.5rem rgba(0, 0, 0, 0.15));
+    pointer-events: none;
+}
+
+/* Слой 3: верхний экран — прижат к правому краю, масштабируется пропорционально */
+.heroTopScreen {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: auto;
+    max-width: none;
+    filter: drop-shadow(0 0 1.5rem rgba(0, 0, 0, 0.15));
+    pointer-events: none;
+}
+
+.heroContent {
+    display: flex;
+    flex-direction: column;
+    gap: var(--pad-lg);
+    width: 100%;
+    max-width: var(--columns-x10);
+    margin: 0 auto;
+    padding-top: var(--pad-4xl);
+}
+
+.eyebrow {
+    composes: eyebrowAccent from '../shared/typography.module.css';
+}
+
+/* ── Секция (общий контейнер текстового блока) ─────────── */
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--xs);             /* 8px между заголовком и телом */
+    width: 100%;
+    max-width: var(--columns-x10);  /* ~1128px ≈ Figma 1140px */
+    padding-top: var(--semantic-6xl);   /* 64px = 4rem */
+    flex-shrink: 0;
+    min-width: 0;
+}
+
+/* ── Типографика ───────────────────────────────────────── */
+.h1 {
+    composes: sectionHeading from '../shared/typography.module.css';
+}
+
+.h2 {
+    composes: sectionHeading from '../shared/typography.module.css';
+}
+
+.lead {
+    composes: sectionLead from '../shared/typography.module.css';
+}
+
+.body {
+    composes: sectionBody from '../shared/typography.module.css';
+    display: flex;
+    flex-direction: column;
+    gap: var(--xs);
+}
+
+.body p {
+    margin: 0;
+}
+
+.list {
+    composes: sectionBody from '../shared/typography.module.css';
+    margin: 0;
+    padding-left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--xs);
+    list-style-type: disc;
+}
+
+.list li::marker {
+    font-size: 1em;
+    line-height: 1rem;
+}
+
+/* ── Скриншот хаоса ────────────────────────────────────── */
+.screenshotWrap {
+    width: 100%;
+    max-width: var(--columns-x12);
+    padding-top: var(--semantic-6xl);
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.screenshotCard {
+    width: 100%;
+    max-width: var(--columns-x10);     /* 1128px */
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.screenshotImg {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* ── Преимущества: карточки + оглавление ──────────────── */
+.benefitsRow {
+    display: block;
+    width: 100%;
+    max-width: var(--columns-x10);
+    padding-top: var(--pad-2xl); /* 32px */
+}
+
+.benefitsCards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--lg);             /* 20px */
+}
+
+/* ── Карточка (универсальная) ──────────────────────────── */
+.card {
+    background: var(--card-bg);
+    border-radius: var(--radius-2xl);
+    padding: var(--pad-2xl) var(--pad-2xl) 1.875rem; /* 32px / 30px */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: var(--md);             /* 16px */
+    height: 100%;
+}
+
+.cardTitle {
+    composes: cardHeading from '../shared/typography.module.css';
+}
+
+.cardText {
+    composes: cardBody from '../shared/typography.module.css';
+}
+
+/* ── Результаты: карточки ──────────────────────────────── */
+.resultCards {
+    display: flex;
+    flex-direction: column;
+    gap: var(--lg);
+    width: 100%;
+    padding-top: var(--pad-2xl);
+}
+
+.resultCard {
+    background: var(--card-bg);
+    border-radius: var(--radius-2xl);
+    padding: var(--pad-2xl) var(--pad-2xl) 1.875rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--md);
+}
+
+.resultImagesRow {
+    display: flex;
+    gap: var(--semantic-3xl);
+    width: 100%;
+    align-items: stretch;
+}
+
+.resultImageButton {
+    display: flex;
+    flex: 1 1 0;
+    width: 100%;
+    min-width: 0;
+    min-height: 25rem;
+    padding: 0;
+    height: 25rem;
+    margin-top: 1rem;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    cursor: zoom-in;
+    background: transparent;
+}
+
+.figImg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+}
+
+.lightboxOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 220;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: var(--pad-2xl);
+    background-color: var(--overlay-dark-75);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.lightboxClose {
+    position: absolute;
+    top: var(--pad-lg);
+    right: var(--pad-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    color: var(--text-primary);
+    border-radius: var(--radius-md);
+    background-color: color-mix(in srgb, var(--surface-level-2) 82%, transparent);
+}
+
+.lightboxContent {
+    width: 100%;
+    max-width: var(--columns-x12);
+    max-height: calc(100dvh - var(--pad-5xl));
+    margin-top: var(--pad-5xl);
+    display: flex;
+    justify-content: center;
+}
+
+.lightboxImage {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    max-height: calc(100dvh - var(--pad-5xl) - var(--pad-2xl));
+    height: auto;
+    object-fit: contain;
+}
+
+@media (max-width: 1128px) {
+    .page {
+        padding-inline: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .benefitsCards {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 980px) {
+    .resultImagesRow > .resultImageButton:nth-child(n + 3) {
+        display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .resultImagesRow > .resultImageButton:nth-child(n + 2) {
+        display: none;
+    }
+}
+
+@media (max-width: 980px) {
+    .heroScreens {
+        width: 75%;
+    }
+
+    .benefitsRow {
+        flex-direction: column;
+    }
+
+    .tocImageWrap {
+        max-width: none;
+    }
+
+    .resultImageButton {
+        flex: 1 1 0;
+        min-height: 25rem;
+    }
+}
+
+@media (max-width: 750px) {
+    .heroScreens {
+        top: auto;
+        bottom: 0;
+        height: 75%;
+        width: 100%;
+    }
+
+    .heroScreenMidWrap,
+    .heroScreenTopWrap {
+        top: auto;
+        bottom: 0;
+        height: 100%;
+    }
+
+    .heroMidScreen {
+        top: auto;
+        bottom: 0;
+        left: 10%;
+        height: 100%;
+    }
+
+    .heroTopScreen {
+        top: auto;
+        bottom: 0;
+        height: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .page {
+        padding-bottom: 5rem;
+    }
+
+    .section {
+        padding-top: var(--semantic-4xl);
+    }
+
+    .benefitsRow {
+        padding-top: var(--lg);
+    }
+
+    .card,
+    .resultCard {
+        padding: var(--xl);
+    }
+
+    .lightboxOverlay {
+        padding: var(--pad-sm);
+    }
+
+    .lightboxContent {
+        margin-top: var(--pad-4xl);
+    }
+
+    .list {
+        padding-left: 1.25rem;
+    }
+    
+}

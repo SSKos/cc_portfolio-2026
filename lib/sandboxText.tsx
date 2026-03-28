@@ -4,9 +4,11 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useRef,
   useState,
 } from 'react'
+import { createPortal } from 'react-dom'
 import { formatText, normalizeLongWordNbsp } from './formatText'
 import styles from './sandboxText.module.css'
 
@@ -22,12 +24,23 @@ const SandboxTextContext = createContext<SandboxTextCtx | null>(null)
 // ── Provider ───────────────────────────────────────────────────────────────
 
 interface Props {
+  slug: string
   contentId: string
   initialTexts: Record<string, string>
   children: React.ReactNode
 }
 
-export function SandboxTextProvider({ contentId, initialTexts, children }: Props) {
+type DuplicateKey = {
+  key: string
+  count: number
+}
+
+type RegistrySnapshot = {
+  registeredKeys: Array<[string, string]>
+  duplicateKeys: DuplicateKey[]
+}
+
+export function SandboxTextProvider({ slug, contentId, initialTexts, children }: Props) {
   const [editMode, setEditMode] = useState(false)
   const [committed, setCommitted] = useState<Record<string, string>>(initialTexts)
   const [drafts, setDrafts] = useState<Record<string, string>>({})
@@ -36,15 +49,20 @@ export function SandboxTextProvider({ contentId, initialTexts, children }: Props
   const [normalizing, setNormalizing] = useState(false)
   const [normalizedMsg, setNormalizedMsg] = useState(false)
 
-  // Registry of keys registered via t() — Map<key, defaultValue>
-  // Populated during render of the child Component; used to build the sidebar.
+  // Registry of keys registered via t() during the current render pass.
   const keysRef = useRef<Map<string, string>>(new Map())
+  const keyCountsRef = useRef<Map<string, number>>(new Map())
+  const [registrySnapshot, setRegistrySnapshot] = useState<RegistrySnapshot>({
+    registeredKeys: [],
+    duplicateKeys: [],
+  })
 
   const t = useCallback(
     (key: string, defaultValue = '') => {
       if (!keysRef.current.has(key)) {
         keysRef.current.set(key, defaultValue)
       }
+      keyCountsRef.current.set(key, (keyCountsRef.current.get(key) ?? 0) + 1)
       return normalizeLongWordNbsp(drafts[key] ?? committed[key] ?? formatText(defaultValue))
     },
     [drafts, committed],
@@ -111,41 +129,81 @@ export function SandboxTextProvider({ contentId, initialTexts, children }: Props
     }
   }
 
-  const registeredKeys = Array.from(keysRef.current.entries())
+  const [toolbarSlot, setToolbarSlot] = useState<Element | null>(null)
+  useEffect(() => {
+    setToolbarSlot(document.getElementById('admin-sandbox-toolbar'))
+  }, [])
+
+  useEffect(() => {
+    const registeredKeys = Array.from(keysRef.current.entries())
+    const duplicateKeys = Array.from(keyCountsRef.current.entries())
+      .filter(([, count]) => count > 1)
+      .map(([key, count]) => ({ key, count }))
+
+    setRegistrySnapshot(prev => {
+      const prevRegistered = JSON.stringify(prev.registeredKeys)
+      const nextRegistered = JSON.stringify(registeredKeys)
+      const prevDuplicates = JSON.stringify(prev.duplicateKeys)
+      const nextDuplicates = JSON.stringify(duplicateKeys)
+
+      if (prevRegistered === nextRegistered && prevDuplicates === nextDuplicates) {
+        return prev
+      }
+
+      return {
+        registeredKeys,
+        duplicateKeys,
+      }
+    })
+
+    keysRef.current = new Map()
+    keyCountsRef.current = new Map()
+  }, [children, committed, drafts, editMode])
+
+  const toolbarContent = !editMode ? (
+    <div className={styles.toolbarActions}>
+      <button className={styles.editBtn} onClick={() => setEditMode(true)}>
+        Редактировать тексты
+      </button>
+      <button
+        className={styles.normalizeBtn}
+        onClick={handleNormalize}
+        disabled={normalizing}
+      >
+        {normalizing ? 'Обработка…' : normalizedMsg ? 'Готово!' : 'Нормализовать текст'}
+      </button>
+      <a
+        href={`/admin/sandbox/${slug}/gallery`}
+        className={styles.galleryBtn}
+      >
+        Галерея
+      </a>
+      <a
+        href={`/admin/sandbox/${slug}/code`}
+        className={styles.galleryBtn}
+      >
+        Edit Code
+      </a>
+    </div>
+  ) : (
+    <div className={styles.toolbarActions}>
+      <span className={styles.editingLabel}>Режим редактирования</span>
+      <button
+        className={styles.saveBtn}
+        onClick={handleSave}
+        disabled={saving}
+      >
+        {saving ? 'Сохранение…' : savedMsg ? 'Сохранено!' : 'Сохранить'}
+      </button>
+      <button className={styles.cancelBtn} onClick={handleCancel}>
+        Отмена
+      </button>
+    </div>
+  )
 
   return (
     <SandboxTextContext.Provider value={{ t, editMode }}>
-      {/* Toolbar */}
-      <div className={styles.toolbar}>
-        {!editMode ? (
-          <div className={styles.toolbarActions}>
-            <button className={styles.editBtn} onClick={() => setEditMode(true)}>
-              Редактировать тексты
-            </button>
-            <button
-              className={styles.normalizeBtn}
-              onClick={handleNormalize}
-              disabled={normalizing}
-            >
-              {normalizing ? 'Обработка…' : normalizedMsg ? 'Готово!' : 'Нормализовать текст'}
-            </button>
-          </div>
-        ) : (
-          <div className={styles.toolbarActions}>
-            <span className={styles.editingLabel}>Режим редактирования</span>
-            <button
-              className={styles.saveBtn}
-              onClick={handleSave}
-              disabled={saving}
-            >
-              {saving ? 'Сохранение…' : savedMsg ? 'Сохранено!' : 'Сохранить'}
-            </button>
-            <button className={styles.cancelBtn} onClick={handleCancel}>
-              Отмена
-            </button>
-          </div>
-        )}
-      </div>
+      {toolbarSlot && createPortal(toolbarContent, toolbarSlot)}
 
       {/* Content area */}
       <div className={editMode ? styles.layoutEdit : styles.layout}>
@@ -160,13 +218,29 @@ export function SandboxTextProvider({ contentId, initialTexts, children }: Props
               После сохранения тексты пройдут типографскую обработку
               (кавычки, тире, висячие предлоги).
             </p>
-            {registeredKeys.length === 0 && (
+            {registrySnapshot.duplicateKeys.length > 0 && (
+              <div className={styles.duplicateWarning}>
+                <p className={styles.duplicateTitle}>Найдены повторяющиеся ключи</p>
+                <p className={styles.duplicateText}>
+                  Один и тот же ключ означает одно общее значение в базе. Если нужен
+                  отдельный текстовый блок, дай ему новый уникальный key.
+                </p>
+                <ul className={styles.duplicateList}>
+                  {registrySnapshot.duplicateKeys.map(item => (
+                    <li key={item.key} className={styles.duplicateItem}>
+                      <code>{item.key}</code> × {item.count}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {registrySnapshot.registeredKeys.length === 0 && (
               <p className={styles.noKeys}>
                 Компонент не использует useText().
                 Добавь хук и пересохрани страницу.
               </p>
             )}
-            {registeredKeys.map(([key, defaultVal]) => (
+            {registrySnapshot.registeredKeys.map(([key, defaultVal]) => (
               <div key={key} className={styles.field}>
                 <label className={styles.fieldLabel}>{key}</label>
                 <textarea

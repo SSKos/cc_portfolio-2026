@@ -1,0 +1,231 @@
+.wrap {
+  max-width: var(--columns-x12);
+  margin: 0 auto;
+  padding: var(--pad-2xl);
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--pad-lg);
+  gap: var(--md);
+  flex-wrap: wrap;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-xs);
+}
+
+.back {
+  font-size: var(--fs-md);
+  font-weight: 300;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.back:hover {
+  color: var(--text-primary);
+}
+
+.separator {
+  color: var(--text-darker);
+  font-weight: 300;
+}
+
+.current {
+  font-size: var(--fs-md);
+  font-weight: 400;
+  color: var(--text-primary);
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+}
+
+.uploadBtn,
+.extractBtn {
+  padding: var(--xs) var(--md);
+  border-radius: var(--radius-md);
+  font-size: 1.125rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.uploadBtn {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-txt);
+}
+
+.uploadBtn:hover:not(:disabled) {
+  background-color: var(--button-primary-bg-hover);
+}
+
+.uploadBtn:disabled {
+  opacity: 0.5;
+}
+
+.extractBtn {
+  background-color: transparent;
+  border: 1px solid color-mix(in srgb, var(--text-primary) 20%, transparent);
+  color: var(--text-darker);
+}
+
+.extractBtn:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--text-primary) 40%, transparent);
+  color: var(--text-primary);
+}
+
+.extractBtn:disabled {
+  opacity: 0.5;
+}
+
+/* ── Hint ─────────────────────────────────────────────────────────────────── */
+
+.hint {
+  font: var(--typo-Card-p);
+  color: var(--text-darker);
+  opacity: 0.7;
+  margin-bottom: var(--pad-2xl);
+}
+
+.code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.125rem;
+  background: var(--surface-level-2);
+  padding: 0 var(--pad-xxs);
+  border-radius: var(--radius-xs);
+  color: var(--text-secondary);
+}
+
+/* ── States ───────────────────────────────────────────────────────────────── */
+
+.error {
+  font: var(--typo-Card-p);
+  color: var(--input-error);
+  margin-bottom: var(--pad-lg);
+}
+
+.empty {
+  font: var(--typo-Card-p);
+  color: var(--text-darker);
+  opacity: 0.6;
+  padding: var(--pad-3xl) 0;
+}
+
+/* ── Grid ─────────────────────────────────────────────────────────────────── */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--pad-lg);
+}
+
+@media (max-width: 1100px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────────── */
+
+.card {
+  background: var(--surface-level-1);
+  border: 1px solid var(--surface-level-3);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.thumb {
+  aspect-ratio: 4 / 3;
+  background: var(--surface-level-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.fileIcon {
+  font-size: 2rem;
+  opacity: 0.4;
+}
+
+.meta {
+  padding: var(--pad-xs) var(--pad-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-xxxxs);
+  border-bottom: 1px solid var(--surface-level-2);
+  flex: 1;
+}
+
+.name {
+  font: var(--typo-Card-p);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.size {
+  font-size: 0.75rem;
+  color: var(--text-darker);
+  opacity: 0.6;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-xxs);
+  padding: var(--pad-xxs) var(--pad-xs);
+}
+
+.copyBtn {
+  flex: 1;
+  font-size: 0.75rem;
+  font-weight: 400;
+  font-family: inherit;
+  color: var(--text-darker);
+  background: none;
+  border: 1px solid var(--surface-level-3);
+  border-radius: var(--radius-xs);
+  padding: var(--pad-xxxs) var(--pad-xs);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.copyBtn:hover {
+  color: var(--text-secondary);
+  border-color: var(--vis-dim);
+}
+
+.copyBtnDone {
+  color: var(--action-hover-online);
+  border-color: var(--action-hover-online);
+}
+
+.hiddenInput {
+  display: none;
+}

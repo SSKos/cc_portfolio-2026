@@ -56,6 +56,7 @@ export default async function AdminSandboxSlugPage({ params }: Props) {
 
   return (
     <SandboxTextProvider
+      slug={slug}
       contentId={item.id}
       initialTexts={(item.data as Record<string, string>) ?? {}}
     >

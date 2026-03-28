@@ -1,0 +1,22 @@
+/* AdminTopBar height: pad-2xl + button-default + pad-3xl + button-default + pad-3xl */
+:root {
+  --admin-topbar-height: calc(var(--pad-2xl) + var(--button-default) + var(--pad-3xl) + var(--button-default) + var(--pad-3xl));
+}
+
+.hero {
+  position: sticky;
+  top: var(--admin-topbar-height);
+  z-index: 30;
+  background: var(--surface-body-bg);
+  border-bottom: 1px solid color-mix(in srgb, var(--text-primary) 8%, transparent);
+}
+
+.heroInner {
+  max-width: var(--columns-x12);
+  margin: 0 auto;
+  padding: 0 var(--pad-2xl);
+}
+
+#admin-sandbox-toolbar {
+  padding: var(--pad-sm) 0;
+}
