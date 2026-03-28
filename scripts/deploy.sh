@@ -55,7 +55,7 @@ ssh -i "$SSH_KEY" "$SSH_USER@$SSH_HOST" bash << EOF
         git reset --hard origin/main
     else
         echo "Cloning repository..."
-        mkdir -p "$SERVER_PATH"
+        rm -rf "$SERVER_PATH"
         git clone "$GIT_REPO" "$SERVER_PATH"
     fi
     echo "Code updated."
