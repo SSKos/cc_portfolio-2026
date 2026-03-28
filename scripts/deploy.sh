@@ -91,6 +91,10 @@ ssh -i "$SSH_KEY" "$SSH_USER@$SSH_HOST" bash << EOF
     docker compose -f docker-compose.yml -f docker-compose.prod.yml pull --quiet 2>/dev/null || true
     docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
     echo "Containers started."
+    # Ensure app container is on nginx_shared (docker-compose sometimes fails to assign IP)
+    docker network disconnect nginx_shared cc_portfolio_app 2>/dev/null || true
+    docker network connect nginx_shared cc_portfolio_app
+    echo "Network reconnected."
 EOF
 
 # ── 6. Seed admin user (only if User table is empty) ──────────────────────────
@@ -170,9 +174,13 @@ server {
 
     client_max_body_size 20M;
 
+    # Docker internal DNS — dynamic resolution so nginx starts even if app is down
+    resolver 127.0.0.11 valid=10s;
+
     # Next.js static assets — long-lived cache
     location /_next/static/ {
-        proxy_pass       http://cc_portfolio_app:3000;
+        set $upstream http://cc_portfolio_app:3000;
+        proxy_pass       $upstream;
         proxy_set_header Host $host;
         add_header       Cache-Control "public, max-age=31536000, immutable";
         access_log off;
@@ -180,7 +188,8 @@ server {
 
     # Public uploads
     location /uploads/ {
-        proxy_pass       http://cc_portfolio_app:3000;
+        set $upstream http://cc_portfolio_app:3000;
+        proxy_pass       $upstream;
         proxy_set_header Host $host;
         expires 30d;
         add_header Cache-Control "public";
@@ -188,10 +197,11 @@ server {
 
     # Everything else → Next.js
     location / {
-        proxy_pass         http://cc_portfolio_app:3000;
+        set $upstream http://cc_portfolio_app:3000;
+        proxy_pass         $upstream;
         proxy_http_version 1.1;
         proxy_set_header   Upgrade           $http_upgrade;
-        proxy_set_header   Connection        'upgrade';
+        proxy_set_header   Connection        "upgrade";
         proxy_set_header   Host              $host;
         proxy_set_header   X-Real-IP         $remote_addr;
         proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
