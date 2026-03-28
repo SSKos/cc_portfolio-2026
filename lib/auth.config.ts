@@ -15,6 +15,7 @@ if (process.env.NEXTAUTH_SECRET === 'change-me-in-production') {
 }
 
 export const authConfig: NextAuthConfig = {
+  trustHost: true,
   pages: {
     signIn: '/admin',
   },
