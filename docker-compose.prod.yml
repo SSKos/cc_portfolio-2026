@@ -1,0 +1,19 @@
+# Production overrides for docker-compose.yml
+# Usage: docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+
+services:
+  postgres:
+    ports: []  # don't expose postgres to host in production
+
+  app:
+    container_name: cc_portfolio_app
+    ports: []  # nginx handles routing — no host port needed
+    networks:
+      - default
+      - nginx_shared
+    restart: unless-stopped
+
+networks:
+  nginx_shared:
+    external: true
+    name: nginx_shared
