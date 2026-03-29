@@ -6,10 +6,10 @@ import { useText } from '@/lib/sandboxText'
 
 // ── Изображения: загрузи в галерею /admin/sandbox/medicine/gallery ─────────────
 // и обнови ID (число в конце URL)
-const IMG_BG     = '/media/sandbox/medicine/1'  // фоновая иллюстрация
-const IMG_PHONE3 = '/media/sandbox/medicine/2'  // первый телефон (10deg, справа)
-const IMG_PHONE2 = '/media/sandbox/medicine/3'  // второй телефон (5deg)
-const IMG_PHONE1 = '/media/sandbox/medicine/4'  // главный телефон (прямо, финал)
+const IMG_BG     = '/media/sandbox/medicine/42'  // фоновая иллюстрация
+const IMG_PHONE3 = '/media/sandbox/medicine/45'  // первый телефон (10deg, справа)
+const IMG_PHONE2 = '/media/sandbox/medicine/44'  // второй телефон (5deg)
+const IMG_PHONE1 = '/media/sandbox/medicine/43'  // главный телефон (прямо, финал)
 
 export default function MedicinePage() {
   const t = useText()
@@ -57,22 +57,17 @@ export default function MedicinePage() {
           <img src={IMG_BG} alt="" className={styles.heroBgImg} />
         </div>
 
-        {/* Телефоны */}
+        {/* Телефоны — полноразмерные слои, размер = фону */}
         <div className={styles.phones} aria-hidden="true">
-          {/* Телефон 3 — первый, справа, 10deg */}
-          <div className={`${styles.phone} ${styles.phone3} ${phase >= 1 ? styles.phoneVisible : ''}`}>
+          <div className={`${styles.phone} ${phase >= 1 ? styles.phoneVisible : ''}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={IMG_PHONE3} alt="" className={styles.phoneImg} />
           </div>
-
-          {/* Телефон 2 — второй, по центру, 5deg */}
-          <div className={`${styles.phone} ${styles.phone2} ${phase >= 2 ? styles.phoneVisible : ''}`}>
+          <div className={`${styles.phone} ${phase >= 2 ? styles.phoneVisible : ''}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={IMG_PHONE2} alt="" className={styles.phoneImg} />
           </div>
-
-          {/* Телефон 1 — главный, прямо, финал */}
-          <div className={`${styles.phone} ${styles.phone1} ${phase >= 3 ? styles.phoneVisible : ''}`}>
+          <div className={`${styles.phone} ${phase >= 3 ? styles.phoneVisible : ''}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={IMG_PHONE1} alt="" className={styles.phoneImg} />
           </div>

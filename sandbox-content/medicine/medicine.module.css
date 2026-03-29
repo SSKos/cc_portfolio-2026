@@ -69,14 +69,13 @@
 
 .phone {
   position: absolute;
+  inset: 0;
   opacity: 0;
-  /* Стартовое состояние: высоко над кадром, близко к зрителю */
+  /* Стартовое состояние: над кадром, близко к зрителю */
   transform: perspective(1400px) translateY(-110%) translateZ(280px);
-  /* Плавное приземление */
   transition:
     opacity 0.65s cubic-bezier(0.2, 0.8, 0.25, 1),
     transform 0.65s cubic-bezier(0.2, 0.8, 0.25, 1);
-  filter: drop-shadow(15px 4px 32px rgba(0, 0, 0, 0.4));
 }
 
 .phoneVisible {
@@ -86,40 +85,10 @@
 
 .phoneImg {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
   display: block;
-}
-
-/* Телефон 3 — первый, справа, 10deg */
-.phone3 {
-  width: 22.9%;
-  left: 60.3%;
-  top: 18.5%;
-}
-.phone3 .phoneImg {
-  transform: rotate(10deg);
-  transform-origin: center bottom;
-}
-
-/* Телефон 2 — второй, по центру, 5deg */
-.phone2 {
-  width: 23.5%;
-  left: 44.2%;
-  top: 13.8%;
-}
-.phone2 .phoneImg {
-  transform: rotate(5deg);
-  transform-origin: center bottom;
-}
-
-/* Телефон 1 — главный, прямой */
-.phone1 {
-  width: 24.6%;
-  left: 28.1%;
-  top: 11.3%;
-}
-.phone1 .phoneImg {
-  transform: rotate(0deg);
 }
 
 /* ── Шапка под hero ────────────────────────────────────────────────────────── */
