@@ -12,7 +12,8 @@ import 'server-only'
 import fs from 'fs'
 import path from 'path'
 
-export const SANDBOX_CACHE_DIR = path.join(process.cwd(), '.sandbox-cache')
+// /tmp is always writable by any user (including the nextjs uid-1001 container user)
+export const SANDBOX_CACHE_DIR = path.join('/tmp', '.sandbox-cache')
 
 // ── CSS helpers ────────────────────────────────────────────────────────────
 
