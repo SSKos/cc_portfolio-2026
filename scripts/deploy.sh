@@ -59,6 +59,9 @@ ssh -i "$SSH_KEY" "$SSH_USER@$SSH_HOST" bash << EOF
         git clone "$GIT_REPO" "$SERVER_PATH"
     fi
     echo "Code updated."
+    # nextjs user in container has uid 1001 — sandbox-content must be writable by it
+    chown -R 1001:1001 "$SERVER_PATH/sandbox-content"
+    echo "sandbox-content ownership set."
 EOF
 
 # ── 4. Check .env on server ───────────────────────────────────────────────────
