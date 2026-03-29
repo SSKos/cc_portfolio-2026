@@ -56,17 +56,26 @@
 .item {
   display: flex;
   align-items: center;
-  gap: var(--md);
-  padding: var(--pad-sm) var(--pad-lg);
+  gap: var(--xs);
   background: var(--surface-level-1);
   border-radius: var(--radius-2xl);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
-  text-decoration: none;
+  padding-right: var(--pad-sm);
   transition: background 0.15s;
 }
 
 .item:hover {
   background: var(--surface-level-2);
+}
+
+.itemLink {
+  display: flex;
+  align-items: center;
+  gap: var(--md);
+  flex: 1;
+  min-width: 0;
+  padding: var(--pad-sm) var(--pad-lg);
+  text-decoration: none;
 }
 
 .itemName {
@@ -88,11 +97,5 @@
   font-size: 1.125rem;
   color: var(--text-darker);
   white-space: nowrap;
-}
-
-.arrow {
-  color: var(--text-darker);
-  font-size: var(--fs-md);
   margin-left: auto;
-  flex-shrink: 0;
 }

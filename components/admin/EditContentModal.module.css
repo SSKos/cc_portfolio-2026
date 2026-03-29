@@ -180,6 +180,30 @@
   color: var(--text-primary);
 }
 
+/* ── Импорт ───────────────────────────────────────────────────────────────── */
+
+.hiddenFileInput {
+  display: none;
+}
+
+.importFileRow {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-xs);
+  background: color-mix(in srgb, var(--brand-300) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand-300) 20%, transparent);
+  border-radius: var(--radius-md);
+  padding: var(--pad-xxs) var(--pad-sm);
+}
+
+.importFileName {
+  font-family: monospace;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  word-break: break-all;
+  flex: 1;
+}
+
 /* ── Ошибки ───────────────────────────────────────────────────────────────── */
 
 .errorText {

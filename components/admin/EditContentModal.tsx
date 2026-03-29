@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { useToast } from '@/components/ui/Toast'
@@ -57,6 +57,10 @@ export function EditContentModal({ mode, onClose, onSaved }: Props) {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
 
+  // Import state
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [importFile, setImportFile] = useState<File | null>(null)
+
   // После успешного создания — показываем пути к файлам вместо формы
   type CreatedMeta = { slug: string; tsxAbs: string; tsxRel: string; cssRel: string }
   const [created, setCreated] = useState<CreatedMeta | null>(null)
@@ -81,7 +85,9 @@ export function EditContentModal({ mode, onClose, onSaved }: Props) {
     return () => window.removeEventListener('keydown', handler)
   }, [onClose])
 
-  async function handleSubmit(e: React.FormEvent) {
+  // ── Create (empty files) ────────────────────────────────────────────────
+
+  async function handleCreate(e: React.FormEvent) {
     e.preventDefault()
     setError('')
     setSaving(true)
@@ -111,7 +117,6 @@ export function EditContentModal({ mode, onClose, onSaved }: Props) {
       onSaved()
 
       if (!isEdit && saved.tsxAbs) {
-        // Показываем success-панель с путями и IDE-ссылкой вместо немедленного закрытия
         setCreated({ slug: saved.slug, tsxAbs: saved.tsxAbs, tsxRel: saved.tsxRel!, cssRel: saved.cssRel! })
       } else if (isEdit) {
         onClose()
@@ -125,6 +130,66 @@ export function EditContentModal({ mode, onClose, onSaved }: Props) {
     }
   }
 
+  // ── Import (zip) ────────────────────────────────────────────────────────
+
+  function handleImportClick() {
+    setError('')
+    if (!name.trim()) { setError('Введите название'); return }
+    if (!slug.trim()) { setError('Введите slug'); return }
+    fileInputRef.current?.click()
+  }
+
+  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0] ?? null
+    setImportFile(file)
+    if (file) {
+      // Auto-fill slug from zip filename if not manually set
+      if (!slugManual) {
+        const derived = file.name.replace(/\.zip$/i, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+        if (derived) setSlug(derived)
+      }
+    }
+  }
+
+  async function handleImportSubmit() {
+    if (!importFile) { handleImportClick(); return }
+    if (!name.trim()) { setError('Введите название'); return }
+    if (!slug.trim()) { setError('Введите slug'); return }
+
+    setError('')
+    setSaving(true)
+
+    try {
+      const fd = new FormData()
+      fd.append('name', name.trim())
+      fd.append('slug', slug.trim())
+      fd.append('description', description.trim())
+      fd.append('file', importFile)
+
+      const res = await fetch('/api/admin/content/import', { method: 'POST', body: fd })
+
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error ?? 'Ошибка импорта')
+      }
+
+      const saved = await res.json() as ContentItem & {
+        tsxAbs: string; tsxRel: string; cssRel: string
+      }
+      showToast('Импортировано')
+      onSaved()
+      setCreated({ slug: saved.slug, tsxAbs: saved.tsxAbs, tsxRel: saved.tsxRel, cssRel: saved.cssRel })
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Ошибка'
+      setError(msg)
+      showToast(msg, 'error')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  // ── Render ──────────────────────────────────────────────────────────────
+
   return (
     <div className={styles.overlay} onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div className={styles.modal}>
@@ -137,32 +202,34 @@ export function EditContentModal({ mode, onClose, onSaved }: Props) {
           </button>
         </div>
 
-        {/* Success-панель: показывается после создания вместо формы */}
+        {/* Success-панель: показывается после создания/импорта вместо формы */}
         {created && (
           <div className={styles.successPanel}>
             <p className={styles.successTitle}>Файлы созданы</p>
 
-            <div className={styles.fileRow}>
-              <code className={styles.filePath}>{created.tsxRel}</code>
-              <button
-                type="button"
-                className={styles.copyBtn}
-                onClick={() => copyPath(created.tsxRel)}
-              >
-                {copiedPath ? 'Скопировано' : 'Copy'}
-              </button>
-            </div>
-            <div className={styles.fileRow}>
-              <code className={styles.filePath}>{created.cssRel}</code>
-            </div>
+            {created.tsxRel && (
+              <div className={styles.fileRow}>
+                <code className={styles.filePath}>{created.tsxRel}</code>
+                <button
+                  type="button"
+                  className={styles.copyBtn}
+                  onClick={() => copyPath(created.tsxRel)}
+                >
+                  {copiedPath ? 'Скопировано' : 'Copy'}
+                </button>
+              </div>
+            )}
+            {created.cssRel && (
+              <div className={styles.fileRow}>
+                <code className={styles.filePath}>{created.cssRel}</code>
+              </div>
+            )}
 
             <div className={styles.successHint}>
               Открой файл в IDE, сохрани — Next.js подхватит с hot reload.
             </div>
 
             <div className={styles.successActions}>
-              {/* idea:// — стандартный URL-scheme всех JetBrains IDE (WebStorm, IntelliJ…).
-                  Работает когда IDE установлена; Toolbox не обязателен. */}
               <a
                 href={`idea://open?file=${encodeURIComponent(created.tsxAbs)}`}
                 className={styles.ideLink}
@@ -179,7 +246,7 @@ export function EditContentModal({ mode, onClose, onSaved }: Props) {
           </div>
         )}
 
-        <form className={styles.form} onSubmit={handleSubmit} style={created ? { display: 'none' } : undefined}>
+        <form className={styles.form} onSubmit={handleCreate} style={created ? { display: 'none' } : undefined}>
           <div className={styles.fieldSlot}>
             <Input
               label="Название"
@@ -232,18 +299,53 @@ export function EditContentModal({ mode, onClose, onSaved }: Props) {
             </div>
           )}
 
+          {/* Файл для импорта — скрытый input + подсказка о выбранном файле */}
+          {!isEdit && (
+            <>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".zip"
+                className={styles.hiddenFileInput}
+                onChange={handleFileChange}
+              />
+              {importFile && (
+                <div className={styles.importFileRow}>
+                  <span className={styles.importFileName}>{importFile.name}</span>
+                  <button
+                    type="button"
+                    className={styles.copyBtn}
+                    onClick={() => { setImportFile(null); if (fileInputRef.current) fileInputRef.current.value = '' }}
+                  >
+                    Убрать
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
           {error && <p className={styles.errorText}>{error}</p>}
 
           <div className={styles.actions}>
             <Button type="button" variant="secondary" onClick={onClose}>
               Отмена
             </Button>
+            {!isEdit && (
+              <Button
+                type="button"
+                variant="secondary"
+                disabled={saving}
+                onClick={importFile ? handleImportSubmit : handleImportClick}
+              >
+                {saving && importFile ? 'Импорт…' : importFile ? 'Загрузить →' : 'Импортировать'}
+              </Button>
+            )}
             <Button type="submit" variant="primary" disabled={saving}>
-              {saving
+              {saving && !importFile
                 ? 'Сохранение…'
                 : isEdit
                   ? 'Сохранить'
-                  : 'Создать → открыть Sandbox'
+                  : 'Создать'
               }
             </Button>
           </div>

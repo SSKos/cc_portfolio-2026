@@ -1,6 +1,6 @@
-import Link from 'next/link'
 import { readContent } from '@/lib/contentStore'
 import { SandboxCreateButton } from '@/components/admin/SandboxCreateButton'
+import { SandboxItemRow } from '@/components/admin/SandboxItemRow'
 import styles from './page.module.css'
 
 export const dynamic = 'force-dynamic'
@@ -23,16 +23,7 @@ export default async function AdminSandboxPage() {
       ) : (
         <ul className={styles.list}>
           {items.map(item => (
-            <li key={item.id}>
-              <Link href={`/admin/sandbox/${item.slug}`} className={styles.item}>
-                <span className={styles.itemName}>{item.name}</span>
-                {item.description && (
-                  <span className={styles.itemDesc}>{item.description}</span>
-                )}
-                <code className={styles.itemSlug}>sandbox-content/{item.slug}.tsx</code>
-                <span className={styles.arrow}>→</span>
-              </Link>
-            </li>
+            <SandboxItemRow key={item.id} item={item} />
           ))}
         </ul>
       )}

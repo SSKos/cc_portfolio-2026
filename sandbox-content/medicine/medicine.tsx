@@ -79,6 +79,9 @@ export default function MedicinePage() {
         <p className={styles.eyebrow}>
           {t('eyebrow', 'Концепт-проект · UX / Mobile')}
         </p>
+      </div>
+
+      <section className={styles.content}>
         <h1 className={styles.title}>
           {t('title', 'Трекер приёма лекарств')}
         </h1>
@@ -88,7 +91,7 @@ export default function MedicinePage() {
             'Как сделать трекер гибче и удобнее: пересобрать ключевые сценарии добавления и управления приёмом лекарств.',
           )}
         </p>
-      </div>
+      </section>
 
       {/* ── Контекст ──────────────────────────────────────────────────────── */}
       <section className={styles.section}>
