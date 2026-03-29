@@ -1,7 +1,10 @@
+import fs from 'fs'
+import path from 'path'
 import { readContent } from '@/lib/contentStore'
 import { notFound } from 'next/navigation'
 import { SandboxTextProvider } from '@/lib/sandboxText'
 import { hasUseText, injectUseText } from '@/lib/sandboxInject'
+import { SandboxRuntimeCanvas } from '@/components/admin/SandboxRuntimeCanvas'
 import { AutoReload } from './AutoReload'
 import styles from './page.module.css'
 
@@ -25,44 +28,62 @@ export default async function AdminSandboxSlugPage({ params }: Props) {
   const item = items.find(i => i.slug === slug)
   if (!item) notFound()
 
+  // ── Build-time component (included in the Next.js bundle) ─────────────────
   const Component = await tryLoad(slug)
 
-  if (!Component) {
+  if (Component) {
+    // Dev-only: auto-inject useText() if the component doesn't use it yet
+    if (process.env.NODE_ENV !== 'production' && !hasUseText(slug)) {
+      injectUseText(slug)
+      return (
+        <div className={styles.placeholder}>
+          <AutoReload delayMs={1500} />
+          <p className={styles.label}>useText() добавлен в {slug}.tsx</p>
+          <p className={styles.hint}>Страница обновится автоматически...</p>
+        </div>
+      )
+    }
+
     return (
-      <div className={styles.placeholder}>
-        <p className={styles.label}>{item.name}</p>
-        <p className={styles.pathLabel}>Файл создан, открой в IDE:</p>
-        <code className={styles.path}>sandbox-content/{slug}/{slug}.tsx</code>
-        <p className={styles.hint}>
-          Сохрани изменения в файле — страница обновится с hot&nbsp;reload.
-          <br />
-          Если не обновляется сразу — обнови страницу вручную.
-        </p>
-      </div>
+      <SandboxTextProvider
+        slug={slug}
+        contentId={item.id}
+        initialTexts={(item.data as Record<string, string>) ?? {}}
+      >
+        <div className={styles.canvas}>
+          <Component />
+        </div>
+      </SandboxTextProvider>
     )
   }
 
-  // Dev-only: auto-inject useText() if the component doesn't use it yet
-  if (process.env.NODE_ENV !== 'production' && !hasUseText(slug)) {
-    injectUseText(slug)
+  // ── Runtime component (uploaded after build, compiled on demand) ──────────
+  const srcFile = path.join(process.cwd(), 'sandbox-content', slug, `${slug}.tsx`)
+  const srcExists = fs.existsSync(srcFile)
+
+  if (srcExists) {
+    // SandboxRuntimeCanvas fetches and executes the bundle in the browser —
+    // no rebuild needed. Full React (hooks, animations, state) works.
     return (
-      <div className={styles.placeholder}>
-        <AutoReload delayMs={1500} />
-        <p className={styles.label}>useText() добавлен в {slug}.tsx</p>
-        <p className={styles.hint}>Страница обновится автоматически...</p>
-      </div>
+      <SandboxRuntimeCanvas
+        slug={slug}
+        contentId={item.id}
+        initialTexts={(item.data as Record<string, string>) ?? {}}
+      />
     )
   }
 
+  // ── No source file ─────────────────────────────────────────────────────────
   return (
-    <SandboxTextProvider
-      slug={slug}
-      contentId={item.id}
-      initialTexts={(item.data as Record<string, string>) ?? {}}
-    >
-      <div className={styles.canvas}>
-        <Component />
-      </div>
-    </SandboxTextProvider>
+    <div className={styles.placeholder}>
+      <p className={styles.label}>{item.name}</p>
+      <p className={styles.pathLabel}>Файл создан, открой в IDE:</p>
+      <code className={styles.path}>sandbox-content/{slug}/{slug}.tsx</code>
+      <p className={styles.hint}>
+        Сохрани изменения в файле — страница обновится с hot&nbsp;reload.
+        <br />
+        Если не обновляется сразу — обнови страницу вручную.
+      </p>
+    </div>
   )
 }
