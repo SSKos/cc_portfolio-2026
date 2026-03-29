@@ -93,7 +93,9 @@ export async function compileToBundle(slug: string): Promise<string | null> {
       jsxImportSource: 'react',
       define: { 'process.env.NODE_ENV': '"production"' },
       absWorkingDir: process.cwd(),
-      tsconfig: path.join(process.cwd(), 'tsconfig.json'),
+      tsconfig: fs.existsSync(path.join(process.cwd(), 'tsconfig.json'))
+        ? path.join(process.cwd(), 'tsconfig.json')
+        : undefined,
       logLevel: 'silent',
       plugins: [
         // Redirect runtime deps to globals set by SandboxRuntimeCanvas before the script loads.
