@@ -94,6 +94,11 @@ ssh -i "$SSH_KEY" "$SSH_USER@$SSH_HOST" bash << EOF
     docker compose -f docker-compose.yml -f docker-compose.prod.yml pull --quiet 2>/dev/null || true
     docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
     echo "Containers started."
+    # Fix uploads volume ownership (nextjs user uid 1001 needs write access)
+    UPLOADS_PATH=\$(docker volume inspect cc-portfolio_uploads --format '{{.Mountpoint}}' 2>/dev/null || true)
+    if [ -n "\$UPLOADS_PATH" ]; then
+        chown -R 1001:1001 "\$UPLOADS_PATH"
+    fi
     # Ensure app container is on nginx_shared (docker-compose sometimes fails to assign IP)
     docker network disconnect nginx_shared cc_portfolio_app 2>/dev/null || true
     docker network connect nginx_shared cc_portfolio_app
