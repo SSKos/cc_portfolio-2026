@@ -39,9 +39,17 @@ type Props = {
   slug: string
   contentId: string
   initialTexts: Record<string, string>
+  bundleUrl?: string
+  cssUrl?: string
 }
 
-export function SandboxRuntimeCanvas({ slug, contentId, initialTexts }: Props) {
+export function SandboxRuntimeCanvas({
+  slug,
+  contentId,
+  initialTexts,
+  bundleUrl = `/api/admin/sandbox-bundle/${slug}`,
+  cssUrl = `/api/admin/sandbox-css/${slug}`,
+}: Props) {
   const [Component, setComponent] = useState<ComponentType | null>(null)
   const [state, setState] = useState<'loading' | 'error' | 'ready'>('loading')
   const scriptRef = useRef<HTMLScriptElement | null>(null)
@@ -55,7 +63,7 @@ export function SandboxRuntimeCanvas({ slug, contentId, initialTexts }: Props) {
     window.__SBX_TEXT__ = { useText }
 
     const script = document.createElement('script')
-    script.src = `/api/admin/sandbox-bundle/${slug}?t=${Date.now()}`
+    script.src = `${bundleUrl}?t=${Date.now()}`
 
     script.onload = () => {
       const comp = window.__SBX_COMPONENT__?.default ?? null
@@ -87,7 +95,7 @@ export function SandboxRuntimeCanvas({ slug, contentId, initialTexts }: Props) {
         try { document.body.removeChild(scriptRef.current) } catch { /* ok */ }
       }
     }
-  }, [slug])
+  }, [bundleUrl])
 
   if (state === 'loading') {
     return (
@@ -108,8 +116,7 @@ export function SandboxRuntimeCanvas({ slug, contentId, initialTexts }: Props) {
   return (
     <>
       {/* Raw CSS with composes: resolved — styles for runtime-compiled components */}
-      {/* eslint-disable-next-line @next/next/no-css-tags */}
-      <link rel="stylesheet" href={`/api/admin/sandbox-css/${slug}`} />
+      <link rel="stylesheet" href={cssUrl} />
 
       <SandboxTextProvider slug={slug} contentId={contentId} initialTexts={initialTexts}>
         <Component />

@@ -2,8 +2,12 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import Editor, { type BeforeMount, type Monaco, type OnMount } from '@monaco-editor/react'
+import Editor, { loader, type BeforeMount, type Monaco, type OnMount } from '@monaco-editor/react'
+import * as monaco from 'monaco-editor'
 import styles from './SandboxCodeEditor.module.css'
+
+// Use the bundled monaco instance instead of the default CDN loader.
+loader.config({ monaco })
 
 type EditorInstance = Parameters<OnMount>[0]
 

@@ -28,6 +28,22 @@ export default async function AdminSandboxSlugPage({ params }: Props) {
   const item = items.find(i => i.slug === slug)
   if (!item) notFound()
 
+  const srcFile = path.join(process.cwd(), 'sandbox-content', slug, `${slug}.tsx`)
+  const srcExists = fs.existsSync(srcFile)
+
+  // In production the sandbox source can be edited after the Next.js build.
+  // Prefer the runtime compiler so the admin preview always reflects the file
+  // currently stored on disk, not the stale bundle artifact.
+  if (process.env.NODE_ENV === 'production' && srcExists) {
+    return (
+      <SandboxRuntimeCanvas
+        slug={slug}
+        contentId={item.id}
+        initialTexts={(item.data as Record<string, string>) ?? {}}
+      />
+    )
+  }
+
   // ── Build-time component (included in the Next.js bundle) ─────────────────
   const Component = await tryLoad(slug)
 
@@ -58,9 +74,6 @@ export default async function AdminSandboxSlugPage({ params }: Props) {
   }
 
   // ── Runtime component (uploaded after build, compiled on demand) ──────────
-  const srcFile = path.join(process.cwd(), 'sandbox-content', slug, `${slug}.tsx`)
-  const srcExists = fs.existsSync(srcFile)
-
   if (srcExists) {
     // SandboxRuntimeCanvas fetches and executes the bundle in the browser —
     // no rebuild needed. Full React (hooks, animations, state) works.

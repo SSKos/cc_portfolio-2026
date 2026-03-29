@@ -29,4 +29,6 @@ services:
 
 volumes:
   postgres_data:
+    name: cc-portfolio_postgres_data
   uploads:
+    name: cc-portfolio_uploads
