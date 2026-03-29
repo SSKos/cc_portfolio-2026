@@ -74,17 +74,17 @@ export function SandboxRuntimeCanvas({
         setState('error')
       }
       // Clean up globals — no longer needed after the IIFE captured them
-      delete window.__SBX_REACT__
-      delete window.__SBX_JSX__
-      delete window.__SBX_TEXT__
-      delete window.__SBX_COMPONENT__
+      window.__SBX_REACT__ = undefined
+      window.__SBX_JSX__ = undefined
+      window.__SBX_TEXT__ = undefined
+      window.__SBX_COMPONENT__ = undefined
     }
 
     script.onerror = () => {
       setState('error')
-      delete window.__SBX_REACT__
-      delete window.__SBX_JSX__
-      delete window.__SBX_TEXT__
+      window.__SBX_REACT__ = undefined
+      window.__SBX_JSX__ = undefined
+      window.__SBX_TEXT__ = undefined
     }
 
     scriptRef.current = script

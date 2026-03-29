@@ -3,11 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Editor, { loader, type BeforeMount, type Monaco, type OnMount } from '@monaco-editor/react'
-import * as monaco from 'monaco-editor'
 import styles from './SandboxCodeEditor.module.css'
-
-// Use the bundled monaco instance instead of the default CDN loader.
-loader.config({ monaco })
 
 type EditorInstance = Parameters<OnMount>[0]
 
@@ -29,6 +25,7 @@ interface Props {
 export function SandboxCodeEditor({ slug, name }: Props) {
   const apiBase = `/api/admin/sandbox/${slug}/code`
 
+  const [editorReady, setEditorReady] = useState(false)
   const [files, setFiles] = useState<CodeFile[]>([])
   const [activeIndex, setActiveIndex] = useState(0)
   const [drafts, setDrafts] = useState<Record<string, string>>({})
@@ -41,6 +38,21 @@ export function SandboxCodeEditor({ slug, name }: Props) {
   const editorRef = useRef<EditorInstance | null>(null)
 
   // ── Load files ─────────────────────────────────────────────────────────────
+
+  useEffect(() => {
+    let cancelled = false
+
+    async function setupMonaco() {
+      const monaco = await import('monaco-editor')
+      if (cancelled) return
+      // Use the bundled monaco instance instead of the default CDN loader.
+      loader.config({ monaco })
+      setEditorReady(true)
+    }
+
+    void setupMonaco()
+    return () => { cancelled = true }
+  }, [])
 
   const fetchFiles = useCallback(async () => {
     setLoading(true)
@@ -200,7 +212,7 @@ export function SandboxCodeEditor({ slug, name }: Props) {
 
       {/* Editor */}
       <div className={styles.editorWrap}>
-        {loading ? (
+        {!editorReady || loading ? (
           <p className={styles.stateMsg}>Загрузка…</p>
         ) : !activeFile ? (
           <p className={styles.stateMsg}>Файлы не найдены</p>
@@ -217,6 +229,7 @@ export function SandboxCodeEditor({ slug, name }: Props) {
             options={{
               fontSize: 13,
               lineNumbers: 'on',
+              links: false,
               minimap: { enabled: false },
               scrollBeyondLastLine: false,
               wordWrap: 'off',
