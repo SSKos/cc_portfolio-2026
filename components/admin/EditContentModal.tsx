@@ -226,7 +226,10 @@ export function EditContentModal({ mode, onClose, onSaved }: Props) {
             )}
 
             <div className={styles.successHint}>
-              Открой файл в IDE, сохрани — Next.js подхватит с hot reload.
+              {importFile
+                ? 'На локальном сервере страница появится после редеплоя (./scripts/deploy.sh). В dev-режиме — сразу.'
+                : 'Открой файл в IDE, сохрани — Next.js подхватит с hot reload.'
+              }
             </div>
 
             <div className={styles.successActions}>
