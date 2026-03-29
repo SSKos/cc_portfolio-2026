@@ -8,6 +8,8 @@ services:
   app:
     container_name: cc_portfolio_app
     ports: []  # nginx handles routing — no host port needed
+    volumes:
+      - /var/www/cc-portfolio/sandbox-content:/app/sandbox-content
     networks:
       - default
       - nginx_shared
