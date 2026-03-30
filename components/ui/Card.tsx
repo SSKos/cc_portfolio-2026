@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import styles from './Card.module.css'
 
 type CardVariant = 'default' | 'glass'
@@ -7,6 +7,7 @@ interface CardProps {
   variant?: CardVariant
   children: ReactNode
   className?: string
+  style?: CSSProperties
 }
 
 interface CardTitleProps {
@@ -17,14 +18,14 @@ interface CardTextProps {
   children: ReactNode
 }
 
-export function Card({ variant = 'default', children, className }: CardProps) {
+export function Card({ variant = 'default', children, className, style }: CardProps) {
   const cls = [
     styles.card,
     variant === 'glass' ? styles.glass : '',
     className ?? '',
   ].filter(Boolean).join(' ')
 
-  return <div className={cls}>{children}</div>
+  return <div className={cls} style={style}>{children}</div>
 }
 
 export function CardTitle({ children }: CardTitleProps) {

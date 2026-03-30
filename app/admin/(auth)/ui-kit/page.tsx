@@ -8,6 +8,7 @@ import { CarouselShowcase } from '@/app/dev/ui/CarouselShowcase'
 import { ToastPreview } from './ToastPreview'
 import { ImageGallery } from './ImageGallery'
 import { Button } from '@/components/ui/Button'
+import { Card, CardTitle, CardText } from '@/components/ui/Card'
 import styles from './page.module.css'
 
 function readSrc(relPath: string): string {
@@ -59,6 +60,14 @@ const COMPONENTS: { id: string; name: string; sources: Record<string, string> }[
       'Carousel.module.css': readSrc('components/ui/Carousel.module.css'),
     },
   },
+  {
+    id: 'card',
+    name: 'Card',
+    sources: {
+      'Card.tsx': readSrc('components/ui/Card.tsx'),
+      'Card.module.css': readSrc('components/ui/Card.module.css'),
+    },
+  },
 ]
 
 export default function AdminUiKitPage() {
@@ -105,6 +114,19 @@ export default function AdminUiKitPage() {
 
         <ComponentBlock id="carousel" name="Carousel" sources={COMPONENTS[4].sources}>
           <CarouselShowcase />
+        </ComponentBlock>
+
+        <ComponentBlock id="card" name="Card" sources={COMPONENTS[5].sources}>
+          <div className={styles.previewRow} style={{ alignItems: 'flex-start', flexWrap: 'wrap', gap: 'var(--lg)' }}>
+            <Card style={{ flex: '1 1 280px' }}>
+              <CardTitle>Стандартная</CardTitle>
+              <CardText>Фон — непрозрачный surface-level-3. Используется для основных блоков контента на тёмном фоне.</CardText>
+            </Card>
+            <Card variant="glass" style={{ flex: '1 1 280px' }}>
+              <CardTitle>Glass</CardTitle>
+              <CardText>Фон — 45% прозрачности, контур — непрозрачный. Цвет управляется через --_glass-color.</CardText>
+            </Card>
+          </div>
         </ComponentBlock>
 
         {/* Галерея медиафайлов — вне ComponentBlock, это не UI-компонент */}
