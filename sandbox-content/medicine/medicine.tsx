@@ -63,29 +63,55 @@ export default function MedicinePage() {
         className={`${styles.hero} ${styles[`phase${phase}`]}`}
         aria-label={t('heroAria', 'Анимированный герой-блок: трекер приёма лекарств')}
       >
-        {/* Скелетон — показывается пока не загружены все изображения */}
+        {/* Скелетон — inline-стили как fallback на случай, если CSS ещё не применился
+            (CSS грузится асинхронно через <link> в SandboxRuntimeCanvas) */}
         <div
           className={`${styles.heroSkeleton} ${imagesReady ? styles.heroSkeletonHidden : ''}`}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 10,
+            borderRadius: 'inherit',
+            background: 'var(--surface-level-3, #242329)',
+            opacity: imagesReady ? 0 : 1,
+            transition: 'opacity 0.4s ease',
+            pointerEvents: imagesReady ? 'none' : 'auto',
+          }}
           aria-hidden="true"
         />
 
-        {/* Фон с прогрессивным размытием */}
-        <div className={styles.heroBg} aria-hidden="true">
+        {/* Фон с прогрессивным размытием.
+            opacity: 0 inline — скрыт до загрузки всех картинок, независимо от CSS */}
+        <div
+          className={styles.heroBg}
+          style={imagesReady ? undefined : { opacity: 0 }}
+          aria-hidden="true"
+        >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={IMG_BG} alt="" className={styles.heroBgImg} onLoad={onImageLoad} onError={onImageLoad} />
         </div>
 
-        {/* Телефоны — полноразмерные слои, размер = фону */}
+        {/* Телефоны — opacity: 0 inline гарантирует скрытость до нужной фазы,
+            даже если CSS-класс .phone ещё не загружен */}
         <div className={styles.phones} aria-hidden="true">
-          <div className={`${styles.phone} ${phase >= 1 ? styles.phoneVisible : ''}`}>
+          <div
+            className={`${styles.phone} ${phase >= 1 ? styles.phoneVisible : ''}`}
+            style={phase >= 1 ? undefined : { opacity: 0 }}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={IMG_PHONE3} alt="" className={styles.phoneImg} onLoad={onImageLoad} onError={onImageLoad} />
           </div>
-          <div className={`${styles.phone} ${phase >= 2 ? styles.phoneVisible : ''}`}>
+          <div
+            className={`${styles.phone} ${phase >= 2 ? styles.phoneVisible : ''}`}
+            style={phase >= 2 ? undefined : { opacity: 0 }}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={IMG_PHONE2} alt="" className={styles.phoneImg} onLoad={onImageLoad} onError={onImageLoad} />
           </div>
-          <div className={`${styles.phone} ${phase >= 3 ? styles.phoneVisible : ''}`}>
+          <div
+            className={`${styles.phone} ${phase >= 3 ? styles.phoneVisible : ''}`}
+            style={phase >= 3 ? undefined : { opacity: 0 }}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={IMG_PHONE1} alt="" className={styles.phoneImg} onLoad={onImageLoad} onError={onImageLoad} />
           </div>
