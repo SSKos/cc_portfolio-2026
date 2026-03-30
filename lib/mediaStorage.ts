@@ -4,7 +4,10 @@ import { randomUUID } from 'crypto'
 
 const MAX_SIZE = 10 * 1024 * 1024 // 10 MB
 
-/** Разрешённые MIME-типы и соответствующие расширения */
+/** MIME-типы, которые конвертируются в WebP при загрузке */
+const CONVERT_TO_WEBP = new Set(['image/jpeg', 'image/png', 'image/gif'])
+
+/** Разрешённые MIME-типы и соответствующие расширения (до конвертации) */
 const ALLOWED: Record<string, string> = {
   'image/jpeg': '.jpg',
   'image/png': '.png',
@@ -60,6 +63,7 @@ export interface SavedFile {
 
 /**
  * Проверяет и сохраняет файл из FormData на диск.
+ * JPEG / PNG / GIF автоматически конвертируются в WebP (quality 85).
  * Возвращает метаданные для записи в БД.
  */
 export async function saveUploadedFile(file: File): Promise<SavedFile> {
@@ -67,11 +71,18 @@ export async function saveUploadedFile(file: File): Promise<SavedFile> {
     throw new Error('File too large (max 10 MB)')
   }
 
-  const buffer = Buffer.from(await file.arrayBuffer())
-  const mimeType = detectMime(buffer)
+  let buffer = Buffer.from(await file.arrayBuffer()) as Buffer
+  let mimeType = detectMime(buffer)
 
   if (!mimeType || !ALLOWED[mimeType]) {
     throw new Error('Unsupported file type. Allowed: JPEG, PNG, GIF, WebP, SVG, PDF')
+  }
+
+  // Convert raster formats to WebP
+  if (CONVERT_TO_WEBP.has(mimeType)) {
+    const sharp = (await import('sharp')).default
+    buffer = await sharp(buffer).webp({ quality: 85 }).toBuffer()
+    mimeType = 'image/webp'
   }
 
   const ext = ALLOWED[mimeType]
@@ -85,7 +96,7 @@ export async function saveUploadedFile(file: File): Promise<SavedFile> {
     filename,
     originalName: file.name,
     mimeType,
-    size: file.size,
+    size: buffer.length,
     url: `/uploads/${filename}`,
   }
 }

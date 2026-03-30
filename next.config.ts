@@ -9,7 +9,7 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   // esbuild is used server-side for runtime sandbox compilation.
   // It must not be bundled by Turbopack/webpack (contains native binaries).
-  serverExternalPackages: ['esbuild'],
+  serverExternalPackages: ['esbuild', 'sharp'],
 
 async headers() {
     return [
