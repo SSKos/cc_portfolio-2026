@@ -38,10 +38,11 @@ export default function MedicinePage() {
       (entries) => {
         if (!entries[0].isIntersecting) return
         obs.disconnect()
+        const DELAY = 7500
         timers = [
-          setTimeout(() => setPhase(1), 300),
-          setTimeout(() => setPhase(2), 1100),
-          setTimeout(() => setPhase(3), 1900),
+          setTimeout(() => setPhase(1), DELAY),
+          setTimeout(() => setPhase(2), DELAY + 800),
+          setTimeout(() => setPhase(3), DELAY + 1600),
         ]
       },
       { threshold: 0.25 },
