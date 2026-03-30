@@ -9,6 +9,14 @@
   margin-bottom: var(--pad-2xl);
 }
 
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--md);
+  margin-bottom: var(--pad-xs);
+}
+
 .title {
   font: var(--typo-Card-h1);
   font-weight: 500;
@@ -16,7 +24,13 @@
   display: flex;
   align-items: baseline;
   gap: var(--pad-xs);
-  margin-bottom: var(--pad-xs);
+  margin: 0;
+}
+
+.convertMsg {
+  font: var(--typo-Card-p);
+  color: var(--text-accent);
+  margin: 0 0 var(--pad-xs);
 }
 
 .count {

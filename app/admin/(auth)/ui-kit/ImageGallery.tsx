@@ -30,6 +30,8 @@ export function ImageGallery() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [uploading, setUploading] = useState(false)
+  const [converting, setConverting] = useState(false)
+  const [convertMsg, setConvertMsg] = useState<string | null>(null)
 
   // Копирование: храним id последнего скопированного элемента для фидбека
   const [copiedId, setCopiedId] = useState<number | null>(null)
@@ -110,6 +112,31 @@ export function ImageGallery() {
     }
   }
 
+  // ── Конвертация в WebP ─────────────────────────────────────────────────────
+
+  const handleConvertToWebP = async () => {
+    const nonWebp = items.filter(m => m.mimeType !== 'image/webp' && m.mimeType !== 'image/svg+xml' && !m.mimeType.includes('pdf'))
+    if (nonWebp.length === 0) {
+      setConvertMsg('Все изображения уже в формате WebP.')
+      return
+    }
+    if (!confirm(`Конвертировать ${nonWebp.length} файл(ов) в WebP? Оригиналы будут удалены.`)) return
+
+    setConverting(true)
+    setConvertMsg(null)
+    try {
+      const res = await fetch('/api/admin/media/convert-to-webp', { method: 'POST' })
+      const data = await res.json() as { converted?: number; failed?: number; error?: string }
+      if (!res.ok) throw new Error(data.error ?? 'Ошибка конвертации')
+      setConvertMsg(`Готово: ${data.converted} конвертировано${data.failed ? `, ${data.failed} ошибок` : ''}.`)
+      await fetchMedia()
+    } catch (e) {
+      setConvertMsg(e instanceof Error ? e.message : 'Ошибка')
+    } finally {
+      setConverting(false)
+    }
+  }
+
   // ── Копирование пути ───────────────────────────────────────────────────────
 
   const handleCopy = async (item: MediaItem) => {
@@ -127,10 +154,20 @@ export function ImageGallery() {
   return (
     <section id="images" className={styles.section}>
       <div className={styles.header}>
-        <h2 className={styles.title}>
-          Images
-          {!loading && <span className={styles.count}>{items.length}</span>}
-        </h2>
+        <div className={styles.headerRow}>
+          <h2 className={styles.title}>
+            Images
+            {!loading && <span className={styles.count}>{items.length}</span>}
+          </h2>
+          <Button
+            variant="secondary"
+            disabled={converting || loading}
+            onClick={handleConvertToWebP}
+          >
+            {converting ? 'Конвертация…' : 'Convert to WebP'}
+          </Button>
+        </div>
+        {convertMsg && <p className={styles.convertMsg}>{convertMsg}</p>}
         {/* Подсказка: что копирует кнопка Copy path */}
         <p className={styles.hint}>
           Copy path копирует стабильный URL вида <code className={styles.code}>/media/123</code>. При замене файла ссылка остаётся той же, даже если изменится имя файла или расширение.
