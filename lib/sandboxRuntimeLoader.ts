@@ -116,9 +116,47 @@ export async function compileToBundle(slug: string): Promise<string | null> {
             build.onResolve({ filter: /^@\/lib\/sandboxText/ }, () => ({
               path: '@/lib/sandboxText', namespace: 'sbx-globals',
             }))
+            // next/link → thin <a> wrapper (no Next.js router needed in IIFE context)
+            build.onResolve({ filter: /^next\/link$/ }, () => ({
+              path: 'next/link', namespace: 'sbx-globals',
+            }))
+            // next/image → thin <img> wrapper
+            build.onResolve({ filter: /^next\/image$/ }, () => ({
+              path: 'next/image', namespace: 'sbx-globals',
+            }))
             build.onLoad({ filter: /.*/, namespace: 'sbx-globals' }, (args) => {
-              const expr = GLOBAL_MAP[args.path] ?? '__SBX_TEXT__'
-              return { contents: `module.exports = ${expr}`, loader: 'js' }
+              if (GLOBAL_MAP[args.path] !== undefined) {
+                return { contents: `module.exports = ${GLOBAL_MAP[args.path]}`, loader: 'js' }
+              }
+              if (args.path === '@/lib/sandboxText') {
+                return { contents: `module.exports = __SBX_TEXT__`, loader: 'js' }
+              }
+              if (args.path === 'next/link') {
+                return {
+                  contents: `
+var __Link = function(props) {
+  var h = typeof props.href === 'string' ? props.href : (props.href && props.href.pathname) || '#';
+  return __SBX_REACT__.createElement('a', { href: h, className: props.className, style: props.style, target: props.target, rel: props.rel, 'aria-label': props['aria-label'] }, props.children);
+};
+module.exports = __Link;
+module.exports.default = __Link;
+`,
+                  loader: 'js',
+                }
+              }
+              if (args.path === 'next/image') {
+                return {
+                  contents: `
+var __Img = function(props) {
+  return __SBX_REACT__.createElement('img', { src: props.src, alt: props.alt || '', width: props.width, height: props.height, className: props.className, style: props.style });
+};
+module.exports = __Img;
+module.exports.default = __Img;
+`,
+                  loader: 'js',
+                }
+              }
+              return { contents: `module.exports = {}`, loader: 'js' }
             })
           },
         },
