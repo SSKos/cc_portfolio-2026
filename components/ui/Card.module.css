@@ -1,0 +1,47 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: var(--md);
+  padding: var(--pad-2xl) var(--pad-2xl) 1.875rem;
+  border-radius: var(--radius-2xl);
+  background: var(--card-bg);
+}
+
+/* ── Glass variant ────────────────────────────────────────────────────────────
+   --_glass-color controls both the opaque border and the semi-transparent
+   background. Adjust it to shift the card's tint without touching opacity. */
+.glass {
+  --_glass-color: var(--surface-level-3);
+
+  background: color-mix(in srgb, var(--_glass-color) 45%, transparent);
+  border: 1px solid var(--_glass-color);
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: clamp(2rem, 3vh, 2.75rem);
+  font-weight: 200;
+  line-height: 1.4;
+  color: var(--text-accent);
+}
+
+.cardText {
+  margin: 0;
+  font-size: clamp(1rem, 2vh, 1.75rem);
+  font-weight: 200;
+  line-height: 140%;
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .cardTitle {
+    font-size: 1.75rem;
+    line-height: 1.4;
+  }
+
+  .cardText {
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+  }
+}
