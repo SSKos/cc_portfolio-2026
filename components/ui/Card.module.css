@@ -14,7 +14,7 @@
 .glass {
   --_glass-color: var(--surface-level-3);
 
-  background: color-mix(in srgb, var(--_glass-color) 45%, transparent);
+  background: color-mix(in srgb, var(--_glass-color) var(--_glass-opacity, 45%), transparent);
   border: 1px solid var(--_glass-color);
 }
 
