@@ -6,7 +6,7 @@ export async function GET() {
   const pages = await prisma.page.findMany({
     where: { isVisible: true },
     orderBy: { order: 'asc' },
-    select: { slug: true, title: true, parentId: true },
+    select: { id: true, slug: true, title: true, parentId: true },
   })
 
   const navItems = pages.filter(page => page.parentId === null)

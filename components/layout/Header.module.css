@@ -68,6 +68,30 @@
   text-decoration: none;
 }
 
+/* ── Level 1 dropdown (for nav items with child pages) ─────────────────── */
+
+.navDropdown {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+
+.navDropdownPanel {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 200px;
+  background: var(--header-background);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid color-mix(in srgb, var(--text-primary) 10%, transparent);
+  border-radius: var(--radius-xl);
+  padding: var(--pad-xxs) 0;
+  z-index: 101;
+  animation: dropdownIn 0.15s ease;
+}
+
 .label {
   font-size: var(--typo-Header-item-font-size);
   font-weight: var(--typo-Header-item-font-weight);

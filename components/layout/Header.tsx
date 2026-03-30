@@ -14,6 +14,7 @@ interface NavItem {
 }
 
 interface PageInfo {
+  id: number
   slug: string
   title: string
   parentId: number | null
@@ -44,16 +45,19 @@ export function Header({ breadcrumb }: HeaderProps) {
   const pathname = usePathname()
 
   const [navItems, setNavItems] = useState<NavItem[]>([])
+  const [navPagesRaw, setNavPagesRaw] = useState<PageInfo[]>([])
   const [pages, setPages] = useState<PageInfo[]>([])
   const [cvOpen, setCvOpen] = useState(false)
   const [mobileMenuPath, setMobileMenuPath] = useState<string | null>(null)
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [l1DropdownSlug, setL1DropdownSlug] = useState<string | null>(null)
 
   useEffect(() => {
     fetch('/api/nav')
       .then(r => r.ok ? r.json() : { navItems: [], pages: [] })
       .then((data: { navItems: PageInfo[]; pages: PageInfo[] }) => {
         setNavItems(data.navItems.map(p => slugToNavItem(p.slug, p.title)))
+        setNavPagesRaw(data.navItems)
         setPages(data.pages)
       })
       .catch(() => {})
@@ -269,6 +273,9 @@ export function Header({ breadcrumb }: HeaderProps) {
               <nav className={styles.nav} ref={navRef} onMouseLeave={onNavLeave} aria-label="Навигация">
                 {navItems.map((item, i) => {
                   const isActive = i === activeIndex
+                  const raw = navPagesRaw[i]
+                  const children = raw ? pages.filter(p => p.parentId === raw.id) : []
+                  const hasChildren = children.length > 0
                   const labelEl = (
                     <span
                       className={[styles.label, isActive ? styles.labelActive : ''].join(' ')}
@@ -288,6 +295,44 @@ export function Header({ breadcrumb }: HeaderProps) {
                       >
                         {labelEl}
                       </button>
+                    )
+                  }
+
+                  if (hasChildren) {
+                    const isOpen = l1DropdownSlug === item.href
+                    return (
+                      <div
+                        key={item.label}
+                        className={styles.navDropdown}
+                        onMouseEnter={() => { onItemHover(i); setL1DropdownSlug(item.href!) }}
+                        onMouseLeave={() => setL1DropdownSlug(null)}
+                      >
+                        <Link
+                          href={item.href!}
+                          className={styles.navItem}
+                          aria-current={isActive ? 'page' : undefined}
+                          aria-haspopup="listbox"
+                          aria-expanded={isOpen}
+                        >
+                          {labelEl}
+                        </Link>
+                        {isOpen && (
+                          <div className={styles.navDropdownPanel} role="listbox">
+                            {children.map(child => (
+                              <Link
+                                key={child.slug}
+                                href={'/' + child.slug}
+                                className={styles.dropdownItem}
+                                role="option"
+                                aria-selected={pathname === '/' + child.slug}
+                                onClick={() => setL1DropdownSlug(null)}
+                              >
+                                {child.title}
+                              </Link>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     )
                   }
 
