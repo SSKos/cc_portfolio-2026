@@ -124,7 +124,11 @@ export default function AdminUiKitPage() {
             </Card>
             <Card variant="glass" style={{ flex: '1 1 280px' }}>
               <CardTitle>Glass</CardTitle>
-              <CardText>Фон — 45% прозрачности, контур — непрозрачный. Цвет управляется через --_glass-color.</CardText>
+              <CardText>Фон — 45% прозрачности, контур — непрозрачный. Цвет по умолчанию: --surface-level-3.</CardText>
+            </Card>
+            <Card variant="glass" color="var(--brand-300)" style={{ flex: '1 1 280px' }}>
+              <CardTitle>Glass + color</CardTitle>
+              <CardText>color="var(--brand-300)" — и фон, и контур перекрашены одним пропом.</CardText>
             </Card>
           </div>
         </ComponentBlock>
