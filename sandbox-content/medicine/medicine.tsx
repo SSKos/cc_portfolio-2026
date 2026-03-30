@@ -11,12 +11,24 @@ const IMG_PHONE3 = '/media/sandbox/medicine/45'  // первый телефон 
 const IMG_PHONE2 = '/media/sandbox/medicine/44'  // второй телефон (5deg)
 const IMG_PHONE1 = '/media/sandbox/medicine/43'  // главный телефон (прямо, финал)
 
+const TOTAL_IMAGES = 4
+
 export default function MedicinePage() {
   const t = useText()
   const heroRef = useRef<HTMLDivElement>(null)
   const [phase, setPhase] = useState(0)
+  const [imagesReady, setImagesReady] = useState(false)
+  const loadedCount = useRef(0)
 
+  function onImageLoad() {
+    loadedCount.current += 1
+    if (loadedCount.current >= TOTAL_IMAGES) setImagesReady(true)
+  }
+
+  // Запускаем анимацию только после загрузки всех изображений
   useEffect(() => {
+    if (!imagesReady) return
+
     const el = heroRef.current
     if (!el) return
 
@@ -40,7 +52,7 @@ export default function MedicinePage() {
       obs.disconnect()
       timers.forEach(clearTimeout)
     }
-  }, [])
+  }, [imagesReady])
 
   return (
     <div className={styles.page}>
@@ -51,25 +63,31 @@ export default function MedicinePage() {
         className={`${styles.hero} ${styles[`phase${phase}`]}`}
         aria-label={t('heroAria', 'Анимированный герой-блок: трекер приёма лекарств')}
       >
+        {/* Скелетон — показывается пока не загружены все изображения */}
+        <div
+          className={`${styles.heroSkeleton} ${imagesReady ? styles.heroSkeletonHidden : ''}`}
+          aria-hidden="true"
+        />
+
         {/* Фон с прогрессивным размытием */}
         <div className={styles.heroBg} aria-hidden="true">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={IMG_BG} alt="" className={styles.heroBgImg} />
+          <img src={IMG_BG} alt="" className={styles.heroBgImg} onLoad={onImageLoad} onError={onImageLoad} />
         </div>
 
         {/* Телефоны — полноразмерные слои, размер = фону */}
         <div className={styles.phones} aria-hidden="true">
           <div className={`${styles.phone} ${phase >= 1 ? styles.phoneVisible : ''}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={IMG_PHONE3} alt="" className={styles.phoneImg} />
+            <img src={IMG_PHONE3} alt="" className={styles.phoneImg} onLoad={onImageLoad} onError={onImageLoad} />
           </div>
           <div className={`${styles.phone} ${phase >= 2 ? styles.phoneVisible : ''}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={IMG_PHONE2} alt="" className={styles.phoneImg} />
+            <img src={IMG_PHONE2} alt="" className={styles.phoneImg} onLoad={onImageLoad} onError={onImageLoad} />
           </div>
           <div className={`${styles.phone} ${phase >= 3 ? styles.phoneVisible : ''}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={IMG_PHONE1} alt="" className={styles.phoneImg} />
+            <img src={IMG_PHONE1} alt="" className={styles.phoneImg} onLoad={onImageLoad} onError={onImageLoad} />
           </div>
         </div>
       </section>

@@ -32,6 +32,35 @@
   z-index: 2;
 }
 
+/* ── Скелетон ──────────────────────────────────────────────────────────────── */
+
+.heroSkeleton {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    var(--surface-level-2, #1e1d21) 0%,
+    var(--surface-level-3, #242329) 40%,
+    var(--surface-level-4, #2c2a33) 60%,
+    var(--surface-level-2, #1e1d21) 100%
+  );
+  background-size: 300% 100%;
+  animation: skeletonShimmer 1.8s ease-in-out infinite;
+  transition: opacity 0.4s ease;
+}
+
+.heroSkeletonHidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes skeletonShimmer {
+  0%   { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
 /* ── Фон ───────────────────────────────────────────────────────────────────── */
 
 .heroBg {
