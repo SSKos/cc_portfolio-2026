@@ -82,6 +82,8 @@ const DEMO_SLIDES = [
 const DEMO_COVER = '/media/1'
 // END CAROUSEL
 
+  import { Card, CardTitle, CardText } from '@/components/ui/Card'
+
 // ── Component ──────────────────────────────────────────────────────────────────
 
 export default function MainPage() {
@@ -146,21 +148,28 @@ export default function MainPage() {
           {/* Title in normal flow — determines hero min-height */}
           <div className={styles.heroOverlay}>
             <p className={styles.heroTitle}>
-              {t('hero.title', 'Константин Кузниченко UX‑дизайнер. Специализируюсь на сложных банковских сценариях и дизайн‑системах.')}
+              {t('hero.title', 'Константин Кузниченко UX‑дизайнер. Специализируюсь на сложных банковских сценариях и дизайн‑системах.')}
             </p>
           </div>
       </section>
 
+         
+
       {/* ── Content container ─────────────────────────────────────────────── */}
       <div className={styles.content}>
+      
 
         {/* ── Intro ──────────────────────────────────────────────────────── */}
         <section className={styles.sectionIntro} data-reveal data-delay="0">
+        <Card variant="glass" color="#00D6CF" titleColor="#00D6CF">                                                                                                                                                                                                                           
+    <CardTitle>Вывод</CardTitle>                                                                                                                                                                                                                                                                          
+    <CardText>Текст...</CardText>                                                                                                                                                                                                                                                                         
+  </Card>    
           <p className={styles.introPara}>
-            {t('intro.p1', 'За более чем 6 лет в финтехе помог двум банкам подняться в рейтингах, «переработать» — критичные продукты и вырастить ключевые метрики в 2-3 раза.')}
+            {t('intro.p1', 'За более чем 6 лет в финтехе помог двум банкам подняться в рейтингах, «переработать» — критичные продукты и вырастить ключевые метрики в 2-3 раза.')}
           </p>
           <p className={styles.introPara}>
-            {t('intro.p2', 'Я стремлюсь структурировать и оптимизировать задачи. Могу предлагать яркие визуальные решения и уверенно чувствую себя с гайдлайнами. Быстро адаптируюсь к новым условиям, процессам, коллегам.')}
+            {t('intro.p2', 'Я стремлюсь структурировать и оптимизировать задачи. Могу предлагать яркие визуальные решения и уверенно чувствую себя с гайдлайнами. Быстро адаптируюсь к новым условиям, процессам, коллегам.')}
           </p>
         </section>
 
@@ -168,7 +177,7 @@ export default function MainPage() {
         <section className={styles.section}>
           <div className={styles.textContainer} data-reveal data-delay="0">
             <h2 className={styles.sectionTitle}>
-              {t('stats.title', 'Результаты в цифрах')}
+              {t('stats.title', 'Результаты в цифрах')}
             </h2>
           </div>
 
@@ -211,7 +220,7 @@ export default function MainPage() {
               {t('projects.title', 'Проекты')}
             </h2>
             <p className={styles.sectionBody}>
-              {t('projects.intro', 'Мне удалось получить опыт в широком спектре продуктовых задач. Я нашёл свои «точки силы» в проектах, связанных с выстраиванием логики или систематизацией. С удовольствием работаю над дизайн‑системами, собираю компоненты, библиотеки. Нравится работать над выстраиванием пользовательских путей, собирать функциональные экраны. Работал и над приложениями и над сайтами.')}
+              {t('projects.intro', 'Мне удалось получить опыт в широком спектре продуктовых задач. Я нашёл свои «точки силы» в проектах, связанных с выстраиванием логики или систематизацией. С удовольствием работаю над дизайн‑системами, собираю компоненты, библиотеки. Нравится работать над выстраиванием пользовательских путей, собирать функциональные экраны. Работал и над приложениями и над сайтами.')}
             </p>
           </div>
 
@@ -224,10 +233,10 @@ export default function MainPage() {
               </div>
               <div className={styles.projTextSide}>
                 <p className={styles.projectCardTitle}>
-                  {t('project.sys.title', 'Дизайн-система')}
+                  {t('project.sys.title', 'Дизайн‑система')}
                 </p>
                 <p className={styles.projectCardBody}>
-                  {t('project.sys.body', 'Модернизация UI-Kit и дизайн-системы: иконки, стандартизация компонентов, токены/переменные, правила использования, автоматизация повторяющихся шагов')}
+                  {t('project.sys.body', 'Модернизация UI‑Kit и дизайн‑системы: иконки, стандартизация компонентов, токены/переменные, правила использования, автоматизация повторяющихся шагов')}
                 </p>
               </div>
             </Link>
@@ -239,10 +248,10 @@ export default function MainPage() {
               </div>
               <div className={styles.projTextBottom}>
                 <p className={styles.projectCardTitle}>
-                  {t('project.mkb.title', 'Продукты и сценарии в МКБ')}
+                  {t('project.mkb.title', 'Продукты и сценарии в МКБ')}
                 </p>
                 <p className={styles.projectCardBody}>
-                  {t('project.mkb.body', 'Сценарии и экраны: оплата по реквизитам, счёт-копилка, чат — от проработки UX до передачи в разработку.')}
+                  {t('project.mkb.body', 'Сценарии и экраны: оплата по реквизитам, счёт‑копилка, чат — от проработки UX до передачи в разработку.')}
                 </p>
               </div>
             </Link>
@@ -251,10 +260,10 @@ export default function MainPage() {
             <Link href="/projects/news-portal" className={`${styles.projectCard} ${styles.projNews}`} data-reveal data-delay="200">
               <div className={styles.projTextLeft}>
                 <p className={styles.projectCardTitle}>
-                  {t('project.news.title', 'Новостной портал')}
+                  {t('project.news.title', 'Новостной портал')}
                 </p>
                 <p className={styles.projectCardBody}>
-                  {t('project.news.body', 'Упражнение в системном UI и паттернах Material Design 3.')}
+                  {t('project.news.body', 'Упражнение в системном UI и паттернах Material Design 3.')}
                 </p>
               </div>
               <div className={styles.projImgFlex}>
@@ -269,10 +278,10 @@ export default function MainPage() {
               </div>
               <div className={styles.projTextLeft}>
                 <p className={styles.projectCardTitle}>
-                  {t('project.health.title', 'Трекер приёма лекарств')}
+                  {t('project.health.title', 'Трекер приёма лекарств')}
                 </p>
                 <p className={styles.projectCardBody}>
-                  {t('project.health.body', 'Концепт-проект: как сделать трекер гибче и удобнее.')}
+                  {t('project.health.body', 'Концепт‑проект: как сделать трекер гибче и удобнее.')}
                 </p>
               </div>
             </Link>
@@ -284,7 +293,7 @@ export default function MainPage() {
         <section className={`${styles.section} ${styles.sectionLg}`}>
           <div className={styles.textContainer} data-reveal data-delay="0">
             <h2 className={styles.sectionTitle}>
-              {t('skills.title', 'Инструменты и навыки')}
+              {t('skills.title', 'Инструменты и навыки')}
             </h2>
           </div>
 
@@ -315,7 +324,7 @@ export default function MainPage() {
         <section className={`${styles.section} ${styles.sectionLg}`}>
           <div className={styles.textContainer} data-reveal data-delay="0">
             <h2 className={styles.sectionTitle}>
-              {t('work.title', 'Опыт работы')}
+              {t('work.title', 'Опыт работы')}
             </h2>
           </div>
 
@@ -345,10 +354,10 @@ export default function MainPage() {
         <section className={`${styles.section} ${styles.sectionLg}`} data-reveal data-delay="0">
           <div className={styles.contactBox}>
             <p className={styles.contactTitle}>
-              {t('contact.title', 'Открыт к сотрудничеству')}
+              {t('contact.title', 'Открыт к сотрудничеству')}
             </p>
             <p className={styles.contactSubtitle}>
-              {t('contact.subtitle', 'Ищу возможности в UX и продуктовом дизайне (удалённо/гибрид)')}
+              {t('contact.subtitle', 'Ищу возможности в UX и продуктовом дизайне (удалённо/гибрид)')}
             </p>
             <div className={styles.contactLinks}>
               <a className={styles.contactLink} href="mailto:konstantinkuznichenko@gmail.com">

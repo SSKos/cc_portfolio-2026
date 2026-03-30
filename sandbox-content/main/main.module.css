@@ -136,7 +136,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--lg); /* 1.25rem = 20px */
-    max-width: var(--columns-x10); /* 1128px */
+    /*max-width: var(--columns-x10); !* 1128px *!*/
     margin-bottom: var(--semantic-3xl); /* 2rem = 32px */
 }
 

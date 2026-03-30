@@ -1,446 +1,445 @@
 /* Высота хедера — используется в layout.tsx для спейсера */
 :root {
-  --header-height: 88px;
+    --header-height: 88px;
 }
 
 @media (max-width: 767px) {
-  :root {
-    --header-height: 64px;
-  }
+    :root {
+        --header-height: 64px;
+    }
 }
 
 /* ── Оболочка ──────────────────────────────────────────────────────────── */
 
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  background-color: var(--header-background);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background-color: var(--header-background);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .inner {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  max-width: var(--columns-x12);
-  height: 88px;
-  margin: 0 auto;
-  padding: 0 var(--md);
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: var(--columns-x12);
+    height: 88px;
+    margin: 0 auto;
+    padding: 0 var(--md);
 }
 
 /* ── Десктоп: обёртка ──────────────────────────────────────────────────── */
 
 .desktop {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 100%;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 }
 
 .desktopL1 {
-  justify-content: center;
+    justify-content: center;
 }
 
 .desktopL2 {
-  justify-content: center;
+    justify-content: center;
 }
 
 /* ── Навигация Level 1 ─────────────────────────────────────────────────── */
 
 .nav {
-  position: relative; /* якорь для .underline */
-  display: flex;
-  align-items: stretch;
+    position: relative; /* якорь для .underline */
+    display: flex;
+    align-items: stretch;
 }
 
 .navItem {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 88px;
-  padding: 0 var(--lg);
-  color: inherit;
-  text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 88px;
+    padding: 0 var(--lg);
+    color: inherit;
+    text-decoration: none;
 }
 
 /* ── Level 1 dropdown (for nav items with child pages) ─────────────────── */
 
 .navDropdown {
-  position: relative;
-  display: flex;
-  align-items: stretch;
+    position: relative;
+    display: flex;
+    align-items: stretch;
 }
 
 .navDropdownPanel {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  min-width: 200px;
-  background: var(--header-background);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid color-mix(in srgb, var(--text-primary) 10%, transparent);
-  border-radius: var(--radius-xl);
-  padding: var(--pad-xxs) 0;
-  z-index: 101;
-  animation: dropdownIn 0.15s ease;
+    position: absolute;
+    top: 100%;
+    left: calc(-1 * var(--pad-xs));
+    /*transform: translateX(-50%);*/
+    min-width: 200px;
+    background: var(--header-background);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid color-mix(in srgb, var(--text-primary) 10%, transparent);
+    border-radius: var(--radius-xl);
+    padding: var(--pad-xxs) 0;
+    z-index: 101;
+    animation: dropdownIn 0.15s ease;
 }
 
 .label {
-  font-size: var(--typo-Header-item-font-size);
-  font-weight: var(--typo-Header-item-font-weight);
-  line-height: var(--typo-Header-item-line-height);
-  color: var(--text-darker);
-  white-space: nowrap;
-  transition: color 0.2s ease;
+    font-size: var(--typo-Header-item-font-size);
+    font-weight: var(--typo-Header-item-font-weight);
+    line-height: var(--typo-Header-item-line-height);
+    color: var(--text-darker);
+    white-space: nowrap;
+    transition: color 0.2s ease;
 }
 
 .labelActive {
-  color: var(--text-primary);
+    color: var(--text-primary);
 }
 
 .navItem:hover .label {
-  color: var(--text-primary);
+    color: var(--text-primary);
 }
 
 /* ── Линия подчёркивания ───────────────────────────────────────────────── */
 
 .underline {
-  position: absolute;
-  bottom: 0;
-  height: 2px;
-  background-color: var(--vis-default);
-  pointer-events: none;
-  opacity: 0;
-  /* left и width задаются inline-стилем из JS */
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background-color: var(--vis-default);
+    pointer-events: none;
+    opacity: 0;
+    /* left и width задаются inline-стилем из JS */
 }
 
 .ulVisible {
-  opacity: 1;
+    opacity: 1;
 }
 
 .ulAnimated {
-  transition:
-    left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ── Level 2 desktop: единая строка навигации ───────────────────────────── */
 
 .level2Nav {
-  position: relative; /* якорь для .underline на level 2 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--lg);
+    position: relative; /* якорь для .underline на level 2 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--lg);
 }
 
 .level2Item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 88px;
-  padding: 0 var(--lg);
-  color: var(--text-darker);
-  text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 88px;
+    padding: 0 var(--lg);
+    color: var(--text-darker);
+    text-decoration: none;
 }
 
 .level2Item:hover .label {
-  color: var(--text-primary);
+    color: var(--text-primary);
 }
 
 .breadcrumb {
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-  min-height: 88px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    min-height: 88px;
 }
 
 .crumbGroup {
-  display: inline-flex;
-  align-items: center;
+    display: inline-flex;
+    align-items: center;
 }
 
 .crumbSep {
-  font-size: var(--typo-Header-item-font-size);
-  font-weight: var(--typo-Header-item-font-weight);
-  line-height: var(--typo-Header-item-line-height);
-  color: var(--text-darker);
-  padding: 0 var(--xs);
+    font-size: var(--typo-Header-item-font-size);
+    font-weight: var(--typo-Header-item-font-weight);
+    line-height: var(--typo-Header-item-line-height);
+    color: var(--text-darker);
+    padding: 0 var(--xs);
 }
 
 .crumbLink {
-  font-size: var(--typo-Header-item-font-size);
-  font-weight: var(--typo-Header-item-font-weight);
-  line-height: var(--typo-Header-item-line-height);
-  color: var(--text-darker);
-  pointer-events: auto;
-  transition: color 0.2s ease;
+    font-size: var(--typo-Header-item-font-size);
+    font-weight: var(--typo-Header-item-font-weight);
+    line-height: var(--typo-Header-item-line-height);
+    color: var(--text-darker);
+    pointer-events: auto;
+    transition: color 0.2s ease;
 }
 
 .crumbLink:hover {
-  color: var(--text-primary);
+    color: var(--text-primary);
 }
 
 .crumbCurrent {
-  font-size: var(--typo-Header-item-font-size);
-  font-weight: var(--typo-Header-item-font-weight);
-  line-height: var(--typo-Header-item-line-height);
-  color: var(--text-darker);
+    font-size: var(--typo-Header-item-font-size);
+    font-weight: var(--typo-Header-item-font-weight);
+    line-height: var(--typo-Header-item-line-height);
+    color: var(--text-darker);
 }
 
 /* Активный пункт крошки: ярче. Подчёркивание — через .underline (JS, как на level 1) */
 .crumbActive {
-  color: var(--text-primary);
+    color: var(--text-primary);
 }
 
 /* ── Дропдаун на level 2 ────────────────────────────────────────────────── */
 
 .crumbDropdown {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  align-self: stretch; /* растягивается на всю высоту .breadcrumb (88px) */
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    align-self: stretch; /* растягивается на всю высоту .breadcrumb (88px) */
 }
 
 .crumbTrigger {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--pad-xxs);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  color: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--pad-xxs);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: inherit;
 }
 
 .chevron {
-  display: flex;
-  align-items: center;
-  color: var(--text-darker);
-  transition: transform 0.2s ease;
-  flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    color: var(--text-darker);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
 }
 
 .chevronOpen {
-  transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 
 .dropdownPanel {
-  position: absolute;
-  top: 100%; /* под нижней границей .crumbDropdown, которая растянута до 88px */
-  left: 92px;
-  transform: translateX(-50%);
-  min-width: 240px;
-  background: var(--header-background);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid color-mix(in srgb, var(--text-primary) 10%, transparent);
-  border-radius: var(--radius-xl);
-  padding: var(--pad-xxs) 0;
-  z-index: 101;
-  animation: dropdownIn 0.15s ease;
+    position: absolute;
+    top: 100%; /* под нижней границей .crumbDropdown, которая растянута до 88px */
+    left: 92px;
+    transform: translateX(-50%);
+    min-width: 240px;
+    background: var(--header-background);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid color-mix(in srgb, var(--text-primary) 10%, transparent);
+    border-radius: var(--radius-xl);
+    padding: var(--pad-xxs) 0;
+    z-index: 101;
+    animation: dropdownIn 0.15s ease;
 }
 
 @keyframes dropdownIn {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(-6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
 }
 
 .dropdownItem {
-  display: block;
-  padding: var(--pad-xs) var(--pad-xl);
-  font-size: var(--typo-Header-item-font-size);
-  font-weight: var(--typo-Header-item-font-weight);
-  line-height: var(--typo-Header-item-line-height);
-  color: var(--text-darker);
-  text-decoration: none;
-  white-space: nowrap;
-  transition: color 0.15s ease;
+    display: block;
+    padding: var(--pad-xs) var(--pad-xl);
+    font-size: var(--typo-Header-item-font-size);
+    font-weight: var(--typo-Header-item-font-weight);
+    line-height: var(--typo-Header-item-line-height);
+    color: var(--text-darker);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.15s ease;
 }
 
 .dropdownItem:hover {
-  color: var(--text-primary);
+    color: var(--text-primary);
 }
 
 .cvBtn {
-  color: var(--text-darker);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 88px;
-  padding: 0 var(--lg);
-  transition: color 0.2s ease;
+    color: var(--text-darker);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 88px;
+    padding: 0 var(--lg);
+    transition: color 0.2s ease;
 }
 
 .cvBtn:hover {
-  color: var(--text-primary);
+    color: var(--text-primary);
 }
 
 /* ── Мобильный хедер ───────────────────────────────────────────────────── */
 
 .mobile {
-  display: none;
+    display: none;
 }
 
 /* ── Мобильное меню (оверлей под хедером) ──────────────────────────────── */
 
 .mobileMenu {
-  position: fixed;
-  top: 56px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 90;
-  background-color: var(--surface-body-bg);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    position: fixed;
+    top: 56px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 90;
+    background-color: var(--surface-body-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 @media (min-width: 768px) {
-  .mobileMenu {
-    display: none;
-  }
+    .mobileMenu {
+        display: none;
+    }
 }
 
 .mobileMenuNav {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .mobileMenuLink {
-  display: block;
-  font-size: var(--fs-lg);
-  font-weight: 300;
-  line-height: var(--lh-4xl);
-  color: var(--text-darker);
-  text-decoration: none;
-  padding: var(--pad-sm) var(--pad-4xl);
-  white-space: nowrap;
-  text-align: center;
-  transition: color 0.2s ease;
+    display: block;
+    font-size: var(--fs-lg);
+    font-weight: 300;
+    line-height: var(--lh-4xl);
+    color: var(--text-darker);
+    text-decoration: none;
+    padding: var(--pad-sm) var(--pad-4xl);
+    white-space: nowrap;
+    text-align: center;
+    transition: color 0.2s ease;
 }
 
 .mobileMenuLink:hover {
-  color: var(--text-primary);
+    color: var(--text-primary);
 }
 
 /* ── Адаптив ───────────────────────────────────────────────────────────── */
 
 @media (max-width: 767px) {
-  .desktop {
-    display: none;
-  }
+    .desktop {
+        display: none;
+    }
 
-  .inner {
-    height: 64px;
-    padding: 0 var(--s);
-  }
+    .inner {
+        height: 64px;
+        padding: 0 var(--s);
+    }
 
-  .mobile {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    gap: var(--xxs);
-  }
+    .mobile {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        gap: var(--xxs);
+    }
 
-  .mobileLeft {
-    flex-shrink: 0;
-  }
+    .mobileLeft {
+        flex-shrink: 0;
+    }
 
-  .mobileIconBtn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    color: var(--text-primary);
-    border-radius: var(--radius-md);
-    transition: background-color 0.2s;
-  }
+    .mobileIconBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        color: var(--text-primary);
+        border-radius: var(--radius-md);
+        transition: background-color 0.2s;
+    }
 
-  .mobileIconBtn svg {
-    width: 1.25rem;
-    height: 1.25rem;
-  }
+    .mobileIconBtn svg {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
 
-  .mobileIconBtn:hover {
-    background-color: var(--surface-level-2);
-  }
+    .mobileIconBtn:hover {
+        background-color: var(--surface-level-2);
+    }
 
-  .mobileCenter {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    padding: 0 var(--xxs);
-  }
+    .mobileCenter {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        padding: 0 var(--xxs);
+    }
 
-  .mobileTitleGroup {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--xxxs);
-    max-width: 100%;
-  }
+    .mobileTitleGroup {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--xxxs);
+        max-width: 100%;
+    }
 
-  .mobileSectionName {
-    font-size: 0.875rem;
-    font-weight: 400;
-    line-height: var(--lh-lg);
-    color: var(--text-darker);
-    white-space: nowrap;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+    .mobileSectionName {
+        font-size: 0.875rem;
+        font-weight: 400;
+        line-height: var(--lh-lg);
+        color: var(--text-darker);
+        white-space: nowrap;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
-  .mobilePageName {
-    font-size: 1.375rem;
-    font-weight: 500;
-    line-height: var(--lh-xl);
-    color: var(--text-primary);
-    white-space: nowrap;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+    .mobilePageName {
+        font-size: 1.375rem;
+        font-weight: 500;
+        line-height: var(--lh-xl);
+        color: var(--text-primary);
+        white-space: nowrap;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
-  .mobileCvBtn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-darker);
-    flex-shrink: 0;
-    width: 44px;
-    height: 44px;
-    padding: 0;
-    transition: color 0.2s ease;
-  }
+    .mobileCvBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-darker);
+        flex-shrink: 0;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        transition: color 0.2s ease;
+    }
 
-  .mobileCvBtn svg {
-    width: 1.625rem;
-    height: auto;
-  }
+    .mobileCvBtn svg {
+        width: 1.625rem;
+        height: auto;
+    }
 
-  .mobileCvBtn:hover {
-    color: var(--text-primary);
-  }
+    .mobileCvBtn:hover {
+        color: var(--text-primary);
+    }
 }

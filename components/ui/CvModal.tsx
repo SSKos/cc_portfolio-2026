@@ -1,73 +1,74 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { IconClose } from './icons'
+import {useEffect, useState} from 'react'
+import {IconClose} from './icons'
 import styles from './CvModal.module.css'
 
 interface CvUrls {
-  ru: { url: string } | null
-  en: { url: string } | null
+    ru: { url: string } | null
+    en: { url: string } | null
 }
 
 interface CvModalProps {
-  open: boolean
-  onClose: () => void
+    open: boolean
+    onClose: () => void
 }
 
-export function CvModal({ open, onClose }: CvModalProps) {
-  const [urls, setUrls] = useState<CvUrls>({ ru: null, en: null })
+export function CvModal({open, onClose}: CvModalProps) {
+    const [urls, setUrls] = useState<CvUrls>({ru: null, en: null})
 
-  useEffect(() => {
-    fetch('/api/cv')
-      .then(r => r.ok ? r.json() : { ru: null, en: null })
-      .then(setUrls)
-      .catch(() => {})
-  }, [])
+    useEffect(() => {
+        fetch('/api/cv')
+            .then(r => r.ok ? r.json() : {ru: null, en: null})
+            .then(setUrls)
+            .catch(() => {
+            })
+    }, [])
 
-  useEffect(() => {
-    if (!open) return
-    function onKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') onClose()
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [open, onClose])
+    useEffect(() => {
+        if (!open) return
 
-  if (!open) return null
+        function onKey(e: KeyboardEvent) {
+            if (e.key === 'Escape') onClose()
+        }
 
-  return (
-    <div className={styles.overlay} onClick={onClose} role="dialog" aria-modal aria-label="Скачать резюме">
-      <div className={styles.modal} onClick={e => e.stopPropagation()}>
-        <button className={styles.closeBtn} onClick={onClose} aria-label="Закрыть">
-          <IconClose />
-        </button>
-        <h2 className={styles.title}>Скачать резюме</h2>
-        <p className={styles.subtitle}>Выберите язык</p>
-        <div className={styles.buttons}>
-          {urls.ru ? (
-            <a
-              href={urls.ru.url}
-              download="Константин Кузниченко UX-дизайнер CV.pdf"
-              className={styles.downloadBtn}
-            >
-              Русский
-            </a>
-          ) : (
-            <span className={styles.downloadBtnDisabled}>Русский</span>
-          )}
-          {urls.en ? (
-            <a
-              href={urls.en.url}
-              download="Konstantin Kuznichenko UX-designer CV.pdf"
-              className={styles.downloadBtn}
-            >
-              English
-            </a>
-          ) : (
-            <span className={styles.downloadBtnDisabled}>English</span>
-          )}
+        window.addEventListener('keydown', onKey)
+        return () => window.removeEventListener('keydown', onKey)
+    }, [open, onClose])
+
+    if (!open) return null
+
+    return (
+        <div className={styles.overlay} onClick={onClose} role="dialog" aria-modal aria-label="Download CV">
+            <div className={styles.modal} onClick={e => e.stopPropagation()}>
+                <button className={styles.closeBtn} onClick={onClose} aria-label="Закрыть">
+                    <IconClose/>
+                </button>
+                <div className={styles.buttons}>
+                    {urls.ru ? (
+                        <a
+                            href={urls.ru.url}
+                            download="Константин Кузниченко UX-дизайнер CV.pdf"
+                            className={styles.downloadBtn}
+                        >
+                            Скачать резюме (РУС)
+                        </a>
+                    ) : (
+                        <span className={styles.downloadBtnDisabled}>Русский</span>
+                    )}
+                    {urls.en ? (
+                        <a
+                            href={urls.en.url}
+                            download="Konstantin Kuznichenko UX-designer CV.pdf"
+                            className={styles.downloadBtn}
+                        >
+                            Download CV (ENG)
+                        </a>
+                    ) : (
+                        <span className={styles.downloadBtnDisabled}>English</span>
+                    )}
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  )
+    )
 }
