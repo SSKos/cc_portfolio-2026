@@ -7,8 +7,10 @@ interface CardProps {
   variant?: CardVariant
   /** Overrides --_glass-color. Accepts any CSS color value: token, hex, rgb, etc. */
   color?: string
-  /** Background opacity for the glass variant (0–1). Default: 0.45 */
+  /** Background opacity for the glass variant (0–1). Default: 0.10 */
   bgOpacity?: number
+  /** Overrides the title color for all CardTitle children. */
+  titleColor?: string
   children: ReactNode
   className?: string
   style?: CSSProperties
@@ -22,7 +24,7 @@ interface CardTextProps {
   children: ReactNode
 }
 
-export function Card({ variant = 'default', color, bgOpacity, children, className, style }: CardProps) {
+export function Card({ variant = 'default', color, bgOpacity, titleColor, children, className, style }: CardProps) {
   const cls = [
     styles.card,
     variant === 'glass' ? styles.glass : '',
@@ -31,8 +33,9 @@ export function Card({ variant = 'default', color, bgOpacity, children, classNam
 
   const inlineStyle: CSSProperties = {
     ...style,
-    ...(color ? { '--_glass-color': color } as CSSProperties : {}),
-    ...(bgOpacity !== undefined ? { '--_glass-opacity': `${Math.round(bgOpacity * 100)}%` } as CSSProperties : {}),
+    ...(color      ? { '--_glass-color':      color                              } as CSSProperties : {}),
+    ...(bgOpacity  !== undefined ? { '--_glass-opacity': `${Math.round(bgOpacity * 100)}%` } as CSSProperties : {}),
+    ...(titleColor ? { '--_card-title-color': titleColor                         } as CSSProperties : {}),
   }
 
   return <div className={cls} style={inlineStyle}>{children}</div>
