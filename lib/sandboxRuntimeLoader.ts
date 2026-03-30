@@ -133,10 +133,12 @@ export async function compileToBundle(slug: string): Promise<string | null> {
               }
               if (args.path === 'next/link') {
                 return {
+                  // Capture React at IIFE init time (before window globals are cleared).
                   contents: `
+var __R = __SBX_REACT__;
 var __Link = function(props) {
   var h = typeof props.href === 'string' ? props.href : (props.href && props.href.pathname) || '#';
-  return __SBX_REACT__.createElement('a', { href: h, className: props.className, style: props.style, target: props.target, rel: props.rel, 'aria-label': props['aria-label'] }, props.children);
+  return __R.createElement('a', { href: h, className: props.className, style: props.style, target: props.target, rel: props.rel, 'aria-label': props['aria-label'] }, props.children);
 };
 module.exports = __Link;
 module.exports.default = __Link;
@@ -146,9 +148,11 @@ module.exports.default = __Link;
               }
               if (args.path === 'next/image') {
                 return {
+                  // Capture React at IIFE init time (before window globals are cleared).
                   contents: `
+var __R = __SBX_REACT__;
 var __Img = function(props) {
-  return __SBX_REACT__.createElement('img', { src: props.src, alt: props.alt || '', width: props.width, height: props.height, className: props.className, style: props.style });
+  return __R.createElement('img', { src: props.src, alt: props.alt || '', width: props.width, height: props.height, className: props.className, style: props.style });
 };
 module.exports = __Img;
 module.exports.default = __Img;
