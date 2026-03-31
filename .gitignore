@@ -45,8 +45,8 @@ next-env.d.ts
 /app/generated/prisma
 /public/uploads
 
-# sandbox content — tracked in git
-# /sandbox-content/
+# sandbox content — local only, not tracked in git
+/sandbox-content/
 
 # playwright mcp artifacts
 /.playwright-mcp/
