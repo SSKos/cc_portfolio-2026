@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { processComposesInCss } from '@/lib/sandboxRuntimeLoader'
+import { processComposesInCss, readExtraCss } from '@/lib/sandboxRuntimeLoader'
 import fs from 'fs'
 import path from 'path'
 
@@ -20,7 +20,7 @@ export async function GET(_req: Request, { params }: Params) {
 
   try {
     const raw = fs.readFileSync(cssFile, 'utf-8')
-    const css = processComposesInCss(raw, cssFile)
+    const css = processComposesInCss(raw, cssFile) + '\n\n' + readExtraCss(slug)
     return new NextResponse(css, {
       headers: {
         'Content-Type': 'text/css',

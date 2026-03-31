@@ -41,6 +41,16 @@
     z-index: 10;
 }
 
+.outer[data-ready='false'] .slide,
+.outer[data-ready='false'] .coverOverlay {
+    visibility: hidden;
+}
+
+.outer[data-ready='true'] .slide,
+.outer[data-ready='true'] .coverOverlay {
+    visibility: visible;
+}
+
 .empty {
     position: absolute;
     inset: 0;

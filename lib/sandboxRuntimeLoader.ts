@@ -55,16 +55,33 @@ export function processComposesInCss(cssSource: string, cssFilePath: string): st
  *   - react, react/jsx-runtime, react-dom  — browser globals
  *   - __sandboxText__                       — useText hook from @/lib/sandboxText
  */
+/**
+ * Returns extra CSS collected from non-sandbox imports (e.g. components/ui/).
+ * Written to cache by compileToBundle; empty string if not yet built.
+ */
+export function readExtraCss(slug: string): string {
+  try {
+    return fs.readFileSync(path.join(SANDBOX_CACHE_DIR, `${slug}-extra.css`), 'utf-8')
+  } catch {
+    return ''
+  }
+}
+
 export async function compileToBundle(slug: string): Promise<string | null> {
   const srcFile = path.join(process.cwd(), 'sandbox-content', slug, `${slug}.tsx`)
   if (!fs.existsSync(srcFile)) return null
 
   const outFile = path.join(SANDBOX_CACHE_DIR, `${slug}.cjs`)
+  const extraCssFile = path.join(SANDBOX_CACHE_DIR, `${slug}-extra.css`)
 
-  // Skip if cache is fresh
+  // Skip if cache is fresh (both bundle and extra CSS must exist)
   try {
     const srcMtime = fs.statSync(srcFile).mtimeMs
-    if (fs.existsSync(outFile) && fs.statSync(outFile).mtimeMs >= srcMtime) {
+    if (
+      fs.existsSync(outFile) &&
+      fs.existsSync(extraCssFile) &&
+      fs.statSync(outFile).mtimeMs >= srcMtime
+    ) {
       return fs.readFileSync(outFile, 'utf-8')
     }
   } catch { /* rebuild */ }
@@ -78,6 +95,10 @@ export async function compileToBundle(slug: string): Promise<string | null> {
   }
 
   fs.mkdirSync(SANDBOX_CACHE_DIR, { recursive: true })
+
+  // Collect CSS from imported components (outside sandbox-content/{slug}/)
+  const sandboxDir = path.join(process.cwd(), 'sandbox-content', slug)
+  const extraCssChunks: string[] = []
 
   try {
     await esbuild.build({
@@ -165,12 +186,17 @@ module.exports.default = __Img;
           },
         },
         // CSS modules → { className: 'className' } (matches the raw CSS served by the CSS endpoint)
+        // Also collects CSS from outside the sandbox dir (e.g. components/ui/) into extraCssChunks.
         {
           name: 'css-modules',
           setup(build) {
             build.onLoad({ filter: /\.css$/ }, ({ path: cssPath }) => {
               try {
                 const css = fs.readFileSync(cssPath, 'utf-8')
+                // Collect non-sandbox CSS so the CSS endpoint can include it
+                if (!cssPath.startsWith(sandboxDir + path.sep) && !cssPath.startsWith(sandboxDir + '/')) {
+                  extraCssChunks.push(processComposesInCss(css, cssPath))
+                }
                 return { contents: `module.exports=${JSON.stringify(classNamesFromCss(css))}`, loader: 'js' }
               } catch {
                 return { contents: 'module.exports={}', loader: 'js' }
@@ -180,9 +206,12 @@ module.exports.default = __Img;
         },
       ],
     })
+    // Save collected component CSS alongside the bundle
+    fs.writeFileSync(extraCssFile, extraCssChunks.join('\n\n'), 'utf-8')
   } catch (e) {
     console.error(`[sandboxRuntimeLoader] Build failed for "${slug}":`, e)
     try { fs.unlinkSync(outFile) } catch { /* ok */ }
+    try { fs.unlinkSync(extraCssFile) } catch { /* ok */ }
     return null
   }
 

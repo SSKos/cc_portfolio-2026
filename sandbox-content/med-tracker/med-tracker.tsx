@@ -6,10 +6,10 @@ import { useText } from '@/lib/sandboxText'
 
 // ── Изображения: загрузи в галерею /admin/sandbox/medicine/gallery ─────────────
 // и обнови ID (число в конце URL)
-const IMG_BG     = '/media/sandbox/medicine/42'  // фоновая иллюстрация
-const IMG_PHONE3 = '/media/sandbox/medicine/45'  // первый телефон (10deg, справа)
-const IMG_PHONE2 = '/media/sandbox/medicine/44'  // второй телефон (5deg)
-const IMG_PHONE1 = '/media/sandbox/medicine/43'  // главный телефон (прямо, финал)
+const IMG_BG     = '/media/sandbox/med-tracker/53'  // фоновая иллюстрация
+const IMG_PHONE3 = '/media/sandbox/med-tracker/50'  // первый телефон (10deg, справа)
+const IMG_PHONE2 = '/media/sandbox/med-tracker/51'  // второй телефон (5deg)
+const IMG_PHONE1 = '/media/sandbox/med-tracker/52'  // главный телефон (прямо, финал)
 
 export default function MedicinePage() {
   const t = useText()
