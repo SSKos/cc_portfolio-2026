@@ -1,0 +1,158 @@
+.sectionHeading {
+    margin: 0;
+    font-size: 3rem;
+    font-weight: 500;
+    line-height: 3.75rem;
+    color: var(--text-primary);
+    text-wrap: balance;
+}
+
+.sectionLead {
+    margin: 0;
+    padding-right: 15vw;
+    font-size: clamp(1.25rem, 6vh, 2rem);
+    font-weight: 300;
+    line-height: 1.4;
+    color: var(--text-primary);
+}
+
+.sectionBody {
+    margin: 0;
+    padding-right: 15vw;
+    font-size: 1.75rem;
+    font-weight: 300;
+    line-height: 2.5rem;
+    color: var(--text-primary);
+    letter-spacing: 3%;
+}
+
+.sectionBody > ul {
+    padding-right: 0;
+}
+
+.cardHeading {
+    margin: 0;
+    font-size: clamp(2rem, 3vh, 2.75rem);
+    font-weight: 200;
+    line-height: 1.4;
+    color: var(--text-accent);
+    text-wrap: balance;
+}
+
+.cardBody {
+    margin: 0;
+    font-size: clamp(1rem, 2vh, 1.75rem);
+    font-weight: 200;
+    line-height: 140%;
+    color: var(--text-primary);
+    letter-spacing: 3%;
+}
+
+.statLabel {
+    margin: 0 0 0.25rem 0;
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 2.5rem;
+    color: var(--text-primary);
+    letter-spacing: 3%;
+}
+
+.statBody {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 2.25rem;
+    color: var(--text-primary);
+    letter-spacing: 3%;
+}
+
+.inlineListItem {
+    font-size: clamp(1rem, 2vh, 1.75rem);
+    font-weight: 200;
+    line-height: 2em;
+    color: var(--text-primary);
+}
+
+.eyebrowAccent {
+    margin: 0;
+    font-size: var(--fs-xl);
+    font-weight: 200;
+    line-height: 2.75rem;
+    color: var(--text-accent);
+}
+
+.secondaryHeading {
+    margin: 0;
+    font-size: 3rem;
+    font-weight: 500;
+    line-height: 3.75rem;
+    color: var(--text-secondary);
+}
+
+.accentBody {
+    margin: 0;
+    font-size: var(--fs-xl);
+    font-weight: 500;
+    line-height: 2.25rem;
+    color: var(--vis-dim-accent);
+}
+
+.contactLinkText {
+    font-size: clamp(1.5rem, 3vw, 1.25rem);
+    font-weight: 400;
+    line-height: 1.6875rem;
+}
+
+@media (max-width: 600px) {
+    .sectionHeading {
+        font-size: 2.25rem;
+        line-height: 2.75rem;
+    }
+
+    .sectionLead {
+        font-size: clamp(1.25rem, 6vh, 2rem);
+        line-height: 1.4;
+        padding-right: 0;
+    }
+
+    .sectionBody {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        padding-right: 0;
+    }
+
+    .cardHeading {
+        font-size: 1.75rem;
+        line-height: 1.4;
+    }
+
+    .cardBody {
+        font-size: 1.125rem;
+        line-height: 1.5rem;
+    }
+
+    .statLabel {
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
+
+    .statBody {
+        font-size: 1.125rem;
+        line-height: 1.5rem;
+    }
+
+    .eyebrowAccent {
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
+
+    .secondaryHeading {
+        font-size: 2.25rem;
+        line-height: 2.75rem;
+    }
+
+    .accentBody {
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
+}

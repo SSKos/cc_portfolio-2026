@@ -45,8 +45,7 @@ next-env.d.ts
 /app/generated/prisma
 /public/uploads
 
-# sandbox content — local only, not tracked in git
-/sandbox-content/
+# sandbox content is tracked in git but excluded from Docker build (see .dockerignore)
 
 # playwright mcp artifacts
 /.playwright-mcp/

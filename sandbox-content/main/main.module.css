@@ -1,0 +1,791 @@
+/* ── Page ──────────────────────────────────────────────────────────────────── */
+
+.page {
+    background-color: var(--surface-body-bg);
+    min-height: 100vh;
+    font-variation-settings: 'YTLC' 500, 'wdth' 100;
+}
+
+/* ── Hero ──────────────────────────────────────────────────────────────────── */
+
+/*
+  Layout strategy:
+  .hero         — flex column, min-height: 50vh — grows to fit .heroOverlay
+  .carouselWrap — absolute fill (background layer, doesn't affect height)
+  .heroGradientBg — absolute gradient vignette (decorative only)
+  .heroOverlay  — in normal flow → its height sets the hero min-height
+*/
+.hero {
+    position: relative;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1600 / 975;
+    min-height: 400px;
+    overflow: hidden;
+    max-width: var(--columns-x12);
+    margin: 0 auto;
+}
+
+/* Карусель — прижата к низу героя */
+.carouselWrap {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+/* Hero uses Carousel as a full-bleed layer, not proportional inline media. */
+.carouselWrap > div {
+    position: absolute;
+    inset: 0;
+}
+
+.heroCarousel [data-carousel-role='sizer'] {
+    display: none;
+}
+
+.heroCarousel [data-carousel-role='slide'],
+.heroCarousel [data-carousel-role='cover'] {
+    position: absolute;
+    inset: auto;
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: auto;
+    height: 100%;
+    max-width: none;
+    object-fit: contain;
+    object-position: right bottom;
+    transform: none;
+}
+
+@media (min-width: 600px){
+    .heroCarousel [data-carousel-role='slide'],
+    .heroCarousel [data-carousel-role='cover'] {
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+    .heroTitle {
+        font-size: clamp(2rem, 5vh, 2.75rem) !important;
+        line-height: 1.4 !important;
+    }
+}
+/* Left-side gradient vignette covering full hero height */
+.heroGradientBg {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: min(664px, 55%);
+    background: linear-gradient(
+            to right,
+            #18181a 0%,
+            rgba(24, 24, 26, 0.8) 37%,
+            rgba(24, 24, 26, 0) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+.heroOverlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    width: min(664px, 55%);
+    padding: 0 96px var(--xl) 0;
+}
+
+.heroTitle {
+    margin: 0;
+    font-size: var(--fs-3xl); /* 3.5rem = 56px */
+    font-weight: 200;
+    line-height: var(--lh-6xl); /* 4.5rem = 72px */
+    color: var(--text-primary);
+}
+
+/* ── Content container ─────────────────────────────────────────────────────── */
+
+.content {
+    max-width: var(--columns-x12); /* 1360px */
+    margin: 0 auto;
+    padding-bottom: 8rem; /* 128px — no token at this scale */
+}
+
+/* ── Section base ──────────────────────────────────────────────────────────── */
+
+.section {
+    padding-top: var(--semantic-6xl); /* 4rem = 64px */
+}
+
+.sectionIntro {
+    padding-top: var(--semantic-4xl); /* 3rem = 48px */
+    display: flex;
+    flex-direction: column;
+    gap: var(--lh-4xl); /* 3rem — one paragraph line-height as gap */
+}
+
+.sectionLg {
+    padding-top: 8rem; /* 128px */
+}
+
+.textContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--lg); /* 1.25rem = 20px */
+    /*max-width: var(--columns-x10); !* 1128px *!*/
+    margin-bottom: var(--semantic-3xl); /* 2rem = 32px */
+}
+
+.sectionTitle {
+    composes: sectionHeading from '../shared/typography.module.css';
+}
+
+.sectionBody {
+    composes: sectionBody from '../shared/typography.module.css';
+}
+
+/* ── Intro ─────────────────────────────────────────────────────────────────── */
+
+.introPara {
+    composes: sectionLead from '../shared/typography.module.css';
+    max-width: var(--columns-x10); /* 1128px */
+}
+
+/* ── Stats grid ────────────────────────────────────────────────────────────── */
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--semantic-3xl); /* 2rem = 32px */
+}
+
+.statCard {
+    position: relative;
+    background-color: var(--surface-level-1);
+    border-radius: var(--radius-2xl); /* 1.5rem = 24px */
+    box-shadow: var(--effect-card-shadow);
+    overflow: hidden;
+}
+
+.statCardInner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--xl); /* 1.5rem = 24px */
+    padding: var(--xl);
+    font-weight: 300;
+}
+
+.statNumber {
+    margin: 0;
+    font-size: 6rem; /* 96px — typo-Card-number */
+    font-weight: 300;
+    line-height: 5.75rem; /* 92px */
+    color: var(--text-accent);
+}
+
+.statSuffix {
+    font-size: 3.9375rem; /* 63px — from design, no token */
+    line-height: inherit;
+}
+
+.statTextBox {
+    display: flex;
+    flex-direction: column;
+    gap: var(--xs); /* 0.5rem = 8px */
+}
+
+.statLabel {
+    composes: statLabel from '../shared/typography.module.css';
+}
+
+.statDesc {
+    composes: statBody from '../shared/typography.module.css';
+}
+
+.bankLogo {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 5rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bankLogo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* ── Projects grid ─────────────────────────────────────────────────────────── */
+
+/*
+  Grid layout:
+    Row 1 [330px]: Design System ──── (col 1-3)
+    Row 2 [330px]: MKB (col 1)     │ News    (col 2-3)
+    Row 3 [330px]: MKB (cont)      │ Health  (col 2-3)
+  MKB card height = 330 + 32 + 330 = 692px (matches design)
+*/
+
+.projectsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, minmax(clamp(180px, 24.3vw, 330px), auto));
+    gap: var(--semantic-3xl); /* 32px */
+}
+
+.projectCard {
+    background-color: var(--surface-level-1);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--effect-card-shadow);
+    overflow: hidden;
+    display: flex;
+    position: relative;
+    transition: box-shadow 0.35s ease, transform 0.25s ease;
+}
+
+.projectCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--vis-dim-accent) 40%, transparent),
+    0 0 20px 4px var(--brand-300-tr),
+    0 0 56px 12px var(--brand-400-tr);
+}
+
+/* ── SHIMMER — удали этот блок целиком, чтобы отключить эффект блика ── */
+.projectCard::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+            108deg,
+            transparent 35%,
+            rgba(255, 255, 255, 0.07) 50%,
+            transparent 65%
+    );
+    transform: translateX(-150%) skewX(-12deg);
+    pointer-events: none;
+    z-index: 10;
+}
+
+.projectCard:hover::after {
+    animation: cardShimmer 1.65s ease forwards;
+}
+
+@keyframes cardShimmer {
+    from {
+        transform: translateX(-150%) skewX(-12deg);
+    }
+    to {
+        transform: translateX(150%) skewX(-12deg);
+    }
+}
+
+/* ── END SHIMMER ──────────────────────────────────────── */
+
+/* Design System — row 1, all columns */
+.projSys {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    flex-direction: row;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.projImgWide {
+    position: relative;
+    flex: 0 0 66%;
+    min-width: 50%;
+    overflow: hidden;
+}
+
+.projTextSide {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--lg); /* 20px */
+    padding: var(--semantic-3xl) var(--xl); /* 32px 24px */
+}
+
+/* MKB — col 1, rows 2-3, tall */
+.projMkb {
+    grid-column: 1;
+    grid-row: 2 / 4;
+    align-self: stretch;
+    flex-direction: column;
+}
+
+.projImgTall {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+}
+
+.projTextBottom {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--xs); /* 8px */
+    padding: 2rem var(--xl) var(--xl);
+}
+
+/* News — col 2-3, row 2 */
+.projNews {
+    grid-column: 2 / 4;
+    grid-row: 2;
+    flex-direction: row;
+}
+
+/* Health — col 2-3, row 3 */
+.projHealth {
+    grid-column: 2 / 4;
+    grid-row: 3;
+    flex-direction: row;
+}
+
+/* Fixed-width text panel (News / Health) */
+.projTextLeft {
+    flex-shrink: 0;
+    flex: 0 0 min(316px, 40%);
+    display: flex;
+    flex-direction: column;
+    gap: var(--xs); /* 8px */
+    padding: var(--xl); /* 24px */
+}
+
+/* Flex image container (News / Health) */
+.projImgFlex {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Cover image — shared across all project cards */
+.coverImg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+}
+
+/* Project card typography */
+.projectCardTitle {
+    composes: cardHeading from '../shared/typography.module.css';
+}
+
+.projectCardBody {
+    composes: cardBody from '../shared/typography.module.css';
+}
+
+/* ── Skills ────────────────────────────────────────────────────────────────── */
+
+.skillsRow {
+    display: flex;
+    gap: var(--semantic-3xl); /* 32px */
+}
+
+.skillCard {
+    flex: 1;
+    background-color: var(--surface-level-1);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--effect-card-shadow);
+    overflow: hidden;
+}
+
+.skillCardInner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--xl); /* 24px */
+    padding: var(--xl);
+}
+
+.skillTitle {
+    composes: cardHeading from '../shared/typography.module.css';
+}
+
+.skillList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.skillListItem {
+    composes: inlineListItem from '../shared/typography.module.css';
+}
+
+.skillList li {
+    display: inline;
+    white-space: nowrap;
+}
+
+.skillList li::after {
+    content: '';
+    display: inline-block;
+    width: 0.35em;
+    height: 0.35em;
+    border-radius: 50%;
+    background-color: var(--text-darker);
+    vertical-align: middle;
+    margin: 0 0.75em;
+}
+
+.skillList li:last-child::after {
+    display: none;
+}
+
+
+/* ── Work ──────────────────────────────────────────────────────────────────── */
+
+.workList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--semantic-3xl); /* 32px */
+}
+
+.workItem {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.workDate {
+    composes: eyebrowAccent from '../shared/typography.module.css';
+}
+
+.workCompany {
+    composes: secondaryHeading from '../shared/typography.module.css';
+}
+
+.workDesc {
+    margin: 0;
+    font-size: clamp(1.125rem, 2.31vw - 0.46rem, 1.5rem); /* 18px@1100→24px@1360 */
+    font-weight: 300;
+    line-height: 2.25rem; /* 36px */
+    color: var(--text-secondary);
+}
+
+/* ── Contact ───────────────────────────────────────────────────────────────── */
+
+.contactBox {
+    border: 1px solid var(--vis-dim-accent); /* #d280f8 */
+    border-radius: var(--radius-2xl); /* 24px */
+    padding: 70px 63px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--lg); /* 20px */
+    text-align: center;
+}
+
+.contactTitle {
+    composes: sectionHeading from '../shared/typography.module.css';
+    margin-bottom: var(--semantic-3xl); /* 32px bottom */
+    line-height: 4.25rem; /* 68px */
+}
+
+.contactSubtitle {
+    composes: accentBody from '../shared/typography.module.css';
+}
+
+.contactLinks {
+    display: flex;
+    gap: var(--semantic-3xl); /* 32px */
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-top: var(--xl); /* 24px */
+}
+
+.contactLink {
+    composes: contactLinkText from '../shared/typography.module.css';
+    display: flex;
+    align-items: center;
+    gap: var(--xs); /* 8px */
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.contactLink:hover {
+    color: var(--vis-dim-accent);
+}
+
+.contactIcon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+
+@media (max-width: 1360px) {
+    .content {
+        padding-inline: 1rem;
+    }
+
+    .heroTitle {
+        padding-inline: 1rem;
+    }
+}
+
+@media (max-width: 1080px) {
+    .statsGrid {
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+
+    .hero {
+        aspect-ratio: 1600 / 975;
+        height: auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .statsGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 580px) {
+    .skillList {
+        display: inline;
+        list-style: disc;
+        padding-left: 1.5rem;
+    }
+
+    .skillList li {
+        display: list-item;
+        white-space: normal;
+        line-height: 1.75em;
+    }
+
+    .skillList li + li::before {
+        display: none;
+    }
+
+    .skillList li::after {
+        display: none;
+    }
+
+}
+
+@media (min-width: 941px) {
+    .skillList {
+        display: inline;
+        list-style: disc;
+        padding-left: 1.5rem;
+    }
+
+    .skillList li {
+        display: list-item;
+        white-space: normal;
+        line-height: 1.75em;
+    }
+
+    .skillList li + li::before {
+        display: none;
+    }
+
+    .skillList li::after {
+        display: none;
+    }
+
+}
+
+@media (max-width: 940px) {
+    .skillsRow {
+        flex-direction: column;
+    }
+
+    /* Single-column grid */
+    .projectsGrid {
+        grid-template-columns: 1fr;
+        grid-template-rows: none;
+    }
+
+    /* All cards: full width, row layout — image left, text right */
+    .projSys,
+    .projMkb,
+    .projNews,
+    .projHealth {
+        grid-column: 1 / -1;
+        grid-row: auto;
+        flex-direction: row;
+        min-height: clamp(160px, 36vw, 280px);
+        align-self: auto;
+    }
+
+    /* Image containers: fixed left portion */
+    .projImgWide,
+    .projImgTall,
+    .projImgFlex {
+        flex: 0 0 50%;
+        min-width: 0;
+    }
+
+    /* Text panels: fill remaining space */
+    .projTextSide,
+    .projTextBottom,
+    .projTextLeft {
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+        width: auto;
+        padding: var(--md) var(--lg) var(--md) 4rem;
+        gap: var(--xs);
+    }
+
+    /* projNews/projHealth: image is after text in DOM — swap order */
+    .projNews .projImgFlex,
+    .projHealth .projImgFlex {
+        order: -1;
+    }
+
+    .projNews .projTextLeft,
+    .projHealth .projTextLeft {
+        order: 1;
+    }
+}
+
+@media (max-width: 640px) {
+    /* Column layout: image top, text bottom */
+    .projSys,
+    .projMkb,
+    .projNews,
+    .projHealth {
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    /* Image box: full width, height = 75% of width */
+    .projImgWide,
+    .projImgTall,
+    .projImgFlex {
+        flex: 0 0 auto;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        min-width: 0;
+    }
+
+    /* Text panel: natural flow, reset order */
+    .projTextSide,
+    .projTextBottom,
+    .projTextLeft {
+        flex: 0 0 auto;
+        justify-content: flex-start;
+        padding: var(--lg);
+    }
+
+    /* Reset order overrides from 940px */
+    .projNews .projImgFlex,
+    .projHealth .projImgFlex {
+        order: 0;
+    }
+
+    .projNews .projTextLeft,
+    .projHealth .projTextLeft {
+        order: 0;
+    }
+}
+
+
+@media (max-width: 980px) {
+
+    /* Carousel: full height, anchored to bottom-right */
+    .carouselWrap {
+        right: 0;
+        bottom: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    .hero {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        overflow: visible;
+        gap: var(--lg);
+        min-height: 0;
+        aspect-ratio: unset;
+    }
+
+    .carouselWrap {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        overflow: hidden;
+        aspect-ratio: 4 / 3;
+        min-height: 55vh;
+    }
+
+    .heroCarousel {
+        position: absolute;
+        inset: 0;
+        height: 100%;
+    }
+
+    .heroCarousel [data-carousel-role='sizer'] {
+        display: none;
+    }
+
+    .heroCarousel [data-carousel-role='slide'],
+    .heroCarousel [data-carousel-role='cover'] {
+        position: absolute;
+        inset: auto;
+        top: auto;
+        right: 0;
+        bottom: -2rem;
+        left: auto;
+        width: auto;
+        height: 130%;
+        max-width: none;
+        transform: none;
+    }
+
+    .heroGradientBg {
+        display: none;
+    }
+
+    .heroOverlay {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        width: 100%;
+        padding: 0 1rem;
+    }
+
+    .heroTitle {
+        padding-left: 0;
+        font-size: calc(var(--fs-3xl) * 0.7);
+        line-height: calc(var(--lh-6xl) * 0.75);
+    }
+}
+
+/* ── Scroll reveal ─────────────────────────────────────────────────────────── */
+/* .page scopes the attribute selectors — satisfies CSS Modules "pure" requirement */
+
+@media (prefers-reduced-motion: no-preference) {
+    .page [data-reveal] {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.4s ease-out,
+        transform 0.4s ease-out;
+    }
+
+    .page [data-reveal][data-visible='true'] {
+        opacity: 1;
+        transform: none;
+    }
+}
