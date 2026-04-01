@@ -60,17 +60,23 @@ POSTGRES_PASSWORD: СИЛЬНЫЙ_ПАРОЛЬ  # совпадает с паро
 ## 4. Запустить
 
 ```bash
-# Собрать и поднять
-docker compose up -d --build
+# Собрать и поднять production-конфигурацию
+docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
 
 # Создать admin-пользователя (только первый раз)
-docker compose exec app npm run seed:admin
+docker compose -f docker-compose.yml -f docker-compose.prod.yml exec app npm run seed:admin
 
 # Проверить логи
-docker compose logs -f app
+docker compose -f docker-compose.yml -f docker-compose.prod.yml logs -f app
 ```
 
 Приложение доступно на `http://твой-ip:3000`.
+
+Важно:
+
+- PostgreSQL не должен быть доступен из интернета.
+- Базовый `docker-compose.yml` привязывает Postgres только к `127.0.0.1`.
+- На сервере всегда используй связку `docker-compose.yml` + `docker-compose.prod.yml`; в итоговой конфигурации Postgres должен слушать только `127.0.0.1:5432`, а не `0.0.0.0:5432`.
 
 ### Хранение загрузок
 

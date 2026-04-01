@@ -3,7 +3,10 @@
 
 services:
   postgres:
-    ports: []  # don't expose postgres to host in production
+    # Base compose already binds Postgres to 127.0.0.1 only.
+    # Keep production access limited to the host/app server; do not publish it publicly.
+    ports:
+      - "127.0.0.1:5432:5432"
 
   app:
     container_name: cc_portfolio_app
