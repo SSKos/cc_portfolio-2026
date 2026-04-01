@@ -67,6 +67,7 @@
   position: absolute;
   left: 0;
   top: 0;
+  height: 100%;
   will-change: transform;
 }
 
@@ -326,10 +327,6 @@
 
   .backgroundImage {
     object-position: 68% center;
-  }
-
-  .layerInner {
-    height: 100%;
   }
 
   .title {
