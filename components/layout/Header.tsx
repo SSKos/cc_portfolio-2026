@@ -3,7 +3,7 @@
 import { useState, useRef, useLayoutEffect, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { IconBurger, IconClose, IconCV } from '../ui/icons'
+import { IconBurger, IconClose, IconCV, IconHome, IconChevronLeft } from '../ui/icons'
 import { CvModal } from '../ui/CvModal'
 import styles from './Header.module.css'
 
@@ -119,6 +119,14 @@ export function Header({ breadcrumb }: HeaderProps) {
     ? resolvedBreadcrumb[resolvedBreadcrumb.length - 2]?.label
     : undefined
   const mobileOpen = mobileMenuPath === pathname
+  const isHome = pathname === '/'
+  const backHref = resolvedBreadcrumb && resolvedBreadcrumb.length >= 2
+    ? (resolvedBreadcrumb[resolvedBreadcrumb.length - 2].href ?? '/')
+    : '/'
+
+  function toggleMobileMenu() {
+    setMobileMenuPath(current => current === pathname ? null : pathname)
+  }
 
   // Siblings для дропдауна на level 2 (страницы с тем же parentId)
   const siblings = (() => {
@@ -436,20 +444,35 @@ export function Header({ breadcrumb }: HeaderProps) {
           {/* ── Мобильный хедер ── */}
           <div className={styles.mobile}>
 
-            {/* Слева: бургер или кнопка «назад» */}
+            {/* Слева: бургер (главная) / домик (раздел) / назад (подраздел) */}
             <div className={styles.mobileLeft}>
-              <button
-                className={styles.mobileIconBtn}
-                onClick={() => setMobileMenuPath(current => current === pathname ? null : pathname)}
-                aria-label={mobileOpen ? 'Закрыть меню' : 'Открыть меню'}
-                aria-expanded={mobileOpen}
-              >
-                {mobileOpen ? <IconClose /> : <IconBurger />}
-              </button>
+              {isHome ? (
+                <button
+                  className={styles.mobileIconBtn}
+                  onClick={toggleMobileMenu}
+                  aria-label={mobileOpen ? 'Закрыть меню' : 'Открыть меню'}
+                  aria-expanded={mobileOpen}
+                >
+                  {mobileOpen ? <IconClose /> : <IconBurger />}
+                </button>
+              ) : isLevel2 ? (
+                <Link href={backHref} className={styles.mobileIconBtn} aria-label="Назад">
+                  <IconChevronLeft />
+                </Link>
+              ) : (
+                <Link href="/" className={styles.mobileIconBtn} aria-label="На главную">
+                  <IconHome />
+                </Link>
+              )}
             </div>
 
-            {/* По центру: название текущей страницы или хлебные крошки */}
-            <div className={styles.mobileCenter}>
+            {/* По центру: кнопка открытия меню */}
+            <button
+              className={styles.mobileCenterBtn}
+              onClick={toggleMobileMenu}
+              aria-label={mobileOpen ? 'Закрыть меню' : 'Открыть меню'}
+              aria-expanded={mobileOpen}
+            >
               {isLevel2 ? (
                 <div className={styles.mobileTitleGroup}>
                   {mobileSecondaryLabel && (
@@ -458,15 +481,13 @@ export function Header({ breadcrumb }: HeaderProps) {
                   <span className={styles.mobilePageName}>{mobilePrimaryLabel}</span>
                 </div>
               ) : (
-                <span className={styles.mobilePageName}>
-                  {mobilePrimaryLabel}
-                </span>
+                <span className={styles.mobilePageName}>{mobilePrimaryLabel}</span>
               )}
-            </div>
+            </button>
 
             {/* Справа: CV */}
             <button className={styles.mobileCvBtn} onClick={() => setCvOpen(true)}>
-                <IconCV />
+              <IconCV />
             </button>
           </div>
 
@@ -477,25 +498,56 @@ export function Header({ breadcrumb }: HeaderProps) {
       {mobileOpen && (
         <div className={styles.mobileMenu} role="dialog" aria-modal aria-label="Меню навигации">
           <nav className={styles.mobileMenuNav}>
-            {navItems.map(item => {
+            {navPagesRaw.map((page, i) => {
+              const item = navItems[i]
+              const children = pages.filter(p => p.parentId === page.id)
+              const isActiveSection = i === activeIndex
+
               if (item.isCv) {
                 return (
-                  <button
-                    key={item.label}
-                    className={styles.mobileMenuLink}
-                    onClick={() => {
-                      setCvOpen(true)
-                      setMobileMenuPath(null)
-                    }}
-                  >
-                    {item.label}
-                  </button>
+                  <div key={item.label} className={styles.mobileMenuGroup}>
+                    <button
+                      className={[styles.mobileMenuSectionLink, styles.mobileMenuSectionBtn].join(' ')}
+                      onClick={() => { setCvOpen(true); setMobileMenuPath(null) }}
+                    >
+                      {item.label}
+                    </button>
+                  </div>
                 )
               }
+
               return (
-                <Link key={item.label} href={item.href!} className={styles.mobileMenuLink}>
-                  {item.label}
-                </Link>
+                <div key={item.label} className={styles.mobileMenuGroup}>
+                  <Link
+                    href={item.href!}
+                    className={[
+                      styles.mobileMenuSectionLink,
+                      isActiveSection ? styles.mobileMenuSectionActive : '',
+                    ].filter(Boolean).join(' ')}
+                  >
+                    {item.label}
+                  </Link>
+                  {children.length > 0 && (
+                    <div className={styles.mobileMenuChildren}>
+                      {children.map(child => {
+                        const childPath = '/' + child.slug
+                        const isActiveChild = pathname === childPath || pathname.startsWith(childPath + '/')
+                        return (
+                          <Link
+                            key={child.slug}
+                            href={childPath}
+                            className={[
+                              styles.mobileMenuChildLink,
+                              isActiveChild ? styles.mobileMenuChildActive : '',
+                            ].filter(Boolean).join(' ')}
+                          >
+                            {child.title}
+                          </Link>
+                        )
+                      })}
+                    </div>
+                  )}
+                </div>
               )
             })}
           </nav>

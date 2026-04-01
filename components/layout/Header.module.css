@@ -298,7 +298,7 @@
 
 .mobileMenu {
     position: fixed;
-    top: 56px;
+    top: var(--header-height);
     left: 0;
     right: 0;
     bottom: 0;
@@ -306,8 +306,7 @@
     background-color: var(--surface-body-bg);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    overflow-y: auto;
 }
 
 @media (min-width: 768px) {
@@ -319,23 +318,89 @@
 .mobileMenuNav {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    padding: var(--pad-2xl) var(--pad-2xl) var(--pad-4xl);
+    flex: 1;
+    justify-content: center;
 }
 
-.mobileMenuLink {
+/* ── Группа: раздел + дочерние страницы ─────────────────────────────────── */
+
+.mobileMenuGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.mobileMenuGroup + .mobileMenuGroup {
+    border-top: 1px solid color-mix(in srgb, var(--text-primary) 8%, transparent);
+}
+
+.mobileMenuSectionLink {
     display: block;
-    font-size: var(--fs-lg);
+    font-size: 1.75rem;
     font-weight: 300;
-    line-height: var(--lh-4xl);
+    line-height: 1.2;
     color: var(--text-darker);
     text-decoration: none;
-    padding: var(--pad-sm) var(--pad-4xl);
+    padding: var(--pad-lg) 0;
+    transition: color 0.2s ease;
     white-space: nowrap;
-    text-align: center;
+}
+
+.mobileMenuSectionActive {
+    color: var(--text-primary);
+}
+
+.mobileMenuSectionLink:hover {
+    color: var(--text-primary);
+}
+
+/* Для CV — кнопка со сбросом стилей */
+.mobileMenuSectionBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    font-size: 1.75rem;
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--text-darker);
+    padding: var(--pad-lg) 0;
     transition: color 0.2s ease;
 }
 
-.mobileMenuLink:hover {
+.mobileMenuSectionBtn:hover {
+    color: var(--text-primary);
+}
+
+/* ── Дочерние страницы ───────────────────────────────────────────────────── */
+
+.mobileMenuChildren {
+    display: flex;
+    flex-direction: column;
+    padding-left: var(--pad-md);
+    padding-bottom: var(--pad-md);
+    margin-left: 3px;
+    border-left: 1.5px solid color-mix(in srgb, var(--text-primary) 14%, transparent);
+}
+
+.mobileMenuChildLink {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--text-darker);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.mobileMenuChildActive {
+    color: var(--text-primary);
+}
+
+.mobileMenuChildLink:hover {
     color: var(--text-primary);
 }
 
@@ -383,13 +448,20 @@
         background-color: var(--surface-level-2);
     }
 
-    .mobileCenter {
+    .mobileCenterBtn {
         flex: 1;
         display: flex;
         align-items: center;
         justify-content: center;
         overflow: hidden;
         padding: 0 var(--xxs);
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: inherit;
+        font: inherit;
+        -webkit-tap-highlight-color: transparent;
+        margin: 0;
     }
 
     .mobileTitleGroup {
