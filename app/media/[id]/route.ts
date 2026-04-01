@@ -72,7 +72,7 @@ export async function GET(req: Request, { params }: Params) {
         await writeFile(cachePath, resized).catch(() => {})
       }
 
-      return new NextResponse(resized, {
+      return new NextResponse(new Uint8Array(resized), {
         headers: {
           'Content-Type': 'image/webp',
           'Content-Length': String(resized.length),
@@ -92,7 +92,7 @@ export async function GET(req: Request, { params }: Params) {
 
     const buffer = await readFile(filePath)
 
-    return new NextResponse(buffer, {
+    return new NextResponse(new Uint8Array(buffer), {
       headers: {
         'Content-Type': media.mimeType,
         'Content-Length': String(buffer.length),
