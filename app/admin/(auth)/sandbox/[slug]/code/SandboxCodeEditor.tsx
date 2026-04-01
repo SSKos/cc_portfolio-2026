@@ -134,18 +134,17 @@ export function SandboxCodeEditor({ slug, name }: Props) {
     setSaving(true)
     setError(null)
     try {
-      const payload = files.map(file => ({
-        filename: file.filename,
-        content: drafts[file.filename] ?? file.content,
-      }))
+      // Only send files that have unsaved edits
+      const dirtyFiles = files
+        .filter(f => f.filename in drafts && drafts[f.filename] !== f.content)
+        .map(f => ({ filename: f.filename, content: drafts[f.filename], scope: f.scope }))
+
+      if (!dirtyFiles.length) return
 
       const res = await fetch(apiBase, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ files: payload.map(f => ({
-          ...f,
-          scope: files.find(ff => ff.filename === f.filename)?.scope ?? 'page',
-        })) }),
+        body: JSON.stringify({ files: dirtyFiles }),
       })
 
       if (!res.ok) {
