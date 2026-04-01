@@ -52,7 +52,16 @@ ssh -i "$SSH_KEY" "$SSH_USER@$SSH_HOST" bash << EOF
         echo "Pulling latest..."
         cd "$SERVER_PATH"
         git fetch origin
+        # Preserve sandbox-content edits made via admin — git reset --hard would overwrite them
+        if [ -d "$SERVER_PATH/sandbox-content" ]; then
+            cp -r "$SERVER_PATH/sandbox-content" /tmp/sandbox-content-backup
+        fi
         git reset --hard origin/main
+        # Restore user edits on top of any new files from git
+        if [ -d /tmp/sandbox-content-backup ]; then
+            cp -r /tmp/sandbox-content-backup/. "$SERVER_PATH/sandbox-content/"
+            rm -rf /tmp/sandbox-content-backup
+        fi
     else
         echo "Cloning repository..."
         rm -rf "$SERVER_PATH"
