@@ -1,39 +1,85 @@
+'use client'
+
 import styles from './obo-mne.module.css'
-import { Carousel } from '@/components/ui/Carousel'
-
-/**
- * Sandbox: obo-mne
- * Обо мне
- *
- * Редактируй этот файл в IDE — изменения видны с hot reload.
- * Превью: /dev/sandbox/obo-mne
- */
-
-// CAROUSEL: данные слайдов
-// Каждый слайд: { id: string, src: string, alt?: string }
-// Пути берёшь из кнопки "Copy path" в UI Kit → Images
-const DEMO_SLIDES = [
-  { id: '1', src: '/media/2', alt: 'Слайд 1' },
-  { id: '2', src: '/media/5', alt: 'Слайд 2' },
-  { id: '3', src: '/media/4', alt: 'Слайд 3' },
-]
-const DEMO_COVER = '/media/1'
-// END CAROUSEL
+import { useText } from '@/lib/sandboxText'
 
 export default function OboMnePage() {
+  const t = useText()
+
   return (
     <div className={styles.page}>
 
-      {/* CAROUSEL: контейнер задаёт размер, Carousel заполняет его как cover.
-          Высоту меняй здесь — карусель подстроится.
-          border-radius + overflow:hidden обрезают углы слайдов. */}
-      <div className={styles.carouselWrap}>
-        <Carousel slides={DEMO_SLIDES} cover={DEMO_COVER} />
+      {/* ── Шапка ──────────────────────────────────────────────────────────── */}
+      <div className={styles.heroContent}>
+        <p className={styles.eyebrow}>
+          {t('eyebrow', 'Дизайнер · Разработчик')}
+        </p>
       </div>
-      {/* END CAROUSEL */}
 
-      <h1 className={styles.title}>Обо мне</h1>
-      {/* Твоя вёрстка здесь */}
+      <section className={styles.content}>
+        <h1 className={styles.title}>
+          {t('title', 'Обо мне')}
+        </h1>
+        <p className={styles.lead}>
+          {t(
+            'lead',
+            'Проектирую интерфейсы и пишу код. Работаю на стыке дизайна и разработки — понимаю обе стороны и умею говорить на каждом языке.',
+          )}
+        </p>
+      </section>
+
+      {/* ── Основной текст ─────────────────────────────────────────────────── */}
+      <section className={styles.section}>
+        <div className={styles.body}>
+          <p>
+            {t(
+              'bio.0',
+              'Я начинал как продуктовый дизайнер в команде с высокими стандартами качества. Мы строили собственную дизайн-систему, работали плотно с разработчиками и уделяли серьёзное внимание деталям: ритму интерфейса, типографике, консистентности на уровне пикселя.',
+            )}
+          </p>
+          <p>
+            {t(
+              'bio.1',
+              'Со временем мне стало интересно не только проектировать, но и реализовывать. Я начал писать код — сначала чтобы лучше понимать ограничения, потом потому что это стало самостоятельным удовольствием. Сейчас я одинаково комфортно чувствую себя в Figma и в редакторе кода.',
+            )}
+          </p>
+          <p>
+            {t(
+              'bio.2',
+              'Этот сайт — сделан мной с нуля: дизайн, фронтенд, бэкенд, деплой. Не для того чтобы впечатлить, а потому что мне интересно держать в голове всю цепочку от идеи до живого продукта.',
+            )}
+          </p>
+        </div>
+      </section>
+
+      {/* ── Карточки ───────────────────────────────────────────────────────── */}
+      <section className={styles.section}>
+        <div className={`${styles.card} ${styles.fullWidthCard}`}>
+          <h3 className={styles.cardTitle}>
+            {t('card.0.title', 'Чем занимаюсь')}
+          </h3>
+          <p className={styles.cardText}>
+            {t(
+              'card.0.text',
+              'Проектирую интерфейсы для мобильных и веб-продуктов. Собираю и поддерживаю дизайн-системы. Пишу фронтенд — TypeScript, React, Next.js. Работаю с базами данных и деплою. Умею взять задачу от постановки до рабочего решения без передачи эстафеты.',
+            )}
+          </p>
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <div className={`${styles.card} ${styles.fullWidthCard}`}>
+          <h3 className={styles.cardTitle}>
+            {t('card.1.title', 'Как работаю')}
+          </h3>
+          <p className={styles.cardText}>
+            {t(
+              'card.1.text',
+              'Предпочитаю небольшие команды с высокой автономией. Важна среда, где качество исполнения ценится, а не просто декларируется. Интересует удалённая работа — умею организовать процесс и работать асинхронно без потери качества коммуникации.',
+            )}
+          </p>
+        </div>
+      </section>
 
     </div>
   )

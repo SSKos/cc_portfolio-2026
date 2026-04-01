@@ -1,29 +1,106 @@
-/**
- * Все значения — через CSS-токены из styles/tokens.css.
- * Цвета:    var(--text-primary) var(--text-secondary) var(--surface-level-*)
- * Отступы:  var(--pad-xs) … var(--pad-3xl)
- * Шрифты:   var(--typo-h1) var(--typo-h2) var(--typo-p) var(--typo-Card-h1)
- * Радиусы:  var(--radius-md) var(--radius-xl) var(--radius-2xl)
- */
-
 .page {
+  width: 100%;
   min-height: 100vh;
-  max-width: var(--columns-x12);
-  margin: 0 auto;
+  padding-bottom: var(--pad-5xl);
 }
 
-/* CAROUSEL: карусель масштабируется пропорционально как обычная картинка.
-   Высота определяется пропорциями первого слайда автоматически.
-   Дополнительные стили (max-width, margin) можно добавить сюда. */
-.carouselWrap {
-  width: 100%;
-  margin-bottom: var(--pad-3xl);
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-lg);
+  width: min(100%, var(--columns-x10));
+  margin: 0 auto;
+  padding: var(--pad-4xl) var(--pad-lg) 0;
+  box-sizing: border-box;
 }
-/* END CAROUSEL */
+
+.eyebrow {
+  composes: eyebrowAccent from '../shared/typography.module.css';
+  margin: 0;
+}
+
+.content {
+  width: min(100%, var(--columns-x10));
+  margin: 0 auto;
+  padding: var(--pad-lg) var(--pad-lg) 0;
+  box-sizing: border-box;
+}
 
 .title {
+  margin: 0;
   font: var(--typo-h2);
   color: var(--text-primary);
-  padding: 0 var(--xl);
-  margin-bottom: var(--xl);
+  max-width: var(--columns-x7);
+}
+
+.lead {
+  max-width: var(--columns-x7);
+  margin: var(--pad-lg) 0 0;
+  font: var(--typo-p);
+  color: var(--text-secondary);
+}
+
+.section {
+  width: min(100%, var(--columns-x10));
+  margin: 0 auto;
+  padding: var(--semantic-6xl) var(--pad-lg) 0;
+  box-sizing: border-box;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--xs);
+  max-width: var(--columns-x7);
+  font: var(--typo-p);
+  color: var(--text-secondary);
+}
+
+.body p {
+  margin: 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: var(--md);
+  height: 100%;
+  padding: var(--pad-2xl) var(--pad-2xl) 1.875rem;
+  border-radius: var(--radius-2xl);
+  background: var(--card-bg);
+}
+
+.cardTitle {
+  margin: 0;
+  composes: cardHeading from '../shared/typography.module.css';
+}
+
+.cardText {
+  margin: 0;
+  composes: cardBody from '../shared/typography.module.css';
+}
+
+.fullWidthCard {
+  width: 100%;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--brand-300) 8%, transparent) 0%,
+      transparent 100%
+    ),
+    var(--surface-level-2);
+  border: 1px solid color-mix(in srgb, var(--brand-300) 20%, transparent);
+}
+
+@media (max-width: 700px) {
+  .title {
+    font-size: var(--fs-2xl);
+    line-height: var(--lh-5xl);
+  }
+
+  .lead {
+    font-size: var(--fs-lg);
+    line-height: var(--lh-3xl);
+  }
 }
