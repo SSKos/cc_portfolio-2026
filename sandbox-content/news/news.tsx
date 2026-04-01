@@ -2,6 +2,7 @@
 
 import styles from './news.module.css'
 import { useText } from '@/lib/sandboxText'
+import { useHeroAssetGate } from '@/lib/useHeroAssetGate'
 
 const IMG_BG = '/media/sandbox/news/38'
 
@@ -25,10 +26,14 @@ const HERO_LAYERS = [
 
 export default function NewsPage() {
   const t = useText()
+  const heroReady = useHeroAssetGate([IMG_BG, ...HERO_LAYERS.map((layer) => layer.src)])
 
   return (
     <div className={styles.page}>
-      <section className={styles.hero} aria-label={t('heroAria', 'Анимированный новостной герой-блок')}>
+      <section
+        className={`${styles.hero} ${heroReady ? styles.heroReady : ''}`}
+        aria-label={t('heroAria', 'Анимированный новостной герой-блок')}
+      >
         <div className={styles.background} aria-hidden="true">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={IMG_BG} alt="" className={styles.backgroundImage} />

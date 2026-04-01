@@ -5,6 +5,7 @@ import styles from './design-systems.module.css'
 import {formatText} from '@/lib/formatText'
 import {useText} from '@/lib/sandboxText'
 import {IconClose} from '@/components/ui/icons'
+import { useHeroAssetGate } from '@/lib/useHeroAssetGate'
 
 /**
  * Sandbox: design-systems
@@ -29,6 +30,7 @@ const IMG_FIG02_03 = '/media/27'
 export default function DesignSystemsPage() {
     const t = useText()
     const [lightboxImage, setLightboxImage] = useState<{ src: string; alt: string } | null>(null)
+    const heroReady = useHeroAssetGate([IMG_HERO_BG, IMG_SCREEN_MID, IMG_SCREEN_TOP])
 
     useEffect(() => {
         if (!lightboxImage) return
@@ -73,7 +75,7 @@ export default function DesignSystemsPage() {
             <div className={styles.page}>
 
                 {/* ── Герой ──────────────────────────────────────────── */}
-                <div className={styles.hero}>
+                <div className={`${styles.hero} ${heroReady ? styles.heroReady : ''}`}>
                     <img className={styles.heroBg} src={IMG_HERO_BG} alt="" aria-hidden="true"/>
                     <div className={styles.heroScreens}>
                         <div className={styles.heroScreenMidWrap}>

@@ -21,13 +21,14 @@
 
 /* ── Герой ─────────────────────────────────────────────── */
 .hero {
+    --hero-height-desktop: clamp(22rem, 36vw, 39.6875rem);
+    --hero-height-mobile: clamp(15rem, 56vw, 22rem);
     position: relative;
     align-self: stretch;
-    height: 38vw;
-    min-height: 35vh;
-    max-height: 50vh;
-    overflow: hidden;       /* единственный overflow:hidden — здесь */
+    height: var(--hero-height-desktop);
+    overflow: hidden;
     flex-shrink: 0;
+    background: var(--surface-level-2);
 }
 
 /* Слой 1: фон — заполняет весь контейнер, прижат к верху */
@@ -38,8 +39,9 @@
     height: 100%;
     object-fit: cover;
     object-position: left top;
-    opacity: 0.35;
+    opacity: 0;
     pointer-events: none;
+    transition: opacity 0.24s ease;
 }
 
 /* Обёртка для группы экранов — ограничена 75% ширины героя */
@@ -80,6 +82,8 @@
     max-width: none;
     filter: drop-shadow(0 0 1.5rem rgba(0, 0, 0, 0.15));
     pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.24s ease;
 }
 
 /* Слой 3: верхний экран — прижат к правому краю, масштабируется пропорционально */
@@ -92,6 +96,17 @@
     max-width: none;
     filter: drop-shadow(0 0 1.5rem rgba(0, 0, 0, 0.15));
     pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.24s ease;
+}
+
+.heroReady .heroBg {
+    opacity: 0.35;
+}
+
+.heroReady .heroMidScreen,
+.heroReady .heroTopScreen {
+    opacity: 1;
 }
 
 .heroContent {
@@ -353,6 +368,10 @@
 }
 
 @media (max-width: 750px) {
+    .hero {
+        height: var(--hero-height-mobile);
+    }
+
     .heroScreens {
         top: auto;
         bottom: 0;

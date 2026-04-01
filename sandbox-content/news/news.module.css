@@ -5,11 +5,13 @@
 }
 
 .hero {
+  --hero-height-desktop: clamp(22rem, 36vw, 39.6875rem);
+  --hero-height-mobile: clamp(15rem, 56vw, 22rem);
   position: relative;
   width: 100%;
-  height: 635px;
-  max-height: 50vh;
+  height: var(--hero-height-desktop);
   overflow: hidden;
+  background: var(--surface-level-2);
   isolation: isolate;
 }
 
@@ -39,7 +41,7 @@
   object-fit: cover;
   object-position: right center;
   transform: scale(1.035);
-  animation: backgroundIn 1.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+  opacity: 0;
 }
 
 .animation {
@@ -79,16 +81,29 @@
 
 .layerOne {
   z-index: 2;
-  animation: layerRiseOne 1.3s cubic-bezier(0.32, 0, 0.12, 1) both;
 }
 
 .layerTwo {
   z-index: 1;
-  animation: layerRiseTwo 1.3s 0.22s cubic-bezier(0.32, 0, 0.12, 1) both;
 }
 
 .layerThree {
   z-index: 2;
+}
+
+.heroReady .backgroundImage {
+  animation: backgroundIn 1.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.heroReady .layerOne {
+  animation: layerRiseOne 1.3s cubic-bezier(0.32, 0, 0.12, 1) both;
+}
+
+.heroReady .layerTwo {
+  animation: layerRiseTwo 1.3s 0.22s cubic-bezier(0.32, 0, 0.12, 1) both;
+}
+
+.heroReady .layerThree {
   animation: layerRiseThree 1.32s 0.44s cubic-bezier(0.32, 0, 0.12, 1) both;
 }
 
@@ -304,15 +319,13 @@
   }
 }
 
-@media (max-width: 900px) {
-  .hero {
-    height: 560px;
-  }
-}
-
 @media (max-width: 700px) {
   .hero {
-    height: 500px;
+    height: var(--hero-height-mobile);
+  }
+
+  .backgroundImage {
+    object-position: 68% center;
   }
 
   .title {
@@ -333,18 +346,18 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .backgroundImage,
-  .layer,
-  .hero:hover .layerInner {
+  .heroReady .backgroundImage,
+  .heroReady .layer,
+  .heroReady:hover .layerInner {
     animation: none;
   }
 
-  .backgroundImage {
+  .heroReady .backgroundImage {
     opacity: 1;
     transform: scale(1.035);
   }
 
-  .layer {
+  .heroReady .layer {
     opacity: 1;
     transform: none;
   }

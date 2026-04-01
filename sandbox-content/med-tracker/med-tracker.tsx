@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from 'react'
 import styles from './med-tracker.module.css'
 import { useText } from '@/lib/sandboxText'
+import { useHeroAssetGate } from '@/lib/useHeroAssetGate'
 
 // ── Изображения: загрузи в галерею /admin/sandbox/medicine/gallery ─────────────
 // и обнови ID (число в конце URL)
@@ -15,8 +16,11 @@ export default function MedicinePage() {
   const t = useText()
   const heroRef = useRef<HTMLDivElement>(null)
   const [phase, setPhase] = useState(0)
+  const heroReady = useHeroAssetGate([IMG_BG, IMG_PHONE3, IMG_PHONE2, IMG_PHONE1])
 
   useEffect(() => {
+    if (!heroReady) return
+
     const el = heroRef.current
     if (!el) return
 
@@ -27,9 +31,9 @@ export default function MedicinePage() {
         if (!entries[0].isIntersecting) return
         obs.disconnect()
         timers = [
-          setTimeout(() => setPhase(1), 300),
-          setTimeout(() => setPhase(2), 1100),
-          setTimeout(() => setPhase(3), 1900),
+          setTimeout(() => setPhase(1), 0),
+          setTimeout(() => setPhase(2), 800),
+          setTimeout(() => setPhase(3), 1600),
         ]
       },
       { threshold: 0.25 },
@@ -40,7 +44,7 @@ export default function MedicinePage() {
       obs.disconnect()
       timers.forEach(clearTimeout)
     }
-  }, [])
+  }, [heroReady])
 
   return (
     <div className={styles.page}>
@@ -48,7 +52,7 @@ export default function MedicinePage() {
       {/* ── Hero ─────────────────────────────────────────────────────────────── */}
       <section
         ref={heroRef}
-        className={`${styles.hero} ${styles[`phase${phase}`]}`}
+        className={`${styles.hero} ${heroReady ? styles.heroReady : ''} ${styles[`phase${phase}`]}`}
         aria-label={t('heroAria', 'Анимированный герой-блок: трекер приёма лекарств')}
       >
         {/* Фон с прогрессивным размытием */}

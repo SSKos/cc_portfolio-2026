@@ -3,6 +3,7 @@
 import {useEffect, useRef, useState} from 'react'
 import styles from './mkb.module.css'
 import {useText} from '@/lib/sandboxText'
+import { useHeroAssetGate } from '@/lib/useHeroAssetGate'
 
 /**
  * Sandbox: mkb
@@ -44,6 +45,7 @@ function useFadeIn() {
 
 export default function MkbPage() {
     const t = useText()
+    const heroReady = useHeroAssetGate(['/media/30'])
 
     const intro = useFadeIn()
     const proj1 = useFadeIn()
@@ -77,7 +79,7 @@ export default function MkbPage() {
         <div className={styles.page}>
 
             {/* ── Герой ──────────────────────────────────────────────────────────── */}
-            <div className={styles.hero}>
+            <div className={`${styles.hero} ${heroReady ? styles.heroReady : ''}`}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                     src="/media/30"

@@ -18,17 +18,31 @@
 /* ── Герой ───────────────────────────────────────────────────────────────── */
 
 .hero {
+    --hero-height-desktop: clamp(22rem, 36vw, 39.6875rem);
+    --hero-height-mobile: clamp(15rem, 56vw, 22rem);
+    position: relative;
     align-self: stretch;
+    height: var(--hero-height-desktop);
+    min-height: 0;
     overflow: hidden;
-    line-height: 0;
-    max-height: 50vh;
+    background: var(--surface-level-2);
+    isolation: isolate;
 }
 
 .heroImg {
+    position: absolute;
+    inset: 0;
     display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
+    object-position: center 56%;
+    opacity: 0;
+    transition: opacity 0.24s ease;
+}
+
+.heroReady .heroImg {
+    opacity: 1;
 }
 
 .heroContent {
@@ -435,6 +449,14 @@
 @media (max-width: 600px) {
     .page {
         padding-bottom: var(--pad-4xl);
+    }
+
+    .hero {
+        height: var(--hero-height-mobile);
+    }
+
+    .heroImg {
+        object-position: center 60%;
     }
 
     .heroContent {

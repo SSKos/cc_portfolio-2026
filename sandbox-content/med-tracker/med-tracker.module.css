@@ -9,12 +9,14 @@
 /* ── Hero ──────────────────────────────────────────────────────────────────── */
 
 .hero {
+  --hero-height-desktop: clamp(22rem, 36vw, 39.6875rem);
+  --hero-height-mobile: clamp(15rem, 56vw, 22rem);
   position: relative;
   width: 100%;
-  aspect-ratio: 1128 / 635;
-  max-height: 72vh;
+  height: var(--hero-height-desktop);
   overflow: hidden;
   border-radius: var(--radius-xl, 20px);
+  background: var(--surface-level-2, #1e1d21);
   isolation: isolate;
 }
 
@@ -51,6 +53,13 @@
   object-fit: cover;
   object-position: center;
   display: block;
+  opacity: 0;
+  transition: opacity 0.24s ease;
+}
+
+.heroReady .heroBgImg,
+.heroReady .phoneImg {
+  opacity: 1;
 }
 
 /* Состояния фона по фазам */
@@ -89,6 +98,8 @@
   object-fit: cover;
   object-position: center;
   display: block;
+  opacity: 0;
+  transition: opacity 0.24s ease;
 }
 
 .content {
@@ -195,6 +206,10 @@
 }
 
 @media (max-width: 700px) {
+  .hero {
+    height: var(--hero-height-mobile);
+  }
+
   .title {
     font-size: var(--fs-2xl);
     line-height: var(--lh-5xl);
