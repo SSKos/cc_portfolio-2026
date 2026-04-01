@@ -10,10 +10,14 @@ export const runtime = 'nodejs'
 type Params = { params: Promise<{ slug: string }> }
 
 const SANDBOX_DIR = join(process.cwd(), 'sandbox-content')
+const SHARED_DIR = join(SANDBOX_DIR, 'shared')
 
 // Only .tsx and .css files are editable; no path traversal possible
 const ALLOWED_EXTS = new Set(['.tsx', '.css'])
 const SAFE_FILENAME_RE = /^[a-z0-9-]+(?:\.module)?\.(tsx|css)$/
+
+// Shared files explicitly allowed for editing
+const SHARED_FILES = ['typography.module.css']
 
 function sandboxDir(slug: string): string {
   return join(SANDBOX_DIR, slug)
@@ -73,7 +77,7 @@ export async function GET(_req: NextRequest, { params }: Params) {
     return NextResponse.json({ error: 'Sandbox directory not found' }, { status: 404 })
   }
 
-  const files = await Promise.all(
+  const pageFiles = await Promise.all(
     entries
       .filter(name => ALLOWED_EXTS.has(extname(name)))
       .sort()
@@ -84,11 +88,24 @@ export async function GET(_req: NextRequest, { params }: Params) {
           filename: name,
           language: langForExt(extname(name)),
           content: synced,
+          scope: 'page' as const,
         }
       }),
   )
 
-  return NextResponse.json({ files })
+  const sharedFiles = await Promise.all(
+    SHARED_FILES.map(async name => {
+      const raw = await readFile(join(SHARED_DIR, name), 'utf8').catch(() => '')
+      return {
+        filename: name,
+        language: langForExt(extname(name)),
+        content: raw,
+        scope: 'shared' as const,
+      }
+    }),
+  )
+
+  return NextResponse.json({ files: [...pageFiles, ...sharedFiles] })
 }
 
 // ── PUT schema ─────────────────────────────────────────────────────────────
@@ -96,6 +113,7 @@ export async function GET(_req: NextRequest, { params }: Params) {
 const FileSchema = z.object({
   filename: z.string().regex(SAFE_FILENAME_RE, 'Invalid filename'),
   content: z.string().max(500_000, 'File too large'),
+  scope: z.enum(['page', 'shared']).default('page'),
 })
 
 const PutSchema = z.object({
@@ -128,31 +146,34 @@ export async function PUT(req: NextRequest, { params }: Params) {
 
   const dir = sandboxDir(slug)
 
-  // Read current files to verify each incoming filename already exists on disk
-  // (we allow only editing existing files, not creating new ones via this endpoint)
-  let existing: string[]
+  // Validate page files exist on disk; shared files must be in the allowed list
+  let existingPageFiles: string[]
   try {
     const entries = await readdir(dir)
-    existing = entries.filter(n => ALLOWED_EXTS.has(extname(n)))
+    existingPageFiles = entries.filter(n => ALLOWED_EXTS.has(extname(n)))
   } catch {
     return NextResponse.json({ error: 'Sandbox directory not found' }, { status: 404 })
   }
-  const existingSet = new Set(existing)
+  const existingPageSet = new Set(existingPageFiles)
 
   for (const file of parsed.data.files) {
-    if (!existingSet.has(file.filename)) {
-      return NextResponse.json(
-        { error: `File does not exist: ${file.filename}` },
-        { status: 400 },
-      )
+    if (file.scope === 'shared') {
+      if (!SHARED_FILES.includes(file.filename)) {
+        return NextResponse.json({ error: `Shared file not allowed: ${file.filename}` }, { status: 400 })
+      }
+    } else {
+      if (!existingPageSet.has(file.filename)) {
+        return NextResponse.json({ error: `File does not exist: ${file.filename}` }, { status: 400 })
+      }
     }
   }
 
   try {
     await Promise.all(
-      parsed.data.files.map(file =>
-        writeFile(join(dir, file.filename), file.content, 'utf8'),
-      ),
+      parsed.data.files.map(file => {
+        const targetDir = file.scope === 'shared' ? SHARED_DIR : dir
+        return writeFile(join(targetDir, file.filename), file.content, 'utf8')
+      }),
     )
   } catch {
     return NextResponse.json({ error: 'Failed to write files' }, { status: 500 })

@@ -123,6 +123,15 @@
   color: var(--action-hover-online);
 }
 
+.tabShared {
+  color: var(--text-accent);
+  opacity: 0.7;
+}
+
+.tabShared.tabActive {
+  opacity: 1;
+}
+
 /* ── Editor ───────────────────────────────────────────────────────────────── */
 
 .editorWrap {

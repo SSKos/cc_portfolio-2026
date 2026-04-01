@@ -13,6 +13,7 @@ interface CodeFile {
   filename: string
   language: string
   content: string
+  scope: 'page' | 'shared'
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -141,7 +142,10 @@ export function SandboxCodeEditor({ slug, name }: Props) {
       const res = await fetch(apiBase, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ files: payload }),
+        body: JSON.stringify({ files: payload.map(f => ({
+          ...f,
+          scope: files.find(ff => ff.filename === f.filename)?.scope ?? 'page',
+        })) }),
       })
 
       if (!res.ok) {
@@ -201,10 +205,16 @@ export function SandboxCodeEditor({ slug, name }: Props) {
           {files.map((file, i) => (
             <button
               key={file.filename}
-              className={`${styles.tab} ${i === activeIndex ? styles.tabActive : ''} ${file.filename in drafts ? styles.tabDirty : ''}`}
+              className={[
+                styles.tab,
+                i === activeIndex ? styles.tabActive : '',
+                file.filename in drafts ? styles.tabDirty : '',
+                file.scope === 'shared' ? styles.tabShared : '',
+              ].filter(Boolean).join(' ')}
               onClick={() => handleTabClick(i)}
+              title={file.scope === 'shared' ? 'shared/ — общий для всех страниц' : undefined}
             >
-              {file.filename}
+              {file.scope === 'shared' ? `shared/${file.filename}` : file.filename}
             </button>
           ))}
         </div>
@@ -219,7 +229,10 @@ export function SandboxCodeEditor({ slug, name }: Props) {
         ) : (
           <Editor
             height="100%"
-            path={`/sandbox-content/${slug}/${activeFile.filename}`}
+            path={activeFile.scope === 'shared'
+              ? `/sandbox-content/shared/${activeFile.filename}`
+              : `/sandbox-content/${slug}/${activeFile.filename}`
+            }
             language={activeFile.language}
             value={contentFor(activeFile)}
             theme="vs-dark"
