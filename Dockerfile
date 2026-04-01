@@ -33,6 +33,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/next.config.ts    ./next.config.t
 COPY --from=builder --chown=nextjs:nodejs /app/tsconfig.json     ./tsconfig.json
 COPY --from=builder --chown=nextjs:nodejs /app/components        ./components
 COPY --from=builder --chown=nextjs:nodejs /app/styles            ./styles
+COPY --from=builder --chown=nextjs:nodejs /app/lib               ./lib
 
 USER nextjs
 EXPOSE 3000
