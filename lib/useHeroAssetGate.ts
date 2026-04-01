@@ -68,7 +68,7 @@ export function useHeroAssetGate(sources: Array<string | null | undefined>, dela
       .finally(() => {
         if (cancelled) return
 
-        revealTimer = window.setTimeout(() => {
+        revealTimer = setTimeout(() => {
           if (!cancelled) {
             setReadyKey(assetKey)
           }
