@@ -25,7 +25,7 @@
     align-self: stretch;
     height: 38vw;
     min-height: 35vh;
-    max-height: 600px;
+    max-height: 50vh;
     overflow: hidden;       /* единственный overflow:hidden — здесь */
     flex-shrink: 0;
 }
