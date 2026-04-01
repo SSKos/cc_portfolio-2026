@@ -1,9 +1,11 @@
-export function buildMediaUrl(id: number): string {
-  return `/media/${id}`
+export function buildMediaUrl(id: number, opts?: { w?: number }): string {
+  const base = `/media/${id}`
+  return opts?.w ? `${base}?w=${opts.w}` : base
 }
 
-export function buildSandboxMediaUrl(slug: string, id: number): string {
-  return `/media/sandbox/${slug}/${id}`
+export function buildSandboxMediaUrl(slug: string, id: number, opts?: { w?: number }): string {
+  const base = `/media/sandbox/${slug}/${id}`
+  return opts?.w ? `${base}?w=${opts.w}` : base
 }
 
 type MediaLike = {

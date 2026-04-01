@@ -191,6 +191,21 @@ server {
 
     client_max_body_size 20M;
 
+    # Gzip compression
+    gzip              on;
+    gzip_comp_level   5;
+    gzip_min_length   1024;
+    gzip_proxied      any;
+    gzip_vary         on;
+    gzip_types
+        text/plain
+        text/css
+        text/javascript
+        application/javascript
+        application/json
+        application/xml
+        image/svg+xml;
+
     # Docker internal DNS — dynamic resolution so nginx starts even if app is down
     resolver 127.0.0.11 valid=10s;
 
@@ -203,13 +218,28 @@ server {
         access_log off;
     }
 
-    # Public uploads
+    # Public uploads (direct static via Next.js)
     location /uploads/ {
         set $upstream http://cc_portfolio_app:3000;
         proxy_pass       $upstream;
         proxy_set_header Host $host;
         expires 30d;
-        add_header Cache-Control "public";
+        add_header Cache-Control "public, max-age=2592000";
+        access_log off;
+    }
+
+    # Media API (stable ID-based URLs, cached by Nginx for 1h)
+    location /media/ {
+        set $upstream http://cc_portfolio_app:3000;
+        proxy_pass         $upstream;
+        proxy_http_version 1.1;
+        proxy_set_header   Host              $host;
+        proxy_set_header   X-Real-IP         $remote_addr;
+        proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+        proxy_hide_header  Cache-Control;
+        add_header         Cache-Control "public, max-age=3600, stale-while-revalidate=604800";
+        access_log off;
     }
 
     # Everything else → Next.js
