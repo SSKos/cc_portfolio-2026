@@ -137,6 +137,10 @@ export async function compileToBundle(slug: string): Promise<string | null> {
             build.onResolve({ filter: /^@\/lib\/sandboxText/ }, () => ({
               path: '@/lib/sandboxText', namespace: 'sbx-globals',
             }))
+            // @/lib/formatText → identity function (no server processing needed in sandbox)
+            build.onResolve({ filter: /^@\/lib\/formatText/ }, () => ({
+              path: '@/lib/formatText', namespace: 'sbx-globals',
+            }))
             // next/link → thin <a> wrapper (no Next.js router needed in IIFE context)
             build.onResolve({ filter: /^next\/link$/ }, () => ({
               path: 'next/link', namespace: 'sbx-globals',
@@ -151,6 +155,9 @@ export async function compileToBundle(slug: string): Promise<string | null> {
               }
               if (args.path === '@/lib/sandboxText') {
                 return { contents: `module.exports = __SBX_TEXT__`, loader: 'js' }
+              }
+              if (args.path === '@/lib/formatText') {
+                return { contents: `module.exports = { formatText: function(s) { return s } }`, loader: 'js' }
               }
               if (args.path === 'next/link') {
                 return {
