@@ -10,7 +10,9 @@ const nunitoSans = Nunito_Sans({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXTAUTH_URL ?? "https://kk-about.me";
+const rawUrl = process.env.NEXTAUTH_URL ?? "https://kk-about.me";
+// Guarantee https — NEXTAUTH_URL on the server may be set to http
+const siteUrl = rawUrl.replace(/^http:\/\//, "https://");
 const siteDescription =
   "UX designer with 6+ years in fintech, focused on banking products, complex user flows, and scalable design systems.";
 const ogImageUrl = `${siteUrl}/og-cover.jpg`;
