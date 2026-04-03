@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic'
 
 async function tryLoad(contentName: string): Promise<React.ComponentType | null> {
   try {
-    const mod = await import(`@/sandbox-content/${contentName}/${contentName}`)
+    const mod = await import(/* @turbopackIgnore */ `@/sandbox-content/${contentName}/${contentName}`)
     return (mod.default ?? null) as React.ComponentType | null
   } catch {
     return null

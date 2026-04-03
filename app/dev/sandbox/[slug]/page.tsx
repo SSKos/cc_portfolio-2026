@@ -9,7 +9,7 @@ async function tryLoad(slug: string): Promise<React.ComponentType | null> {
   try {
     // webpack creates a context module for sandbox-content/* in dev mode.
     // New files are detected by the file watcher — may need one refresh.
-    const mod = await import(`@/sandbox-content/${slug}/${slug}`)
+    const mod = await import(/* @turbopackIgnore */ `@/sandbox-content/${slug}/${slug}`)
     return (mod.default ?? null) as React.ComponentType | null
   } catch {
     return null
