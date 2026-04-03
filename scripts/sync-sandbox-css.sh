@@ -31,7 +31,10 @@ command -v scp  >/dev/null || error "scp not found"
 cd "$(git rev-parse --show-toplevel)" || error "Not inside a git repo"
 
 # ── 1. Collect all CSS files in sandbox-content ───────────────────────────────
-mapfile -t CSS_FILES < <(find sandbox-content -name "*.css" | sort)
+CSS_FILES=()
+while IFS= read -r f; do
+  CSS_FILES+=("$f")
+done < <(find sandbox-content -name "*.css" | sort)
 
 if [ ${#CSS_FILES[@]} -eq 0 ]; then
   warn "No CSS files found in sandbox-content/. Exiting."
