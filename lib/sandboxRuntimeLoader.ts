@@ -28,6 +28,7 @@ function classNamesFromCss(css: string): Record<string, string> {
 /**
  * Resolve `composes: ClassName from './path'` by inlining the referenced
  * CSS properties, so the file can be served as plain CSS.
+ * Handles nested composes (e.g. projects.module.css → typography.module.css).
  */
 export function processComposesInCss(cssSource: string, cssFilePath: string): string {
   return cssSource.replace(
@@ -37,7 +38,9 @@ export function processComposesInCss(cssSource: string, cssFilePath: string): st
         const resolved = path.resolve(path.dirname(cssFilePath), fromPath)
         const shared = fs.readFileSync(resolved, 'utf-8')
         const match = shared.match(new RegExp(`\\.${className}\\s*\\{([^}]+)\\}`))
-        return match ? match[1].trim() : ''
+        if (!match) return ''
+        // Recursively resolve nested composes (e.g. projects.module.css → typography.module.css)
+        return processComposesInCss(match[1].trim(), resolved)
       } catch {
         return ''
       }

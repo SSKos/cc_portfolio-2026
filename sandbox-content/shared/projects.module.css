@@ -1,0 +1,137 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   projects.module.css — Shared base styles for portfolio project pages.
+   Usage in page CSS: composes: <name> from '../shared/projects.module.css';
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Page wrapper ─────────────────────────────────────────────────────────── */
+
+.page {
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: var(--pad-5xl);
+}
+
+/* ── Hero ─────────────────────────────────────────────────────────────────── */
+/* Height custom properties — override locally if needed.                     */
+
+.hero {
+  --hero-height-desktop: clamp(22rem, 36vw, 39.6875rem);
+  --hero-height-mobile: clamp(15rem, 56vw, 22rem);
+  position: relative;
+  height: var(--hero-height-desktop);
+  overflow: hidden;
+  background: var(--surface-level-2);
+}
+
+/* ── Hero content (title block inside the hero area) ─────────────────────── */
+
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-lg);
+  width: min(100%, var(--columns-x10));
+  margin: 0 auto;
+  padding: var(--pad-4xl) var(--pad-lg) 0;
+  box-sizing: border-box;
+}
+
+/* ── Eyebrow label ────────────────────────────────────────────────────────── */
+
+.eyebrow {
+  composes: eyebrowAccent from './typography.module.css';
+  margin: 0;
+}
+
+/* ── Content column (directly below hero) ────────────────────────────────── */
+
+.content {
+  width: min(100%, var(--columns-x10));
+  margin: 0 auto;
+  padding: var(--pad-lg) var(--pad-lg) 0;
+  box-sizing: border-box;
+}
+
+/* ── Section ──────────────────────────────────────────────────────────────── */
+
+.section {
+  width: min(100%, var(--columns-x10));
+  margin: 0 auto;
+  padding: var(--semantic-6xl) var(--pad-lg) 0;
+  box-sizing: border-box;
+}
+
+/* ── Title / lead text ────────────────────────────────────────────────────── */
+
+.title {
+  margin: 0;
+  font: var(--typo-h2);
+  color: var(--text-primary);
+  max-width: var(--columns-x7);
+}
+
+.lead {
+  max-width: var(--columns-x7);
+  margin: var(--pad-lg) 0 0;
+  font: var(--typo-p);
+  color: var(--text-secondary);
+}
+
+/* ── Body text block (paragraph-level: typo-p / text-secondary) ──────────── */
+/* Note: mkb and design-systems use sectionBody (large typography) instead.   */
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--xs);
+  font: var(--typo-p);
+  color: var(--text-secondary);
+}
+
+.body p {
+  margin: 0;
+}
+
+/* ── 3-column cards grid ──────────────────────────────────────────────────── */
+/* Responsive breakpoints differ per page — keep @media rules locally.        */
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--lg);
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────────── */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: var(--md);
+  height: 100%;
+  padding: var(--pad-2xl) var(--pad-2xl) 1.875rem;
+  border-radius: var(--radius-2xl);
+  background: var(--card-bg);
+}
+
+.cardTitle {
+  margin: 0;
+  composes: cardHeading from './typography.module.css';
+}
+
+.cardText {
+  margin: 0;
+  composes: cardBody from './typography.module.css';
+}
+
+/* ── Full-width accent card ───────────────────────────────────────────────── */
+
+.fullWidthCard {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--brand-300) 8%, transparent) 0%,
+      transparent 100%
+    ),
+    var(--surface-level-2);
+  border: 1px solid color-mix(in srgb, var(--brand-300) 20%, transparent);
+}
