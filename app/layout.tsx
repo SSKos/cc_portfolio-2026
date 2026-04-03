@@ -19,7 +19,7 @@ const siteDescription =
 const ogImageUrl = `${siteUrl}/og-cover.jpg`;
 const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
 const plausibleScriptSrc = process.env.NEXT_PUBLIC_PLAUSIBLE_SRC;
-const yandexMetrikaId = process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID;
+const yandexMetrikaId = process.env.YANDEX_METRIKA_ID;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
