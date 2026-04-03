@@ -56,4 +56,4 @@ npm run dev
 docker compose up --build
 ```
 
-Приложение на порту 3000, Postgres доступен только с localhost хоста на `127.0.0.1:5432`. Перед первым запуском нужны миграции и сид: удобнее один раз выполнить их локально с `DATABASE_URL=postgresql://portfolio:portfolio@localhost:5432/portfolio`, затем поднимать `docker compose up`.
+Приложение и Postgres доступны только с localhost хоста на `127.0.0.1:3000` и `127.0.0.1:5432`. Перед первым запуском нужны миграции и сид: удобнее один раз выполнить их локально с `DATABASE_URL=postgresql://portfolio:portfolio@localhost:5432/portfolio`, затем поднимать `docker compose up`.

@@ -22,7 +22,7 @@ services:
       postgres:
         condition: service_healthy
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     volumes:
       - uploads:/app/public/uploads
     command: sh -c "npx prisma migrate deploy && npx next start -p 3000"
