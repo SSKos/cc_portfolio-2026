@@ -15,8 +15,8 @@
 /* Height custom properties — override locally if needed.                     */
 
 .hero {
-  --hero-height-desktop: clamp(22rem, 36vw, 39.6875rem);
-  --hero-height-mobile: clamp(15rem, 56vw, 22rem);
+  --hero-height-desktop: clamp(22rem, 45vw, 39.6875rem);
+  --hero-height-mobile: clamp(15rem, 70vw, 22rem);
   position: relative;
   height: var(--hero-height-desktop);
   overflow: hidden;
@@ -116,6 +116,7 @@
 .cardTitle {
   margin: 0;
   composes: cardHeading from './typography.module.css';
+    font-size: 2.25rem;
 }
 
 .cardText {

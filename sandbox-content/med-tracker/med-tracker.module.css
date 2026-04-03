@@ -8,8 +8,11 @@
 
 .hero {
   composes: hero from '../shared/projects.module.css';
-  border-radius: var(--radius-xl);
   isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 /* Нижний градиент для плавного перехода в фон страницы */
@@ -55,25 +58,41 @@
 }
 
 /* Состояния фона по фазам */
-.phase1 .heroBg { filter: blur(4px);  opacity: 0.9; }
-.phase2 .heroBg { filter: blur(8px);  opacity: 0.75; }
-.phase3 .heroBg { filter: blur(12px); opacity: 0.6; }
+.phase1 .heroBg {
+  filter: blur(4px);
+  opacity: 0.9;
+}
+
+.phase2 .heroBg {
+  filter: blur(8px);
+  opacity: 0.75;
+}
+
+.phase3 .heroBg {
+  filter: blur(12px);
+  opacity: 0.6;
+}
 
 /* ── Телефоны ──────────────────────────────────────────────────────────────── */
 
 .phones {
-  position: absolute;
+  display: flex;
+  width: 100%;
+  min-width: 530px;
+  justify-content: center;
   inset: 0;
   z-index: 1;
   pointer-events: none;
+  height: 100%;
 }
 
 .phone {
+  height: 100%;
+  width: auto;
   position: absolute;
-  inset: 0;
+  flex-shrink: 0;
   opacity: 0;
-  /* Стартовое состояние: над кадром, близко к зрителю */
-  transform: perspective(1400px) translateY(-110%) translateZ(280px);
+  transform: translateX(6000px);
   transition:
     opacity 0.65s cubic-bezier(0.2, 0.8, 0.25, 1),
     transform 0.65s cubic-bezier(0.2, 0.8, 0.25, 1);
@@ -81,13 +100,14 @@
 
 .phoneVisible {
   opacity: 1;
-  transform: perspective(1400px) translateY(0) translateZ(0);
+  transform: translateX(0);
 }
 
 .phoneImg {
-  width: 100%;
+  width: auto;
+  min-width: 530px;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   display: block;
   opacity: 0;
