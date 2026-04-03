@@ -12,7 +12,7 @@ type Props = { params: Promise<{ slug: string }> }
 
 async function tryLoad(slug: string): Promise<React.ComponentType | null> {
   try {
-    const mod = await import(/* @turbopackIgnore */ `@/sandbox-content/${slug}/${slug}`)
+    const mod = await import(/* webpackIgnore: true */ /* @turbopackIgnore */ `@/sandbox-content/${slug}/${slug}`)
     return (mod.default ?? null) as React.ComponentType | null
   } catch {
     return null
