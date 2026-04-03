@@ -7,6 +7,10 @@ const securityHeaders = [
 ]
 
 const nextConfig: NextConfig = {
+  // Disable React Strict Mode to avoid double-render timing issues with
+  // Turbopack in dev (performance.measure negative timestamp bug in React 19).
+  reactStrictMode: false,
+
   // esbuild is used server-side for runtime sandbox compilation.
   // It must not be bundled by Turbopack/webpack (contains native binaries).
   serverExternalPackages: ['esbuild', 'sharp'],

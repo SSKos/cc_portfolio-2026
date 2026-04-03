@@ -7,9 +7,11 @@ import { AnalyticsTracker } from '@/components/analytics/AnalyticsTracker'
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <SessionProvider>
-      <Suspense>
-        <AnalyticsTracker />
-      </Suspense>
+      {process.env.NODE_ENV === 'production' && (
+        <Suspense>
+          <AnalyticsTracker />
+        </Suspense>
+      )}
       {children}
     </SessionProvider>
   )
