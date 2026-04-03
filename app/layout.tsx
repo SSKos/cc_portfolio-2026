@@ -11,6 +11,9 @@ const nunitoSans = Nunito_Sans({
 });
 
 const siteUrl = process.env.NEXTAUTH_URL ?? "https://kk-about.me";
+const siteDescription =
+  "UX designer with 6+ years in fintech, focused on banking products, complex user flows, and scalable design systems.";
+const ogImageUrl = `${siteUrl}/og-cover.jpg`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -18,33 +21,39 @@ export const metadata: Metadata = {
     default: "Konstantin Kuznichenko | UX Designer",
     template: "%s | Konstantin Kuznichenko",
   },
-  description:
-    "6+ years in fintech: banking products, complex user flows, and design systems.",
+  description: siteDescription,
   alternates: {
-    canonical: "/",
+    canonical: siteUrl,
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.ico", type: "image/x-icon" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
+    ],
+    shortcut: ["/favicon.ico"],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
   openGraph: {
     type: "website",
     url: siteUrl,
     siteName: "kk-about.me",
     title: "Konstantin Kuznichenko | UX Designer",
-    description:
-      "6+ years in fintech: banking products, complex user flows, and design systems.",
+    description: siteDescription,
     images: [
       {
-        url: "/opengraph-image",
+        url: ogImageUrl,
         width: 1200,
         height: 630,
-        alt: "Превью портфолио Константина Кузниченко",
+        alt: "Konstantin Kuznichenko portfolio preview",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Konstantin Kuznichenko | UX Designer",
-    description:
-      "6+ years in fintech: banking products, complex user flows, and design systems.",
-    images: ["/opengraph-image"],
+    description: siteDescription,
+    images: [ogImageUrl],
   },
 };
 
