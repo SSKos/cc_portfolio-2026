@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { IconBurger, IconClose, IconCV, IconHome, IconChevronLeft } from '../ui/icons'
 import { CvModal } from '../ui/CvModal'
+import { trackEvent } from '@/lib/analytics'
 import styles from './Header.module.css'
 
 interface NavItem {
@@ -123,6 +124,11 @@ export function Header({ breadcrumb }: HeaderProps) {
   const backHref = resolvedBreadcrumb && resolvedBreadcrumb.length >= 2
     ? (resolvedBreadcrumb[resolvedBreadcrumb.length - 2].href ?? '/')
     : '/'
+
+  function openCvModal(source: string) {
+    trackEvent('cv_open', { source })
+    setCvOpen(true)
+  }
 
   function toggleMobileMenu() {
     setMobileMenuPath(current => current === pathname ? null : pathname)
@@ -299,7 +305,7 @@ export function Header({ breadcrumb }: HeaderProps) {
                         key={item.label}
                         className={styles.navItem}
                         onMouseEnter={() => onItemHover(i)}
-                        onClick={() => setCvOpen(true)}
+                        onClick={() => openCvModal('header_desktop')}
                       >
                         {labelEl}
                       </button>
@@ -427,7 +433,7 @@ export function Header({ breadcrumb }: HeaderProps) {
                   })}
                 </div>
 
-                <button className={styles.cvBtn} onClick={() => setCvOpen(true)}>
+                <button className={styles.cvBtn} onClick={() => openCvModal('header_level2')}>
                   <span className={styles.label}>CV</span>
                 </button>
 
@@ -486,7 +492,7 @@ export function Header({ breadcrumb }: HeaderProps) {
             </button>
 
             {/* Справа: CV */}
-            <button className={styles.mobileCvBtn} onClick={() => setCvOpen(true)}>
+            <button className={styles.mobileCvBtn} onClick={() => openCvModal('header_mobile')}>
               <IconCV />
             </button>
           </div>
@@ -508,7 +514,7 @@ export function Header({ breadcrumb }: HeaderProps) {
                   <div key={item.label} className={styles.mobileMenuGroup}>
                     <button
                       className={[styles.mobileMenuSectionLink, styles.mobileMenuSectionBtn].join(' ')}
-                      onClick={() => { setCvOpen(true); setMobileMenuPath(null) }}
+                      onClick={() => { openCvModal('header_mobile_menu'); setMobileMenuPath(null) }}
                     >
                       {item.label}
                     </button>

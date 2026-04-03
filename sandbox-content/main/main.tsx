@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
+import { trackEvent } from '@/lib/analytics'
 import { useText } from '@/lib/sandboxText'
 import styles from './main.module.css'
 import {Carousel} from "@/components/ui/Carousel";
@@ -227,7 +228,12 @@ export default function MainPage() {
           <div className={styles.projectsGrid}>
 
             {/* Design System — row 1, full width */}
-            <Link href="/projects/ds" className={`${styles.projectCard} ${styles.projSys}`} data-reveal data-delay="0">
+            <Link
+              href="/projects/ds"
+              className={`${styles.projectCard} ${styles.projSys}`}
+              data-reveal
+              data-delay="0"
+            >
               <div className={styles.projImgWide}>
                 <img src={IMG_SYS} alt="Дизайн-система" className={styles.coverImg} />
               </div>
@@ -242,7 +248,12 @@ export default function MainPage() {
             </Link>
 
             {/* MKB — col 1, rows 2-3, tall */}
-            <Link href="/projects/mkb" className={`${styles.projectCard} ${styles.projMkb}`} data-reveal data-delay="100">
+            <Link
+              href="/projects/mkb"
+              className={`${styles.projectCard} ${styles.projMkb}`}
+              data-reveal
+              data-delay="100"
+            >
               <div className={styles.projImgTall}>
                 <img src={IMG_MKB} alt="Продукты и сценарии в МКБ" className={styles.coverImg} />
               </div>
@@ -257,7 +268,12 @@ export default function MainPage() {
             </Link>
 
             {/* News — col 2-3, row 2 */}
-            <Link href="/projects/news-portal" className={`${styles.projectCard} ${styles.projNews}`} data-reveal data-delay="200">
+            <Link
+              href="/projects/news-portal"
+              className={`${styles.projectCard} ${styles.projNews}`}
+              data-reveal
+              data-delay="200"
+            >
               <div className={styles.projTextLeft}>
                 <p className={styles.projectCardTitle}>
                   {t('project.news.title', 'Новостной портал')}
@@ -272,7 +288,12 @@ export default function MainPage() {
             </Link>
 
             {/* Health — col 2-3, row 3 */}
-            <Link href="/projects" className={`${styles.projectCard} ${styles.projHealth}`} data-reveal data-delay="300">
+            <Link
+              href="/projects"
+              className={`${styles.projectCard} ${styles.projHealth}`}
+              data-reveal
+              data-delay="300"
+            >
               <div className={styles.projImgFlex}>
                 <img src={IMG_HEALTH} alt="Трекер приёма лекарств" className={styles.coverImg} />
               </div>
@@ -360,15 +381,31 @@ export default function MainPage() {
               {t('contact.subtitle', 'Ищу возможности в UX и продуктовом дизайне (удалённо/гибрид)')}
             </p>
             <div className={styles.contactLinks}>
-              <a className={styles.contactLink} href="mailto:konstantinkuznichenko@gmail.com">
+              <a
+                className={styles.contactLink}
+                href="mailto:konstantinkuznichenko@gmail.com"
+                onClick={() => trackEvent('contact_click', { channel: 'email', source: 'home_contacts' })}
+              >
                 <img src={ICON_EMAIL} alt="" aria-hidden="true" className={styles.contactIcon} />
                 <span>konstantinkuznichenko@gmail.com</span>
               </a>
-              <a className={styles.contactLink} href="https://t.me/Viridovix" target="_blank" rel="noopener noreferrer">
+              <a
+                className={styles.contactLink}
+                href="https://t.me/Viridovix"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackEvent('contact_click', { channel: 'telegram', source: 'home_contacts' })}
+              >
                 <img src={ICON_TG} alt="" aria-hidden="true" className={styles.contactIcon} />
                 <span>@Viridovix</span>
               </a>
-              <a className={styles.contactLink} href="https://www.linkedin.com/in/koskuz" target="_blank" rel="noopener noreferrer">
+              <a
+                className={styles.contactLink}
+                href="https://www.linkedin.com/in/koskuz"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackEvent('contact_click', { channel: 'linkedin', source: 'home_contacts' })}
+              >
                 <img src={ICON_LI} alt="" aria-hidden="true" className={styles.contactIcon} />
                 <span>www.linkedin.com/in/koskuz</span>
               </a>

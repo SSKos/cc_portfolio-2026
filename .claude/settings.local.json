@@ -57,7 +57,18 @@
       "Bash(npx tsx:*)",
       "Skill(claude-md-management:revise-claude-md)",
       "mcp__plugin_playwright_playwright__browser_evaluate",
-      "Bash(git add: *)"
+      "Bash(git add: *)",
+      "Read(//Users/kos/.claude/**)",
+      "Bash(ssh:*)",
+      "Bash(scp -i ~/.ssh/id_ed25519_portfolio /tmp/portfolio_dump.dump root@157.180.85.212:/tmp/portfolio_dump.dump)",
+      "Bash(git rm:*)",
+      "Bash(grep -r \"resize\\\\|thumbnail\\\\|width.*height\" /Users/kos/projects/2025-portfolio/cc-portfolio/lib /Users/kos/projects/2025-portfolio/cc-portfolio/app/api --include=*.ts --include=*.tsx)",
+      "Bash(./scripts/deploy.sh 2>&1)",
+      "mcp__plugin_playwright_playwright__browser_resize",
+      "Bash(scp -i ~/.ssh/id_ed25519_portfolio sandbox-content/med-tracker/med-tracker.module.css root@157.180.85.212:/var/www/cc-portfolio/sandbox-content/med-tracker/med-tracker.module.css)",
+      "Bash(chmod:*)",
+      "mcp__plugin_playwright_playwright__browser_console_messages",
+      "mcp__plugin_playwright_playwright__browser_network_requests"
     ]
   }
 }

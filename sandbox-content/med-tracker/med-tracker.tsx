@@ -7,10 +7,10 @@ import { useHeroAssetGate } from '@/lib/useHeroAssetGate'
 
 // ── Изображения: загрузи в галерею /admin/sandbox/medicine/gallery ─────────────
 // и обнови ID (число в конце URL)
-const IMG_BG     = '/media/sandbox/med-tracker/53'  // фоновая иллюстрация
-const IMG_PHONE3 = '/media/sandbox/med-tracker/50'  // первый телефон (10deg, справа)
-const IMG_PHONE2 = '/media/sandbox/med-tracker/51'  // второй телефон (5deg)
-const IMG_PHONE1 = '/media/sandbox/med-tracker/52'  // главный телефон (прямо, финал)
+const IMG_BG     = '/media/sandbox/med-tracker/50'  // фоновая иллюстрация
+const IMG_PHONE3 = '/media/sandbox/med-tracker/53'  // первый телефон (10deg, справа)
+const IMG_PHONE2 = '/media/sandbox/med-tracker/52'  // второй телефон (5deg)
+const IMG_PHONE1 = '/media/sandbox/med-tracker/51'  // главный телефон (прямо, финал)
 
 export default function MedicinePage() {
   const t = useText()

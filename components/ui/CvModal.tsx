@@ -2,6 +2,7 @@
 
 import {useEffect, useState} from 'react'
 import {IconClose} from './icons'
+import { trackEvent } from '@/lib/analytics'
 import styles from './CvModal.module.css'
 
 interface CvUrls {
@@ -50,6 +51,7 @@ export function CvModal({open, onClose}: CvModalProps) {
                             href={urls.ru.url}
                             download="Константин Кузниченко UX-дизайнер CV.pdf"
                             className={styles.downloadBtn}
+                            onClick={() => trackEvent('cv_download', { language: 'ru' })}
                         >
                             Скачать резюме (РУС)
                         </a>
@@ -61,6 +63,7 @@ export function CvModal({open, onClose}: CvModalProps) {
                             href={urls.en.url}
                             download="Konstantin Kuznichenko UX-designer CV.pdf"
                             className={styles.downloadBtn}
+                            onClick={() => trackEvent('cv_download', { language: 'en' })}
                         >
                             Download CV (ENG)
                         </a>

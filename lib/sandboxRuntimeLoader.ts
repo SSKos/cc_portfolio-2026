@@ -77,13 +77,18 @@ export async function compileToBundle(slug: string): Promise<string | null> {
   const outFile = path.join(SANDBOX_CACHE_DIR, `${slug}.cjs`)
   const extraCssFile = path.join(SANDBOX_CACHE_DIR, `${slug}-extra.css`)
 
-  // Skip if cache is fresh (both bundle and extra CSS must exist)
+  // Skip if cache is fresh (both bundle and extra CSS must exist).
+  // Check both TSX and CSS mtime so CSS edits (e.g. via the code editor) also
+  // trigger a rebuild — otherwise stale class name maps cause missing styles.
+  const cssFile = path.join(process.cwd(), 'sandbox-content', slug, `${slug}.module.css`)
   try {
     const srcMtime = fs.statSync(srcFile).mtimeMs
+    const cssMtime = fs.existsSync(cssFile) ? fs.statSync(cssFile).mtimeMs : 0
+    const newestSrc = Math.max(srcMtime, cssMtime)
     if (
       fs.existsSync(outFile) &&
       fs.existsSync(extraCssFile) &&
-      fs.statSync(outFile).mtimeMs >= srcMtime
+      fs.statSync(outFile).mtimeMs >= newestSrc
     ) {
       return fs.readFileSync(outFile, 'utf-8')
     }
